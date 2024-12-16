@@ -19,10 +19,10 @@ class User extends Authenticatable implements RequireTwoFALogin
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'name', 'email', 'password', 'last_name', 'university', 'role',
     ];
+
+
 
     /**
      * The attributes that should be hidden for serialization.
