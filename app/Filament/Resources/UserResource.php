@@ -103,6 +103,11 @@ class UserResource extends Resource
             ]);
     }
 
+    public static function canViewAny(): bool
+    {
+    return auth()->user()?->role === 'admin';
+    }
+
 
 
     public static function getRelations(): array

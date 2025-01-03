@@ -11,8 +11,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('first_name')->nullable(); // Nombre
+        Schema::table('users', function (Blueprint $table) { // Nombre
             $table->string('last_name')->nullable();  // Apellidos
             $table->string('university')->nullable(); // Universidad
             $table->string('role')->default('participant'); // Rol

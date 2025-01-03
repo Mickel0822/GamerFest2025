@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignId('member_4_id')->nullable()->constrained('users');
             $table->decimal('cost', 8, 2);
             $table->string('status')->default('pendiente'); // Estado del pago
-            $table->string('payment_receipt'); // Archivo de imagen (JPG)
+            $table->string('payment_receipt')->nullable(); // Archivo de imagen (JPG)
             $table->timestamps();
         });
     }

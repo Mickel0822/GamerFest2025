@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAMERFEST</title>
+    @livewireStyles
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -116,6 +117,7 @@
     </style>
 </head>
 <body>
+    @livewireScripts
     <!-- Header con botones y logo -->
     <div class="header-container">
         <a href="/inscribete" class="cta-buttons">Inscríbete</a>

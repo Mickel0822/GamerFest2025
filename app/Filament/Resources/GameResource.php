@@ -45,7 +45,6 @@ class GameResource extends Resource
                     'pausado' => 'Pausado',
                     'finalizado' => 'Finalizado',
                 ])
-                ->default('activo')
                 ->required(),
             Forms\Components\Textarea::make('rules')
                 ->label('Reglas del Juego')
@@ -109,6 +108,10 @@ class GameResource extends Resource
             ]);
     }
 
+    public static function canViewAny(): bool
+    {
+    return auth()->user()?->role === 'admin';
+    }
 
 
     public static function getRelations(): array

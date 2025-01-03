@@ -12,6 +12,7 @@ use App\Models\User;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Radio;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
@@ -81,6 +82,15 @@ class InscriptionResource extends Resource
                 ->searchable()
                 ->visible(fn ($get) => Game::find($get('game_id'))?->type === 'group'),
 
+            Radio::make('payment_method')
+                ->label('Método de Pago')
+                ->options([
+                    'efectivo' => 'Efectivo',
+                    'comprobante' => 'Comprobante',
+                ])
+                ->required(),
+
+
             FileUpload::make('payment_receipt')
                 ->label('Comprobante de Pago (JPG)')
                 ->image()
@@ -115,16 +125,21 @@ class InscriptionResource extends Resource
                     'warning' => 'pendiente',
                 ]),
 
-            ImageColumn::make('payment_receipt') // Usa el nombre correcto
+            TextColumn::make('payment_receipt')
                 ->label('Comprobante')
-                ->disk('public') // Especifica el disco
-                ->visibility('public')
-                ->url(fn ($record) => asset('storage/' . $record->payment_receipt)), // Asegura que sea visible
+                ->formatStateUsing(fn () => 'Ver Comprobante') // El texto que se mostrará
+                ->url(fn ($record) => asset('storage/' . $record->payment_receipt)) // URL de la imagen
+                ->openUrlInNewTab(), // Abre el enlace en una nueva pestaña
         ])
         ->actions([
             Tables\Actions\EditAction::make(),
             Tables\Actions\DeleteAction::make(),
         ]);
+    }
+
+    public static function canViewAny(): bool
+    {
+    return auth()->user()?->role === 'participant' or auth()->user()->role === 'admin';
     }
 
 

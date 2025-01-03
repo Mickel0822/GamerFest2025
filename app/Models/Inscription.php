@@ -10,8 +10,13 @@ class Inscription extends Model
     protected $fillable = [
         'user_id', 'game_id', 'team_name', 'member_1_id',
         'member_2_id', 'member_3_id', 'member_4_id',
-        'cost', 'status', 'payment_receipt',
+        'cost', 'status', 'payment_receipt', 'payment_method',
     ];
+
+    const STATUS_PENDING = 'pendiente';
+    const STATUS_VERIFIED = 'verificado';
+    const STATUS_REJECTED = 'rechazado';
+
 
     public function user()
     {
