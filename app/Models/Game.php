@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Game extends Model
 {
     use HasFactory;
-
+  
     protected $fillable = [
         'name',
         'type',
@@ -45,4 +45,5 @@ class Game extends Model
     {
         return $this->hasMany(Round::class);
     }
+
 }
