@@ -8,44 +8,49 @@ use Illuminate\Support\Facades\Storage;
 class Inscription extends Model
 {
     protected $fillable = [
-        'user_id', 'game_id', 'team_name', 'member_1_id',
-        'member_2_id', 'member_3_id', 'member_4_id',
-        'cost', 'status', 'payment_receipt', 'payment_method',
+        'user_id',
+        'game_id',
+        'team_name',
+        'cost',
+        'status',
+        'payment_method',
+        'payment_receipt',
+        'round_id', // Relación con rondas
     ];
 
     const STATUS_PENDING = 'pendiente';
     const STATUS_VERIFIED = 'verificado';
     const STATUS_REJECTED = 'rechazado';
-
-
+    /**
+     * Relación: Una inscripción pertenece a un usuario.
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Relación: Una inscripción pertenece a un juego.
+     */
     public function game()
     {
         return $this->belongsTo(Game::class);
     }
 
-    public function member1()
+    /**
+     * Relación: Una inscripción pertenece a una ronda.
+     */
+    public function round()
     {
-        return $this->belongsTo(User::class, 'member_1_id');
+        return $this->belongsTo(Round::class);
     }
 
-    public function member2()
+    /**
+     * Relación: Una inscripción tiene muchos miembros de equipo.
+     */
+    public function teamMembers()
     {
-        return $this->belongsTo(User::class, 'member_2_id');
-    }
-
-    public function member3()
-    {
-        return $this->belongsTo(User::class, 'member_3_id');
-    }
-
-    public function member4()
-    {
-        return $this->belongsTo(User::class, 'member_4_id');
+        return $this->hasMany(TeamMember::class, 'inscription_id');
     }
 
     public function getPaymentReceiptUrlAttribute()

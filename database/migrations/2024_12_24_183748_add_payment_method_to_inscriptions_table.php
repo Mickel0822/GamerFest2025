@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('inscriptions', function (Blueprint $table) {
-            $table->string('payment_method')->nullable()->after('status'); // Método de pago (efectivo/comprobante)
+            $table->string('team_name')->nullable()->after('status'); // Método de pago (efectivo/comprobante)
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('inscriptions', function (Blueprint $table) {
-            $table->dropColumn('payment_method');
+            $table->dropColumn('team_name');
         });
     }
 };
