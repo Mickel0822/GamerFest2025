@@ -6,6 +6,8 @@ use App\Filament\Resources\GameResource\Pages;
 use App\Filament\Resources\GameResource\RelationManagers;
 use App\Models\Game;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -45,7 +47,6 @@ class GameResource extends Resource
                     'pausado' => 'Pausado',
                     'finalizado' => 'Finalizado',
                 ])
-                ->default('activo')
                 ->required(),
             Forms\Components\Textarea::make('rules')
                 ->label('Reglas del Juego')
@@ -57,6 +58,24 @@ class GameResource extends Resource
                 ->label('URL de la Imagen')
                 ->url() // Valida que sea una URL válida
                 ->placeholder('https://example.com/image.jpg'),
+            Forms\Components\Select::make('coordinator_id')
+                ->label('Coordinador')
+                ->relationship('coordinator', 'name') // Relación con users
+                ->nullable(),
+            TextInput::make('start_time')
+                ->label('Fecha de Inicio')
+                ->type('date')
+                ->required()
+                ->default(now()->format('Y-m-d')),
+            TextInput::make('end_time')
+                ->label('Fecha de Finalización')
+                ->type('date')
+                ->required()
+                ->default(now()->format('Y-m-d')),
+            Forms\Components\TextInput::make('location')
+                ->label('Lugar')
+                ->placeholder('Ej: Curso A405')
+                ->required(),
         ]);
     }
 
@@ -99,9 +118,18 @@ class GameResource extends Resource
                 Tables\Columns\ImageColumn::make('image_url') // Columna para la imagen
                     ->label('Imagen del Juego')
                     ->circular(), // Imagen redondeada
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Creado')
-                    ->dateTime(),
+                Tables\Columns\TextColumn::make('coordinator.name')
+                    ->label('Coordinador'),
+                Tables\Columns\TextColumn::make('start_time')
+                    ->label('Inicio')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('end_time')
+                    ->label('Fin')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('location')
+                    ->label('Ubicación'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -109,6 +137,10 @@ class GameResource extends Resource
             ]);
     }
 
+    public static function canViewAny(): bool
+    {
+    return auth()->user()?->role === 'admin';
+    }
 
 
     public static function getRelations(): array

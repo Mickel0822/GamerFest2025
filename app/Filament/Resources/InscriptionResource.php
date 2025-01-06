@@ -12,11 +12,13 @@ use App\Models\User;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Radio;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\TeamMember;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -57,29 +59,51 @@ class InscriptionResource extends Resource
                 ->label('Nombre del Equipo')
                 ->visible(fn ($get) => Game::find($get('game_id'))?->type === 'group'),
 
-            Select::make('member_1_id')
-                ->label('Miembro 1')
-                ->relationship('member1', 'name')
-                ->searchable()
-                ->visible(fn ($get) => Game::find($get('game_id'))?->type === 'group'),
+            Select::make('members')
+                ->label('Miembros del Equipo')
+                ->multiple()
+                ->options(\App\Models\User::pluck('name', 'id')) // Opciones de usuarios
+                ->visible(fn ($get) => \App\Models\Game::find($get('game_id'))?->type === 'group')
+                ->helperText('Seleccione los miembros adicionales del equipo.')
+                ->required(fn ($get) => \App\Models\Game::find($get('game_id'))?->type === 'group')
+                ->default([]) // Asegura que sea un array vacío por defecto
+                ->rule('distinct')
+                ->rule('exists:users,id') // Asegurar que los usuarios existan
+                ->extraAttributes(['name' => 'members[]'])
+                ->afterStateUpdated(function ($state, callable $set, $component) {
+                    $inscriptionId = $component->getContainer()->getState()['id'] ?? null;
 
-            Select::make('member_2_id')
-                ->label('Miembro 2')
-                ->relationship('member2', 'name')
-                ->searchable()
-                ->visible(fn ($get) => Game::find($get('game_id'))?->type === 'group'),
+                    if (!$inscriptionId) {
+                        // No hay inscripción asociada, no limpiar directamente el campo.
+                        return;
+                    }
 
-            Select::make('member_3_id')
-                ->label('Miembro 3')
-                ->relationship('member3', 'name')
-                ->searchable()
-                ->visible(fn ($get) => Game::find($get('game_id'))?->type === 'group'),
+                    $gameId = Inscription::find($inscriptionId)?->game_id;
 
-            Select::make('member_4_id')
-                ->label('Miembro 4')
-                ->relationship('member4', 'name')
-                ->searchable()
-                ->visible(fn ($get) => Game::find($get('game_id'))?->type === 'group'),
+                    if (!$gameId) {
+                        // No se encontró un juego asociado, no realizar operaciones adicionales.
+                        return;
+                    }
+
+                    foreach ($state as $memberId) {
+                        if (TeamMember::whereHas('inscription', fn ($query) =>
+                            $query->where('game_id', $gameId))
+                            ->where('user_id', $memberId)
+                            ->exists()) {
+                            $set('members', []); // Limpia el campo correctamente si hay conflicto.
+                            break;
+                        }
+                    }
+                }),
+
+
+            Radio::make('payment_method')
+                ->label('Método de Pago')
+                ->options([
+                    'efectivo' => 'Efectivo',
+                    'comprobante' => 'Comprobante',
+                ])
+                ->required(),
 
             FileUpload::make('payment_receipt')
                 ->label('Comprobante de Pago (JPG)')
@@ -115,16 +139,21 @@ class InscriptionResource extends Resource
                     'warning' => 'pendiente',
                 ]),
 
-            ImageColumn::make('payment_receipt') // Usa el nombre correcto
+            TextColumn::make('payment_receipt')
                 ->label('Comprobante')
-                ->disk('public') // Especifica el disco
-                ->visibility('public')
-                ->url(fn ($record) => asset('storage/' . $record->payment_receipt)), // Asegura que sea visible
+                ->formatStateUsing(fn () => 'Ver Comprobante') // El texto que se mostrará
+                ->url(fn ($record) => asset('storage/' . $record->payment_receipt)) // URL de la imagen
+                ->openUrlInNewTab(), // Abre el enlace en una nueva pestaña
         ])
         ->actions([
             Tables\Actions\EditAction::make(),
             Tables\Actions\DeleteAction::make(),
         ]);
+    }
+
+    public static function canViewAny(): bool
+    {
+    return auth()->user()?->role === 'participant' or auth()->user()->role === 'admin';
     }
 
 
