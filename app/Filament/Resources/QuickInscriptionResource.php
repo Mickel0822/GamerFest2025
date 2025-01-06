@@ -2,43 +2,39 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\InscriptionResource\Pages;
-use App\Filament\Resources\InscriptionResource\RelationManagers;
+use App\Filament\Resources\QuickInscriptionResource\Pages;
+use App\Filament\Resources\QuickInscriptionResource\RelationManagers;
 use App\Models\Inscription;
+use App\Models\QuickInscription;
 use Filament\Forms;
-use Filament\Forms\Form;
-use App\Models\Game;
-use App\Models\User;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Radio;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Columns\ImageColumn;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use App\Models\TeamMember;
 use Filament\Tables\Table;
+use App\Models\User;
+use App\Models\Game;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Get;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class InscriptionResource extends Resource
+class QuickInscriptionResource extends Resource
 {
     protected static ?string $model = Inscription::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
-    protected static ?string $pluralLabel = 'Incripciones';
-    protected static ?string $singularLabel = 'Inscripcion';
-    protected static ?int $navigationSort = 4; // Cambia el orden
-    protected static ?string $navigationGroup = 'Gestion Para las Inscripciones'; // Grupo del menú
+    protected static ?string $pluralLabel = 'Inscripción Rápida';
+    protected static ?string $navigationIcon = 'heroicon-o-plus-circle';
+    protected static ?string $navigationGroup = 'Gestion Tesorero';
 
     public static function form(Form $form): Form
     {
         return $form->schema([
             Select::make('user_id')
                 ->label('Participante')
-                ->relationship('user', 'name')
+                ->searchable()
+                ->options(User::all()->pluck('name', 'id'))
                 ->required(),
 
             Select::make('game_id')
@@ -96,66 +92,47 @@ class InscriptionResource extends Resource
                     }
                 }),
 
-
-            Radio::make('payment_method')
+            Select::make('payment_method')
                 ->label('Método de Pago')
                 ->options([
-                    'efectivo' => 'Efectivo',
-                    'comprobante' => 'Comprobante',
+                    'cash' => 'Efectivo',
+                    'receipt' => 'Comprobante',
                 ])
-                ->required(),
+                ->default('cash')
+                ->required()
+                ->reactive(),
 
             FileUpload::make('payment_receipt')
                 ->label('Comprobante de Pago (JPG)')
                 ->image()
-                ->directory('receipts') // Guarda en storage/app/public/receipts
-                ->visibility('public') // Hace que sea accesible públicamente
+                ->directory('receipts')
+                ->visibility('public')
                 ->downloadable()
-                ->default(fn ($record) => $record ? asset('storage/' . $record->payment_receipt) : null),
+                ->default(fn ($record) => $record ? asset('storage/' . $record->payment_receipt) : null)
+                ->visible(fn (\Filament\Forms\Get $get) => $get('payment_method') === 'receipt')
+                ->required(fn (\Filament\Forms\Get $get) => $get('payment_method') === 'receipt'),
         ]);
     }
+
 
     public static function table(Table $table): Table
     {
-        return $table->columns([
-            TextColumn::make('user.name')
-                ->label('Participante'),
-
-            TextColumn::make('game.name')
-                ->label('Juego'),
-
-            TextColumn::make('team_name')
-                ->label('Nombre del Equipo')
-                ->sortable(),
-
-            TextColumn::make('cost')
-                ->label('Costo')
-                ->money('USD'),
-
-            BadgeColumn::make('status')
-                ->label('Estado')
-                ->colors([
-                    'success' => 'verificado',
-                    'warning' => 'pendiente',
+        return $table
+            ->columns([
+                //
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
-
-            TextColumn::make('payment_receipt')
-                ->label('Comprobante')
-                ->formatStateUsing(fn () => 'Ver Comprobante') // El texto que se mostrará
-                ->url(fn ($record) => asset('storage/' . $record->payment_receipt)) // URL de la imagen
-                ->openUrlInNewTab(), // Abre el enlace en una nueva pestaña
-        ])
-        ->actions([
-            Tables\Actions\EditAction::make(),
-            Tables\Actions\DeleteAction::make(),
-        ]);
+            ]);
     }
-
-    public static function canViewAny(): bool
-    {
-    return auth()->user()?->role === 'participant' or auth()->user()->role === 'admin';
-    }
-
 
     public static function getRelations(): array
     {
@@ -167,9 +144,9 @@ class InscriptionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListInscriptions::route('/'),
-            'create' => Pages\CreateInscription::route('/create'),
-            'edit' => Pages\EditInscription::route('/{record}/edit'),
+            'index' => Pages\ListQuickInscriptions::route('/'),
+            'create' => Pages\CreateQuickInscription::route('/create'),
+            'edit' => Pages\EditQuickInscription::route('/{record}/edit'),
         ];
     }
 }

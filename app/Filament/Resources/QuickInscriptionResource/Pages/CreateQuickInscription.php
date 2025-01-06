@@ -1,25 +1,23 @@
 <?php
 
-namespace App\Filament\Resources\InscriptionResource\Pages;
+namespace App\Filament\Resources\QuickInscriptionResource\Pages;
 
-use App\Filament\Resources\InscriptionResource;
+use App\Filament\Resources\QuickInscriptionResource;
 use App\Models\TeamMember;
-use Illuminate\Database\Eloquent\Model; // Importa Model
 use Filament\Resources\Pages\CreateRecord;
 
-
-class CreateInscription extends CreateRecord
+class CreateQuickInscription extends CreateRecord
 {
-    protected static string $resource = InscriptionResource::class;
+    protected static string $resource = QuickInscriptionResource::class;
     protected array $members = [];
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-    // Extraer los miembros seleccionados
-    $this->members = $data['members'] ?? [];
-    unset($data['members']); // Remueve 'members' del array para evitar conflictos
+        $data['status'] = 'verificado'; // Aseguramos que el estado sea "verificado".
+        $this->members = $data['members'] ?? [];
+        unset($data['members']); // Remueve 'members' del array para evitar conflictos
 
-    return $data; // Devuelve los datos restantes (sin duplicar la inscripción)
+        return $data; // Devuelve los datos restantes (sin duplicar la inscripción)
     }
 
     protected function afterCreate(): void
@@ -32,5 +30,4 @@ class CreateInscription extends CreateRecord
             ]);
         }
     }
-
 }

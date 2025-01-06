@@ -9,11 +9,16 @@ return new class extends Migration {
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Nombre del juego
-            $table->enum('type', ['individual', 'group']); // Tipo de juego
-            $table->enum('status', ['activo', 'pausado', 'finalizado'])->default('activo'); // Estado
-            $table->text('rules')->nullable(); // Reglas del juego
-            $table->text('results')->nullable(); // Resultados (JSON o texto)
+            $table->string('name');
+            $table->string('image_url')->nullable();
+            $table->enum('type', ['individual', 'group']);
+            $table->enum('status', ['activo', 'pausado', 'finalizado'])->default('activo');
+            $table->text('rules')->nullable();
+            $table->text('results')->nullable();
+            $table->foreignId('coordinator_id')->unique()->nullable()->constrained('users')->onDelete('cascade'); // Coordinador (1:1)
+            $table->timestamp('start_time')->nullable(); // Fecha de inicio
+            $table->timestamp('end_time')->nullable(); // Fecha de fin
+            $table->string('location')->nullable(); // Ubicación física del juego
             $table->timestamps();
         });
     }

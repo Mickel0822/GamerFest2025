@@ -1,4 +1,4 @@
-<p>Hi {{ $name }},</p>
+<p>Hola {{ $name }},</p>
 <p>
-    Your 2-fa code is : {{ $code }}
+    Tu codigo de verificacion es el siguiente : {{ $code }}
 </p>

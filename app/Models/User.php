@@ -19,10 +19,36 @@ class User extends Authenticatable implements RequireTwoFALogin
      * @var list<string>
      */
     protected $fillable = [
-        'name', 'email', 'password', 'last_name', 'university', 'role',
+        'name',
+        'last_name',
+        'email',
+        'password',
+        'university',
+        'role',
     ];
 
 
+      /**
+     * Relación: Un usuario puede coordinar un juego (1:1).
+     */
+    public function game()
+    {
+        return $this->hasOne(Game::class, 'coordinator_id');
+    }
+
+    /**
+     * Relación: Un usuario puede tener muchas inscripciones.
+     */
+    public function inscriptions()
+    {
+        return $this->hasMany(Inscription::class);
+    }
+
+
+    public function isCoordinator()
+    {
+        return $this->role === 'coordinator';
+    }
 
     /**
      * The attributes that should be hidden for serialization.
