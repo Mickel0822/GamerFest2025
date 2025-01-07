@@ -32,7 +32,7 @@
 
         .footer-text {
             font-size: 0.9rem;
-            font-family: 'Adventure Request', cursive; 
+            font-family: 'Adventure Request', cursive;
             text-align: center;
             color: #666;
         }
@@ -45,7 +45,7 @@
     </style>
 </head>
 <body>
-    
+
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -67,10 +67,19 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <!-- Institución -->
+                            <!-- Universidad -->
                             <div class="mb-3">
-                                <input type="text" name="institution" id="institution" class="form-control" placeholder="Institución" value="{{ old('institution') }}" required>
-                                @error('institution')
+                                <label for="university" class="form-label">Universidad</label>
+                                <select name="university" id="university" class="form-control" required>
+                                    <option value="" disabled selected>Seleccione su universidad</option>
+                                    <option value="Universidad Técnica de Cotopaxi">Universidad Técnica de Cotopaxi</option>
+                                    <option value="Universidad Técnica Particular de Loja">Universidad Técnica Particular de Loja</option>
+                                    <option value="Universidad Estatal de Bolívar">Universidad Estatal de Bolívar</option>
+                                    <option value="Universidad de las Fuerzas Armadas ESPE Latacunga">Universidad de las Fuerzas Armadas ESPE Latacunga</option>
+                                    <option value="Universidad Politécnica Salesiana">Universidad Politécnica Salesiana</option>
+                                    <!-- Agrega más universidades si es necesario -->
+                                </select>
+                                @error('university')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>

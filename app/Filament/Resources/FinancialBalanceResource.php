@@ -50,7 +50,7 @@ class FinancialBalanceResource extends Resource
     public static function shouldRegisterNavigation(): bool
     {
         // Solo mostrar en el menú si el usuario tiene el rol de tesorero.
-        return auth()->user()?->role === 'treasurer' || auth()->user()->role === 'admin';
+        return auth()->user()?->role === 'treasurer';
     }
 
     public static function getRelations(): array

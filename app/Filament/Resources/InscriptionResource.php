@@ -28,19 +28,15 @@ class InscriptionResource extends Resource
     protected static ?string $model = Inscription::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
-    protected static ?string $pluralLabel = 'Incripciones';
+    protected static ?string $pluralLabel = 'Inscripciones';
     protected static ?string $singularLabel = 'Inscripcion';
+    protected static ?string $navigationLabel = '¡Inscribete Ahora!';
     protected static ?int $navigationSort = 4; // Cambia el orden
-    protected static ?string $navigationGroup = 'Gestion Para las Inscripciones'; // Grupo del menú
+    protected static ?string $navigationGroup = 'Inscribirse Nuevo Juego'; // Grupo del menú
 
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Select::make('user_id')
-                ->label('Participante')
-                ->relationship('user', 'name')
-                ->required(),
-
             Select::make('game_id')
                 ->label('Juego')
                 ->relationship('game', 'name')
@@ -62,7 +58,7 @@ class InscriptionResource extends Resource
             Select::make('members')
                 ->label('Miembros del Equipo')
                 ->multiple()
-                ->options(\App\Models\User::pluck('name', 'id')) // Opciones de usuarios
+                ->options(User::where('id', '!=', auth()->id())->pluck('name', 'id')) // Opciones de usuarios
                 ->visible(fn ($get) => \App\Models\Game::find($get('game_id'))?->type === 'group')
                 ->helperText('Seleccione los miembros adicionales del equipo.')
                 ->required(fn ($get) => \App\Models\Game::find($get('game_id'))?->type === 'group')
@@ -96,21 +92,13 @@ class InscriptionResource extends Resource
                     }
                 }),
 
-
-            Radio::make('payment_method')
-                ->label('Método de Pago')
-                ->options([
-                    'efectivo' => 'Efectivo',
-                    'comprobante' => 'Comprobante',
-                ])
-                ->required(),
-
             FileUpload::make('payment_receipt')
                 ->label('Comprobante de Pago (JPG)')
                 ->image()
                 ->directory('receipts') // Guarda en storage/app/public/receipts
                 ->visibility('public') // Hace que sea accesible públicamente
                 ->downloadable()
+                ->required()
                 ->default(fn ($record) => $record ? asset('storage/' . $record->payment_receipt) : null),
         ]);
     }
@@ -146,15 +134,15 @@ class InscriptionResource extends Resource
                 ->openUrlInNewTab(), // Abre el enlace en una nueva pestaña
         ])
         ->actions([
-            Tables\Actions\EditAction::make(),
             Tables\Actions\DeleteAction::make(),
         ]);
     }
 
     public static function canViewAny(): bool
     {
-    return auth()->user()?->role === 'participant' or auth()->user()->role === 'admin';
+    return auth()->user()?->role === 'participant';
     }
+
 
 
     public static function getRelations(): array

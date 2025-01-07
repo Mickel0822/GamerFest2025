@@ -22,7 +22,12 @@ class CoordinatorParticipantsResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    protected static ?string $navigationGroup = 'Gestión de Juegos';
+    protected static ?string $navigationGroup = 'Gestión de Coordinador';
+
+    protected static ?string $navigationLabel = 'Lista de Participantes';
+
+    protected static ?string $pluralLabel = 'Listado de Participantes Inscritos';
+    protected static ?string $singularLabel = 'Listado de Participantes Inscritos';
 
     public static function table(Tables\Table $table): Tables\Table
     {
@@ -83,7 +88,7 @@ class CoordinatorParticipantsResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return auth()->user()?->role === 'coordinator' or auth()->user()?->role === 'admin';
+        return auth()->user()?->role === 'coordinator';
     }
 
     public static function getRelations(): array

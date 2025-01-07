@@ -21,12 +21,4 @@ class ListCoordinatorParticipants extends ListRecords
             ->with(['game', 'teamMembers.user']); // Cargar relaciones necesarias
     }
 
-
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\CreateAction::make(),
-        ];
-    }
 }

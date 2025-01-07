@@ -89,7 +89,7 @@
 
         /* Fondo difuminado */
         .background-image {
-        
+
         top: 0;
         left: 0;
         width: 100%;
@@ -220,13 +220,13 @@
             height: 1px;
             transition: transorm 0.3s ease;
         }
-        
+
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
     </style>
 </head>
 <body>
@@ -234,11 +234,25 @@
     <div class="header">
         <img src="/images/LOGO.png" alt="logo de la pagina">
         <h1>GAMERFEST 2025</h1>
-        <div> 
-            <a href="/admin" class="cta-buttonss">Registrarse</a>
-            <a href="/admin" class="cta-buttonss">Login</a>
+        <div>
+            @if(Auth::check())
+                <!-- Usuario autenticado: Mostrar botón al panel -->
+                <a href="/admin" class="cta-buttonss">Panel</a>
+            @else
+                <!-- Usuario no autenticado: Mostrar botones de registro y login -->
+                <a href="/register" class="cta-buttonss">Registrarse</a>
+                <a href="/admin/login" class="cta-buttonss">Login</a>
+            @endif
         </div>
     </div>
+
+    <!-- Mostrar mensajes de éxito -->
+@if(session('success'))
+    <div class="alert alert-success" style="text-align: center; margin: 1rem auto; max-width: 800px; background-color: #d4edda; color: #155724; padding: 1rem; border-radius: 5px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        {{ session('success') }}
+    </div>
+@endif
+
 
     <!-- Fondo difuminado -->
 

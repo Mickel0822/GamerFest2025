@@ -14,6 +14,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use App\Models\User;
 use App\Models\Game;
+use App\Models\TeamMember;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Get;
 use Filament\Forms\Components\Radio;
@@ -114,6 +115,10 @@ class QuickInscriptionResource extends Resource
         ]);
     }
 
+    public static function canViewAny(): bool
+    {
+    return auth()->user()?->role === 'treasurer';
+    }
 
     public static function table(Table $table): Table
     {

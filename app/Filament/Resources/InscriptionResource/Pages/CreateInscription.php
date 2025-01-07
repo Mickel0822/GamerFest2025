@@ -15,10 +15,12 @@ class CreateInscription extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
+     // Asignar el usuario actual
     // Extraer los miembros seleccionados
     $this->members = $data['members'] ?? [];
     unset($data['members']); // Remueve 'members' del array para evitar conflictos
-
+    $data['user_id'] = auth()->id();
+    $data['payment_method'] = 'comprobante';
     return $data; // Devuelve los datos restantes (sin duplicar la inscripción)
     }
 

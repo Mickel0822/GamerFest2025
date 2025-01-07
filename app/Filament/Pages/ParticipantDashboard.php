@@ -14,10 +14,28 @@ class ParticipantDashboard extends Page
     protected static string $view = 'filament.pages.participant-dashboard';
 
     // Controla quién puede ver esta página
-    public static function canViewAny(): bool
+    // Controla quién puede acceder a esta página
+    public static function isAccessible(): bool
     {
-        return auth()->user()?->role === 'treasurer' || auth()->user()?->role === 'admin';
+        // Solo permite acceso a usuarios con rol "participant"
+        return auth()->check() && auth()->user()?->role === 'participant';
     }
+
+    // Controla si la página debe aparecer en la navegación
+    public static function shouldRegisterNavigation(): bool
+    {
+        // Solo registra la página en la navegación para usuarios con rol "participant"
+        return auth()->check() && auth()->user()?->role === 'participant';
+    }
+
+     // Verificar acceso en el método `mount`
+     public function mount(): void
+     {
+         if (!auth()->check() || auth()->user()?->role !== 'participant') {
+             abort(403, 'No tienes permiso para acceder a esta página.');
+         }
+     }
+
 
     // Proporciona datos dinámicos a la vista del dashboard
     public function getViewData(): array
