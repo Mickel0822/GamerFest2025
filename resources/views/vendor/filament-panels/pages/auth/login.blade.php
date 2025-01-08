@@ -8,9 +8,6 @@
     <style>
         body {
             background-color: #dff2f9 !important; /* Fondo gris claro */
-            background-image: url('/images/logoGamerFest1.png');
-            background-repeat: repeat;
-            background-size: 150px 150px; /* Cambia a un tamaño más pequeño */
             font-family: 'Adventure Request' !important; /* Usar la fuente Adventure Request */
         }
 
