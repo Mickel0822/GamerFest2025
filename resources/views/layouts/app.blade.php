@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('images/LOGO.png') }}" type="image/png">
+    <!-- Opción adicional para iconos .ico -->
+    <!-- <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon"> -->
+
     <!-- Incluye estilos generados por Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js']) <!-- Agrega también el archivo app.js -->
     @stack('styles') <!-- Para agregar estilos adicionales -->
@@ -23,4 +28,3 @@
     </footer>
 </body>
 </html>
-
