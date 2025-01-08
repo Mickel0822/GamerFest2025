@@ -8,4 +8,12 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    resolve: {
+        alias: {
+            // Agregamos alias para evitar problemas con rutas de FullCalendar
+            '@fullcalendar/core': 'node_modules/@fullcalendar/core',
+            '@fullcalendar/daygrid': 'node_modules/@fullcalendar/daygrid',
+        },
+    },
 });
+
