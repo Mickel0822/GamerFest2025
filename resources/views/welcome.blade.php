@@ -1,195 +1,353 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>GAMERFEST</title>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAMERFEST</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Indie+Flower&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+        /* Fondo exclusivo para el contenido principal */
+.content-with-bg {
+    background: url('https://media.istockphoto.com/id/1420927953/es/v%C3%ADdeo/abstract-motion-fondo.jpg?s=640x640&k=20&c=MXaexTmjL5zdKA8TugAmX46vIi7fmxENlZWEjzzW1oo=') no-repeat center center fixed; /* Fondo fijo */
+    background-size: cover; /* Cubre todo el contenedor */
+    padding: 2rem 0; /* Espaciado interno */
+}
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-        
-        <!-- Styles -->
-        <style>
-            body {
-                margin: 0;
-                font-family: 'Roboto', sans-serif;
-                background-color: #00274D;
-                color: #ffffff;
-            }
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+    padding: 0.5rem 2rem;
+    color: #172857;
+    font-family: 'Indie Flower', cursive;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-            /* Header */
-            .header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                background-color: #001f3f;
-                padding: 1rem 2rem;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            }
+/* Título de las secciones */
+    h1.section-title {
+            text-align: center; /* Centra el texto */
+            font-family: 'Rockwell', cursive;
+            font-size: 2.5rem;
+            color: #111933;
+            margin-bottom: 1.5rem;
+        }
 
-            /* Logo */
-            .header-left .logo {
-                font-size: 2rem;
-                font-weight: bold;
-                color: #4C99E3;
-                text-transform: uppercase;
-                letter-spacing: 2px;
-            }
-
-            /* Login Button */
-            .header-right .login-button {
-                display: flex;
-                align-items: center;
-                text-decoration: none;
-                background-color: #4C99E3;
-                padding: 0.5rem 1rem;
-                border-radius: 8px;
-                transition: background-color 0.3s, transform 0.2s;
-            }
-
-            .header-right .login-button:hover {
-                background-color: #3779b1;
-                transform: scale(1.05);
-            }
-
-            /* Login Image */
-            .header-right .login-image {
-                width: 24px;
-                height: 24px;
-                margin-right: 8px;
-            }
-
-            .header-right span {
-                color: #ffffff;
-                font-weight: bold;
-                font-size: 1rem;
-            }
-
-            .center-logo {
-                text-align: center;
-                margin: 2rem 0;
-            }
-            .center-logo img {
-                max-width: 200px;
-            }
-            .games-section, .sponsors-section {
-                display: flex;
-                justify-content: center;
-                gap: 2rem;
-                margin: 2rem 0;
-            }
-            .box {
-                width: 150px;
-                height: 200px;
-                background-color: #0d88bf;
-                border-radius: 8px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            .box.large {
-                width: 250px;
-                height: 200px;
-            }
             .footer {
-                text-align: center;
-                padding: 2rem 0;
-                background-color: #c4cdd6;
-            }
-            .footer a {
-                margin: 0 1rem;
-                color: #ffffff;
-                text-decoration: none;
-                font-size: 1.5rem;
-            }
-            .contador {
-                width: 350px;
-                height: 220px;
-                background-color: #4C99E3;
-                border-radius: 12px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-                font-family: 'Poppins', Georgia, 'Times New Roman', Times, serif;
-                color: #ffffff;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                padding: 20px; 
-            }
-        </style>
-    </head>
-    <body>
-        <!-- Header -->
-        <div class="header">
-            <!-- Logo a la izquierda -->
-            <div class="header-left">
-                <span class="logo">GAMERFEST</span>
+            background-color: #ffffff; /* Fondo blanco */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem; /* Ajusta el espaciado interno */
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1); /* Sombra opcional para destacar */
+        }
+    /* Header estático */
+    .header {
+        background-color: #0b2261; /* Fondo azul oscuro */
+        text-align: center; /* Centrar el texto */
+        padding: 1rem; /* Espaciado interno */
+        font-family: 'Indie Flower', cursive; /* Tipo de letra personalizada */
+        font-size: 2.5rem; /* Tamaño del texto */
+        position: static; /* Header estático (por defecto) */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra opcional */
+    }
+    /* Título del Header */
+    .header h1 {
+        font-size: 2.0rem;
+        margin: 0;
+        color: #f0f0f0; /* Texto blanco */
+    }
+    .header img {
+            width: 80px; /* Tamaño más grande del logo */
+            height: 80px; /* Asegura proporción */
+    }
+
+        /* Botón Login */
+        .cta-buttonss {
+            font-family: 'Rockwell', cursive;
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #061925;
+            text-decoration: none;
+            transition: all 0.29s ease;
+            background-color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            /* Ajusta la distancia desde el borde derecho */
+        }
+
+        /* Fondo difuminado */
+        .background-image {
+
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        background: url('/images/LOGO.png') no-repeat center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 0;
+    }
+
+
+        /* Títulos personalizados */
+        h1 {
+            font-family: 'Rockwell', cursive; /* Fuente personalizada */
+            font-size: 2.5rem; /* Tamaño del texto */
+            color: #111933; /* Color del texto */
+            margin-bottom: 1rem;
+        }
+        /* Sección de Juegos y Patrocinadores */
+        .games-section,
+        .sponsors-section {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 3rem 1rem;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .box {
+            width: 200px; /* Ajusta el tamaño de las tarjetas */
+            background: rgba(38, 56, 73, 0.95); /* Fondo ligeramente oscuro */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7); /* Sombra para dar profundidad */
+            text-align: center;
+            padding: 1rem; /* Espacio interno */
+            color: #ffffff;
+            transition: transform 0.3s ease;
+        }
+
+        .box:hover {
+            transform: scale(1.05); /* Efecto de zoom al pasar el cursor */
+        }
+
+        .game-card img,
+        .box img {
+            width: 100%;
+            height: 120px; /* Ajusta la altura de la imagen */
+            object-fit: cover; /* Mantiene la proporción de la imagen */
+            border-radius: 10px 10px 0 0;
+        }
+
+        .game-card h3, .game-card p {
+            margin: 10px 0;
+            font-size: 1rem;
+        }
+
+        .game-buttons {
+            margin-top: 10px;
+        }
+
+        .game-buttons a {
+            display: inline-block;
+            margin: 5px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            color: #fff;
+            background-color: #7d93cf;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .game-buttons a:hover {
+            background-color: #5991b6;
+        }
+
+        /* Redes sociales en una fila */
+        .social-media {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-media img {
+            width: 50px;
+            height: 50px;
+            transition: transform 0.3s ease;
+        }
+
+        .social-media img:hover {
+            transform: scale(1.2);
+        }
+
+        /* Contador */
+        .contador {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 250px;
+            background: rgba(20, 63, 83, 0.9);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(243, 242, 242, 0.87);
+            text-align: center;
+            animation: fadeIn 2s ease;
+            font-family: 'Rockwell', cursive;
+            z-index: 2; /* Por encima del fondo difuminado */
+        }
+
+        .contador h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        #countdown {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #f3f1f5;
+        }
+        .logo{
+            width: 1px;
+            height: 1px;
+            transition: transorm 0.3s ease;
+        }
+
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <img src="/images/LOGO.png" alt="logo de la pagina">
+        <h1>GAMERFEST 2025</h1>
+        <div>
+            @if(Auth::check())
+                <!-- Usuario autenticado: Mostrar botón al panel -->
+                <a href="/admin" class="cta-buttonss">Panel</a>
+            @else
+                <!-- Usuario no autenticado: Mostrar botones de registro y login -->
+                <a href="/register" class="cta-buttonss">Registrarse</a>
+                <a href="/admin/login" class="cta-buttonss">Login</a>
+            @endif
+        </div>
+    </div>
+
+    <!-- Mostrar mensajes de éxito -->
+@if(session('success'))
+    <div class="alert alert-success" style="text-align: center; margin: 1rem auto; max-width: 800px; background-color: #d4edda; color: #155724; padding: 1rem; border-radius: 5px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        {{ session('success') }}
+    </div>
+@endif
+
+
+    <!-- Fondo difuminado -->
+
+    <!-- Contenido principal -->
+    <div class="content-with-bg">
+        <!-- Juegos Individuales -->
+        <h1 class="section-title">Juegos Individuales</h1>
+            <div class="games-section">
+                @foreach($games as $game)
+                    @if ($game->type === 'individual')
+                    <div class="box">
+                        <div class="game-card">
+                            <img src="{{ $game->image_url }}" alt="{{ $game->name }}">
+                            <h3>{{ $game->name }}</h3>
+                            <p>Precio: $3.00</p>
+                            <div class="game-buttons">
+                                <a href="/inscribirse/{{ $game->id }}">Inscribirse</a>
+                                <a href="#">Reglas</a>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                @endforeach
             </div>
 
-            <!-- Login con imagen a la derecha -->
-            <div class="header-right">
-                <a href="/admin" class="login-button">
-                    <img src="/images/login-icon.png" alt="Login" class="login-image">
-                    <span>LOGIN</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- Center Logo -->
-        <div class="center-logo">
-            <img src="/images/LOGO.png" alt="GAMERFEST 2025">
-        </div>
-
-        <!-- Games Section -->
+        <!-- Juegos Grupales -->
+        <h1 class="section-title">Juegos Grupales</h1>
         <div class="games-section">
-            <div class="box">Juego 9</div>
-            <div class="box">Juego 5</div>
-            <div class="box">Juego 1</div>
+            @foreach($games as $game)
+                @if ($game->type === 'group')
+                <div class="box">
+                    <div class="game-card">
+                        <img src="{{ $game->image_url }}" alt="{{ $game->name }}">
+                        <h3>{{ $game->name }}</h3>
+                        <p>Precio: $25.00</p>
+                        <div class="game-buttons">
+                            <a href="/inscribirse/{{ $game->id }}">Inscribirse</a>
+                            <a href="#">Reglas</a>
+                        </div>
+                    </div>
+                </div>
+                @endif
+            @endforeach
         </div>
 
-        <!-- Sponsors Section -->
+        <!-- Patrocinadores -->
+        <h1 class="section-title">Patrocinadores</h1>
         <div class="sponsors-section">
-            <div class="box">EXAMPLE</div>
-            <div class="box">EXAMPLE</div>
-            <div class="box">EXAMPLE</div>
-            <div class="box">EXAMPLE</div>
-            <div class="contador fixed bottom-4 right-4 p-6 mb-4 text-white rounded-lg shadow-lg" role="alert">
-                <div class="text-lg font-medium">¡Gamerfest está a punto de comenzar!</div>
-                <p class="mt-2 text-lg font-semibold">Tiempo restante:</p>
-                <div id="countdown" class="text-2xl font-bold">00:00:00</div>
-            </div>
+            @foreach($sponsors as $sponsor)
+                <div class="box">
+                    <div>
+                        <img src="{{ $sponsor->image_url }}" alt="{{ $sponsor->name }}">
+                        <h3>{{ $sponsor->name }}</h3>
+                    </div>
+                </div>
+            @endforeach
         </div>
+    </div>
+    </div>
+    <!-- Contador -->
+    <div class="contador">
+        <h2>¡Gamerfest está a punto de comenzar!</h2>
+        <div id="countdown">00d 00h 00m 00s</div>
+    </div>
 
-        <!-- Footer -->
-        <div class="footer">
-            <a href="#"><img src="/images/tuich.png" alt="Twitch" width="70" height="40"></a>
-            <a href="#"><img src="/images/feibu.png" alt="Facebook" width="40" height="40"></a>
-            <a href="#"><img src="/images/ig.png" alt="Instagram" width="40" height="40"></a>
+    <!-- Footer -->
+    <div class="footer">
+        <h1>Síguenos</h1>
+        <div class="social-media">
+            <a href="#"><img src="/images/feibu.png" alt="Facebook"></a>
+            <a href="#"><img src="/images/ig.png" alt="Instagram"></a>
         </div>
+    </div>
+      <!-- Script del Contador -->
+<script>
+    const eventDate = new Date("2025-12-20T10:00:00").getTime();
+    const countdownFunction = setInterval(function () {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
 
-        <!-- Script -->
-        <script>
-            // Configura la fecha y hora del evento (Gamerfest)
-            const eventDate = new Date("2024-12-20T10:00:00").getTime(); 
-        
-            // Actualiza el contador cada segundo
-            const countdownFunction = setInterval(function() {
-                const now = new Date().getTime();
-                const distance = eventDate - now;
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        // Actualizar el contenido del contador
+        document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
-                document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        // Verificar si la cuenta regresiva ha terminado
+        if (distance < 0) {
+            clearInterval(countdownFunction);
+            document.getElementById("countdown").innerHTML = "¡El evento ha comenzado!";
+        }
+    }, 1000);
+</script>
 
-                if (distance < 0) {
-                    clearInterval(countdownFunction);
-                    document.getElementById("countdown").innerHTML = "¡El evento ha comenzado!";
-                }
-            }, 1000);
-        </script>
-    </body>
+</body>
 </html>

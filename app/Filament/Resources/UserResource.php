@@ -54,7 +54,14 @@ class UserResource extends Resource
                     'treasurer' => 'Tesorero',
                     'participant' => 'Participante',
                 ])
-                ->required(),
+                ->required()
+                ->reactive()
+                ->afterStateUpdated(fn ($state, callable $set) => $set('game_id', null)), // Limpia juego al cambiar rol
+            Forms\Components\Select::make('game_id')
+                ->label('Juego Asignado (Coordinador)')
+                ->relationship('game', 'name')
+                ->visible(fn ($get) => $get('role') === 'coordinator') // Solo visible para coordinadores
+                ->nullable(),
             Forms\Components\TextInput::make('password')
                 ->label('Contraseña')
                 ->password()
@@ -83,6 +90,9 @@ class UserResource extends Resource
                         'primary' => 'treasurer',
                         'info' => 'participant',
                     ]),
+                Tables\Columns\TextColumn::make('game.name')
+                    ->label('Juego Coordinado')
+                    ->visible(fn ($record) => $record?->role === 'coordinator'), // Solo visible si es coordinador
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Creado')
                     ->dateTime(),
@@ -101,6 +111,11 @@ class UserResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ]);
+    }
+
+    public static function canViewAny(): bool
+    {
+    return auth()->user()?->role === 'admin';
     }
 
 

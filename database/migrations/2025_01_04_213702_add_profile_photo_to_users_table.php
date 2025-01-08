@@ -9,17 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('first_name');
+            $table->string('profile_photo')->nullable(); // Agrega el campo para la URL de la foto de perfil
         });
     }
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('first_name')->nullable();
+            $table->dropColumn('profile_photo'); // Elimina el campo si se revierte la migración
         });
     }
 };
+
