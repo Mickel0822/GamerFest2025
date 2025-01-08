@@ -21,6 +21,9 @@
     <footer class="bg-gray-800 text-white text-center py-4">
         <p>&copy; {{ date('Y') }} - Todos los derechos reservados.</p>
     </footer>
+
+    <!-- Cargar scripts adicionales -->
+    @stack('scripts') <!-- Esto se asegura de cargar los scripts adicionales cuando se agregan -->
 </body>
 </html>
 

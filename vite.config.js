@@ -15,5 +15,10 @@ export default defineConfig({
             '@fullcalendar/daygrid': 'node_modules/@fullcalendar/daygrid',
         },
     },
+
+    build: {
+        outDir: 'public_html/build',  // Asegúrate de que la salida se dirige a public_html/build
+        manifest: true,  // Asegura que se genere el manifest
+    }
 });
 
