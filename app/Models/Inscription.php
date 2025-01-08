@@ -56,7 +56,18 @@ class Inscription extends Model
     public function getPaymentReceiptUrlAttribute()
     {
         return $this->payment_receipt
-            ? Storage::disk('public')->url($this->payment_receipt)
+            ? Storage::disk('s3')->url($this->payment_receipt)
             : null;
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($inscription) {
+            if ($inscription->payment_receipt) {
+                Storage::disk('s3')->delete($inscription->payment_receipt);
+            }
+        });
+    }
+
 }

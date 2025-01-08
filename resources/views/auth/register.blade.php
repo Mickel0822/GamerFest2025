@@ -45,7 +45,7 @@
     </style>
 </head>
 <body>
-
+    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data" autocomplete="off">
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -90,6 +90,14 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
+                            <!-- Imagen de Perfil -->
+                            <div class="mb-3">
+                                <label for="profile_photo" class="form-label">Foto de Perfil (Opcional)</label>
+                                <input type="file" name="profile_photo" id="profile_photo" class="form-control" accept="image/*">
+                                @error('profile_photo')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
                             <!-- Contraseña -->
                             <div class="mb-3">
                                 <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña" autocomplete="new-password" required>
@@ -101,6 +109,7 @@
                             <div class="mb-3">
                                 <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Repetir Contraseña" required>
                             </div>
+
                             <!-- Botón -->
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary">Registrarse</button>
@@ -126,5 +135,6 @@
             </div>
         </div>
     </div>
+    </form>
 </body>
 </html>

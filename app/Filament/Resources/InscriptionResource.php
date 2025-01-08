@@ -20,6 +20,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use App\Models\TeamMember;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -95,11 +97,13 @@ class InscriptionResource extends Resource
             FileUpload::make('payment_receipt')
                 ->label('Comprobante de Pago (JPG)')
                 ->image()
-                ->directory('receipts') // Guarda en storage/app/public/receipts
-                ->visibility('public') // Hace que sea accesible públicamente
+                ->disk('s3')
+                ->directory('inscripcion')
+                ->visibility('private')
                 ->downloadable()
-                ->required()
-                ->default(fn ($record) => $record ? asset('storage/' . $record->payment_receipt) : null),
+                ->required(),
+
+
         ]);
     }
 
@@ -127,11 +131,17 @@ class InscriptionResource extends Resource
                     'warning' => 'pendiente',
                 ]),
 
-            TextColumn::make('payment_receipt')
+                TextColumn::make('payment_receipt')
                 ->label('Comprobante')
-                ->formatStateUsing(fn () => 'Ver Comprobante') // El texto que se mostrará
-                ->url(fn ($record) => asset('storage/' . $record->payment_receipt)) // URL de la imagen
-                ->openUrlInNewTab(), // Abre el enlace en una nueva pestaña
+                ->formatStateUsing(fn () => 'Ver Comprobante')
+                ->url(fn ($record) => $record->payment_receipt
+                    ? Storage::disk('s3')->url($record->payment_receipt)
+                    : null
+                )
+                ->openUrlInNewTab(),
+
+
+
         ])
         ->actions([
             Tables\Actions\DeleteAction::make(),

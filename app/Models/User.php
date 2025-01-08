@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Solutionforest\FilamentEmail2fa\Interfaces\RequireTwoFALogin;
 use Solutionforest\FilamentEmail2fa\Trait\HasTwoFALogin;
 
@@ -25,6 +26,7 @@ class User extends Authenticatable implements RequireTwoFALogin
         'password',
         'university',
         'role',
+        'profile_photo',
     ];
 
 
@@ -49,6 +51,14 @@ class User extends Authenticatable implements RequireTwoFALogin
     {
         return $this->role === 'coordinator';
     }
+
+    public function getAvatarUrlAttribute()
+    {
+        return $this->profile_photo
+            ? Storage::disk('s3')->url($this->profile_photo) // Cambia a 'public' si usas almacenamiento local
+            : 'https://th.bing.com/th/id/OIP.exLShyIcCt9bTvzfMmwXjwHaHa?rs=1&pid=ImgDetMain'; // URL de una imagen predeterminada
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.
