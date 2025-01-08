@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAMERFEST</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Indie+Flower&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ asset('images/LOGO.png') }}" type="image/png">
     <style>
         body {
             margin: 0;
@@ -27,7 +27,7 @@
     background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
     padding: 0.5rem 2rem;
     color: #172857;
-    font-family: 'Indie Flower', cursive;
+    font-family: 'Rockwell', cursive;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -40,21 +40,62 @@
             margin-bottom: 1.5rem;
         }
 
-            .footer {
-            background-color: #ffffff; /* Fondo blanco */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem; /* Ajusta el espaciado interno */
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1); /* Sombra opcional para destacar */
-        }
+        .footer {
+    background-color: #ffffff; /* Fondo blanco */
+    display: flex;
+    flex-direction: row; /* Coloca las secciones en fila */
+    justify-content: space-between; /* Espacio uniforme entre secciones */
+    align-items: center; /* Centra verticalmente */
+    padding: 2rem; /* Espaciado interno */
+}
+
+/* Redes sociales */
+.footer .social-media {
+    font-family: 'Rockwell', cursive;
+    text-align: center;
+    color: #304470;
+    margin-right: -50px; /* Ajusta la distancia desde el borde derecho */
+    display: flex;
+    gap: 1rem; /* Espaciado entre iconos */
+    font-size: 1.4rem;
+    
+}
+
+.footer .social-media img {
+    width: 60px;
+    height: 60px;
+    transition: transform 0.3s ease; /* Efecto de hover */
+}
+
+.footer .social-media img:hover {
+    transform: scale(1.2); /* Aumenta ligeramente al pasar el cursor */
+}
+
+/* Derechos de autor */
+.footer-text {
+    font-size: 1.2rem;
+            font-family: 'Rockwell', cursive;
+            text-align: center;
+            color: #304470;
+            margin-right: -50px; /* Ajusta la distancia desde el borde derecho */
+}
+
+/* Creadores */
+.footer .creators {
+    font-size: 1.0rem;
+    font-family: 'Rockwell', cursive;
+    text-align: right;
+    color: #304470;
+    text-align: left; /* Alinea el texto hacia la izquierda */
+    margin-right: 100px; /* Ajusta la distancia desde el borde derecho */
+}
+
     /* Header estático */
     .header {
         background-color: #0b2261; /* Fondo azul oscuro */
         text-align: center; /* Centrar el texto */
         padding: 1rem; /* Espaciado interno */
-        font-family: 'Indie Flower', cursive; /* Tipo de letra personalizada */
+        font-family: 'Rockwell', cursive; /* Tipo de letra personalizada */
         font-size: 2.5rem; /* Tamaño del texto */
         position: static; /* Header estático (por defecto) */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra opcional */
@@ -73,7 +114,7 @@
         /* Botón Login */
         .cta-buttonss {
             font-family: 'Rockwell', cursive;
-            font-size: 1.4rem;
+            font-size: 0.9rem;
             font-weight: bold;
             text-transform: uppercase;
             color: #061925;
@@ -81,7 +122,7 @@
             transition: all 0.29s ease;
             background-color: #ffffff;
             padding: 0.5rem 1rem;
-            border-radius: 5px;
+            border-radius: 3px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
             position: relative;
             /* Ajusta la distancia desde el borde derecho */
@@ -191,19 +232,21 @@
 
         /* Contador */
         .contador {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 250px;
-            background: rgba(20, 63, 83, 0.9);
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(243, 242, 242, 0.87);
-            text-align: center;
-            animation: fadeIn 2s ease;
-            font-family: 'Rockwell', cursive;
-            z-index: 2; /* Por encima del fondo difuminado */
-        }
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 250px;
+    background: rgba(20, 63, 83, 0.9);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(243, 242, 242, 0.87);
+    text-align: center;
+    animation: fadeIn 2s ease;
+    font-family: 'Rockwell', cursive;
+    z-index: 2; /* Por encima del fondo difuminado */
+    transition: bottom 0.3s ease; /* Transición suave al ajustar la posición */
+}
+
 
         .contador h2 {
             font-size: 1.5rem;
@@ -220,6 +263,127 @@
             height: 1px;
             transition: transorm 0.3s ease;
         }
+                /* Menú principal */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0b2261; /* Color de fondo del menú */
+            padding: 0.5rem 1rem;
+            color: white;
+            position: relative;
+            font-family: 'Indie Flower', cursive; /* Tipo de letra personalizada */
+            font-size: 2.5rem; /* Tamaño del texto */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra opcional */
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #f0f0f0; /* Texto blanco */
+        }
+        .navbar img {
+            width: 80px; /* Tamaño más grande del logo */
+            height: 80px; /* Asegura proporción */
+        }
+
+        /* Menú de enlaces */
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-family: 'Rockwell', cursive;
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #061925;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Estilos para el menú hamburguesa */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            border-radius: 3px;
+        }
+
+        /* Menú desplegable (por defecto oculto) */
+        .nav-links-mobile {
+            display: none;
+            flex-direction: column;
+            gap: 1rem;
+            background-color: #0b2261;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            left: 0;
+            padding: 1rem;
+        }
+        /* Mostrar el menú desplegable cuando esté activo */
+        .nav-links-mobile.active {
+            display: flex;
+        }
+
+        /* Menú en pantallas grandes (768px en adelante) */
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex; /* Menú principal visible en pantallas grandes */
+            }
+
+            .nav-links-mobile {
+                display: none; /* Oculta el menú móvil completamente */
+            }
+        }
+
+        .nav-links-mobile a {
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-family: 'Rockwell', cursive;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: white; /* Cambiar color del texto a blanco para mejor visibilidad */
+            background-color: transparent; /* Elimina el fondo blanco */
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        .nav-links-mobile a:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Efecto hover más limpio */
+        }
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Oculta los enlaces en dispositivos pequeños */
+            }
+
+            .hamburger {
+                display: flex; /* Muestra el botón de hamburguesa */
+            }
+        }
+
 
 
         @keyframes fadeIn {
@@ -231,17 +395,34 @@
 </head>
 <body>
     <!-- Header -->
-    <div class="header">
+    <div class="navbar">
         <img src="/images/LOGO.png" alt="logo de la pagina">
         <h1>GAMERFEST 2025</h1>
-        <div>
+        <div  class="nav-links">
             @if(Auth::check())
                 <!-- Usuario autenticado: Mostrar botón al panel -->
                 <a href="/admin" class="cta-buttonss">Panel</a>
             @else
                 <!-- Usuario no autenticado: Mostrar botones de registro y login -->
                 <a href="/register" class="cta-buttonss">Registrarse</a>
-                <a href="/admin/login" class="cta-buttonss">Login</a>
+                <a href="/admin/login" class="cta-buttonss">Iniciar Sesion</a>
+            @endif
+        </div>
+        <!-- Botón de menú hamburguesa -->
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <!-- Menú móvil -->
+        <div class="nav-links-mobile">
+            @if(Auth::check())
+            <!-- Usuario autenticado: Mostrar botón al panel -->
+            <a href="/admin" class="cta-buttonss">Panel</a>
+            @else
+            <!-- Usuario no autenticado: Mostrar botones de registro y login -->
+            <a href="/register" class="cta-buttonss">Registrarse</a>
+            <a href="/admin/login" class="cta-buttonss">Iniciar Sesion</a>
             @endif
         </div>
     </div>
@@ -319,12 +500,32 @@
     </div>
 
     <!-- Footer -->
-    <div class="footer">
-        <h1>Síguenos</h1>
-        <div class="social-media">
-            <a href="#"><img src="/images/feibu.png" alt="Facebook"></a>
-            <a href="#"><img src="/images/ig.png" alt="Instagram"></a>
-        </div>
+<div class="footer">
+    <!-- Redes sociales -->
+    <div class="social-media">
+        <p>Síguenos</p>
+        <a href="#"><img src="/images/feibu.png" alt="Facebook"></a>
+        <a href="#"><img src="/images/ig.png" alt="Instagram"></a>
+    </div>
+
+    <!-- Derechos de autor -->
+        <div class="footer-text mt-3">
+        <p>© 2025 GamerFest. Todos los derechos reservados.</p>
+        <p><a href="#" class="text-decoration-none">Política de Privacidad</a> | <a href="#" class="text-decoration-none">Términos y Condiciones</a></p>
+    </div>
+
+    <!-- Creadores -->
+    <div class="creators">
+        <a href="#">Creador por:</a>
+        
+        <p>Mickel Aragón </p>
+        <p>Cristian Bayas </p>
+        <p>Nayely Camalli  </p>
+        <p>Damarys León  </p>
+    </div>
+</div>
+
+    
     </div>
       <!-- Script del Contador -->
 <script>
@@ -348,6 +549,55 @@
         }
     }, 1000);
 </script>
+<script>
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.querySelector('.nav-links-mobile');
+
+    // Alternar el menú desplegable al hacer clic en el ícono de hamburguesa
+    hamburger.addEventListener('click', () => {
+        mobileMenu.classList.toggle('active');
+    });
+
+    // Ocultar el menú móvil si la pantalla es grande
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            mobileMenu.classList.remove('active');
+        }
+    });
+
+    // Asegurar que el menú móvil esté oculto al cargar la página en pantallas grandes
+    window.addEventListener('load', () => {
+        if (window.innerWidth > 768) {
+            mobileMenu.classList.remove('active');
+        }
+    });
+</script>
+<script>
+    // Función para ajustar la posición del contador
+    function adjustCounterPosition() {
+        const footer = document.querySelector('.footer');
+        const contador = document.querySelector('.contador');
+
+        if (footer && contador) {
+            const footerRect = footer.getBoundingClientRect();
+            const contadorRect = contador.getBoundingClientRect();
+
+            // Si el contador se superpone al footer
+            if (contadorRect.bottom > footerRect.top) {
+                const overlap = contadorRect.bottom - footerRect.top;
+                contador.style.bottom = `${20 + overlap}px`; // Ajusta la posición del contador
+            } else {
+                contador.style.bottom = '20px'; // Posición normal del contador
+            }
+        }
+    }
+
+    // Ajustar posición del contador al cargar y al cambiar tamaño/scroll
+    window.addEventListener('load', adjustCounterPosition);
+    window.addEventListener('resize', adjustCounterPosition);
+    window.addEventListener('scroll', adjustCounterPosition);
+</script>
+
 
 </body>
 </html>

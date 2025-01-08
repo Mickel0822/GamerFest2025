@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->favicon(asset('images/LOGO.png')) // Ruta al favicon
             ->login()
             ->colors([
                 'primary' => Color::Amber,

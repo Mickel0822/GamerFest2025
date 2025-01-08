@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro | GamerFest2025</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="{{ asset('images/LOGO.png') }}" type="image/png">
 
     <!-- Incluir la fuente Adventure ReQuest -->
     <link href="https://db.onlinewebfonts.com/c/1bdf0533e00276037a4d0e492b42afcd?family=Adventure+ReQuest" rel="stylesheet">
@@ -117,15 +118,7 @@
                         </form>
                     </div>
                 </div>
-                <!-- Sección de leyendas -->
-                <div class="text-center mt-4">
-                    <h5>Nuestros Patrocinadores</h5>
-                    <div class="sponsors d-flex justify-content-center flex-wrap">
-                        <img src="/images/sponsorFake1.png" alt="Patrocinador 1">
-                        <img src="/images/sponsorFake2.png" alt="Patrocinador 2">
-                        <img src="/images/sponsorFake3.png" alt="Patrocinador 3">
-                    </div>
-                </div>
+               
 
                 <!-- Derechos Reservados -->
                 <div class="footer-text mt-3">

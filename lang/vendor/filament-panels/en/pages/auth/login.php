@@ -2,9 +2,9 @@
 
 return [
 
-    'title' => 'Login',
+    'title' => 'Ingreso',
 
-    'heading' => 'Sign in',
+    'heading' => 'Ingresar',
 
     'actions' => [
 
