@@ -6,12 +6,18 @@ use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\Auth\LoginController;
 
 Route::get('/', [GameController::class, 'index'])->name('home');
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
+
+
+
+
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::post('/upload-receipt', [FileUploadController::class, 'uploadReceipt'])->name('upload-receipt');

@@ -58,7 +58,7 @@
     display: flex;
     gap: 1rem; /* Espaciado entre iconos */
     font-size: 1.4rem;
-    
+
 }
 
 .footer .social-media img {
@@ -384,6 +384,139 @@
             }
         }
 
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .dropdown-toggle img.avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .dropdown-toggle span.nombre {
+            font-size: 1.8rem;
+        }
+
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            z-index: 1000;
+            min-width: 200px;
+        }
+
+        .dropdown-menu a,
+        .dropdown-item-form {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #333;
+            font-family: 'Rockwell', cursive;
+            font-size: 1rem;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f5f5f5;
+
+        }
+
+        .dropdown-item-button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            text-align: left;
+        }
+
+        .dropdown-item-button:hover {
+            background-color: #f5f5f5;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        /* Estilos para el avatar y el menú desplegable móvil */
+        .dropdown-mobile {
+            position: relative;
+            display: block;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .dropdown-toggle-mobile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .dropdown-toggle-mobile img.avatar-mobile {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .dropdown-toggle-mobile span.nombre-mobil {
+            font-size: 1.4rem;
+        }
+
+        .dropdown-menu-mobile {
+            display: none;
+            position: static;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            z-index: 1000;
+            margin-top: 1rem;
+            padding: 1rem;
+        }
+
+        .dropdown-menu-mobile a,
+        .dropdown-item-form-mobile {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #333;
+            font-family: 'Rockwell', cursive;
+            font-size: 1rem;
+        }
+
+        .dropdown-menu-mobile a:hover {
+            background-color: #f5f5f5;
+        }
+
+        .dropdown-item-button-mobile {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            text-align: left;
+        }
+
+        .dropdown-item-button-mobile:hover {
+            background-color: #f5f5f5;
+        }
+
+        .dropdown-mobile.active .dropdown-menu-mobile {
+            display: block;
+        }
+
 
 
         @keyframes fadeIn {
@@ -400,8 +533,20 @@
         <h1>GAMERFEST 2025</h1>
         <div  class="nav-links">
             @if(Auth::check())
-                <!-- Usuario autenticado: Mostrar botón al panel -->
-                <a href="/admin" class="cta-buttonss">Panel</a>
+                 <!-- Usuario autenticado: Menú desplegable -->
+            <div class="dropdown">
+                <div class="dropdown-toggle" onclick="toggleDropdown()">
+                    <span class="nombre">{{ Auth::user()->name }}</span>
+                    <img src="{{ Auth::user()->avatar_url }}" alt="Foto de perfil" class="avatar">
+                </div>
+                <div class="dropdown-menu">
+                    <a href="/admin/dashboard-participante" class="dropdown-item">Revisar mi perfil</a>
+                    <form action="/logout" method="POST" class="dropdown-item-form">
+                        @csrf
+                        <button type="submit" class="dropdown-item-button">Cerrar sesión</button>
+                    </form>
+                </div>
+            </div>
             @else
                 <!-- Usuario no autenticado: Mostrar botones de registro y login -->
                 <a href="/register" class="cta-buttonss">Registrarse</a>
@@ -417,12 +562,24 @@
         <!-- Menú móvil -->
         <div class="nav-links-mobile">
             @if(Auth::check())
-            <!-- Usuario autenticado: Mostrar botón al panel -->
-            <a href="/admin" class="cta-buttonss">Panel</a>
+                <!-- Usuario autenticado: Menú desplegable -->
+                <div class="dropdown-mobile">
+                    <div class="dropdown-toggle-mobile" onclick="toggleDropdownMobile()">
+                        <span class="nombre-mobil">{{ Auth::user()->name }}</span>
+                        <img src="{{ Auth::user()->avatar_url }}" alt="Foto de perfil" class="avatar-mobile">
+                    </div>
+                    <div class="dropdown-menu-mobile">
+                        <a href="/profile" class="dropdown-item-mobile">Revisar mi perfil</a>
+                        <form action="{{ route('logout') }}" method="POST" class="dropdown-item-form-mobile">
+                            @csrf
+                            <button type="submit" class="dropdown-item-button-mobile">Cerrar sesión</button>
+                        </form>
+                    </div>
+                </div>
             @else
-            <!-- Usuario no autenticado: Mostrar botones de registro y login -->
-            <a href="/register" class="cta-buttonss">Registrarse</a>
-            <a href="/admin/login" class="cta-buttonss">Iniciar Sesion</a>
+                <!-- Usuario no autenticado: Botones de registro y login -->
+                <a href="/register" class="cta-buttonss">Registrarse</a>
+                <a href="/admin/login" class="cta-buttonss">Iniciar Sesión</a>
             @endif
         </div>
     </div>
@@ -517,7 +674,7 @@
     <!-- Creadores -->
     <div class="creators">
         <a href="#">Creador por:</a>
-        
+
         <p>Mickel Aragón </p>
         <p>Cristian Bayas </p>
         <p>Nayely Camalli  </p>
@@ -525,7 +682,7 @@
     </div>
 </div>
 
-    
+
     </div>
       <!-- Script del Contador -->
 <script>
@@ -597,6 +754,23 @@
     window.addEventListener('resize', adjustCounterPosition);
     window.addEventListener('scroll', adjustCounterPosition);
 </script>
+<script>
+    function toggleDropdownMobile() {
+        const dropdownMenu = document.querySelector('.dropdown-menu-mobile');
+        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    window.addEventListener('click', (e) => {
+        const dropdown = document.querySelector('.dropdown-mobile');
+        const dropdownMenu = document.querySelector('.dropdown-menu-mobile');
+
+        if (!dropdown.contains(e.target)) {
+            dropdownMenu.style.display = 'none';
+        }
+    });
+</script>
+
+
 
 
 </body>
