@@ -141,10 +141,9 @@ class InscriptionResource extends Resource
                 ->openUrlInNewTab(),
 
 
-
         ])
         ->actions([
-            Tables\Actions\DeleteAction::make(),
+
         ]);
     }
 
@@ -167,7 +166,6 @@ class InscriptionResource extends Resource
         return [
             'index' => Pages\ListInscriptions::route('/'),
             'create' => Pages\CreateInscription::route('/create'),
-            'edit' => Pages\EditInscription::route('/{record}/edit'),
         ];
     }
 }
