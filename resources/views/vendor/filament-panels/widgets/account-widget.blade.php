@@ -19,6 +19,25 @@
                 </p>
             </div>
 
+            <!-- Botón adicional: Volver al Inicio -->
+            <form
+                action="/"
+                method="get"
+                class="my-auto"
+            >
+                <x-filament::button
+                    color="gray"
+                    icon="heroicon-o-home"
+                    icon-alias="panels::widgets.account.home-button"
+                    labeled-from="sm"
+                    tag="button"
+                    type="submit"
+                >
+                    Volver al Inicio
+                </x-filament::button>
+            </form>
+
+            <!-- Botón: Salir -->
             <form
                 action="{{ filament()->getLogoutUrl() }}"
                 method="post"

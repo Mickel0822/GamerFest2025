@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Section;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class InscriptionVerificationResource extends Resource
 {
@@ -35,36 +36,43 @@ class InscriptionVerificationResource extends Resource
         return $form->schema([
             //Sección: Datos del Participante
             Section::make('Datos del Participante')
-                ->schema([
-                    TextInput::make('user_id')
-                        ->label('Participante')
-                        ->default(fn ($record) => $record->user?->name)
-                        ->disabled(),
+            ->schema([
+                Select::make('user_id')
+                    ->label('Participante')
+                    ->relationship('user', 'name') // Carga la relación y muestra el nombre del usuario
+                    ->disabled(), // Deshabilita el campo para que no sea editable
 
-                    TextInput::make('game_id')
-                        ->label('Juego')
-                        ->default(fn ($record) => $record->game?->name)
-                        ->disabled(),
+                Select::make('game_id')
+                    ->label('Juego')
+                    ->relationship('game', 'name') // Carga la relación y muestra el nombre del juego
+                    ->disabled(), // Deshabilita el campo para que no sea editable
 
-                    TextInput::make('cost')
-                        ->label('Costo')
-                        ->disabled(),
-                ])
-                ->columnSpan('full') // Ocupa todo el ancho
-                , // Encabezado de la sección
+                TextInput::make('cost')
+                    ->label('Costo')
+                    ->default(fn ($record) => $record?->cost) // Obtiene el costo
+                    ->disabled(),
+            ])
+            ->columnSpan('full'),
 
-            // Sección: Comprobante de Pago
            // Sección: Comprobante de Pago
            Section::make('Comprobante de Pago')
-                ->schema([
-                    Forms\Components\ViewField::make('payment_receipt_preview')
-                        ->view('components.image-preview')
-                        ->viewData([
-                            'image_url' => request()->route()->parameter('record')
-                                ? asset('storage/' . Inscription::find(request()->route()->parameter('record'))?->payment_receipt ?? '')
-                                : '',
-                        ]),
-                ]),
+            ->schema([
+                // Campo del número de comprobante
+                TextInput::make('receipt_number')
+                    ->label('Número de Comprobante')
+                    ->default(fn ($record) => $record?->receipt_number) // Muestra el valor actual
+                    ->disabled(),
+
+                Forms\Components\ViewField::make('payment_receipt_preview')
+                    ->view('components.image-preview') // La vista personalizada que usas
+                    ->viewData([
+                        'image_url' => request()->route()->parameter('record')
+                            ? (Inscription::find(request()->route()->parameter('record'))?->payment_receipt
+                                ? Storage::disk('s3')->url(Inscription::find(request()->route()->parameter('record'))?->payment_receipt)
+                                : null)
+                            : null,
+                    ]),
+            ]),
 
             // Campo: Estado del Pago
             Select::make('status')
@@ -93,11 +101,14 @@ class InscriptionVerificationResource extends Resource
                     'success' => 'verificado',
                     'danger' => 'rechazado',
                 ]),
-                TextColumn::make('payment_receipt')
-                    ->label('Comprobante')
-                    ->formatStateUsing(fn () => 'Ver Comprobante') // El texto que se mostrará
-                    ->url(fn ($record) => asset('storage/' . $record->payment_receipt)) // URL de la imagen
-                    ->openUrlInNewTab(), // Abre el enlace en una nueva pestaña
+                ImageColumn::make('payment_receipt')
+                ->label('Comprobante de Pago')
+                ->disk('s3') // Indica que se usa S3
+                ->getStateUsing(fn ($record) => $record->payment_receipt
+                    ? Storage::disk('s3')->url($record->payment_receipt)
+                    : null
+                )
+                ->size(50), // Abre el enlace en una nueva pestaña
         ])
         ->actions([
             Tables\Actions\EditAction::make()->label('Verificar Pago'),
@@ -123,7 +134,7 @@ class InscriptionVerificationResource extends Resource
 
     public static function canViewAny(): bool
     {
-    return auth()->user()?->role === 'treasurer';
+    return auth()->user()?->role === 'treasurer' or auth()->user()?->role === 'admin';
     }
 
 

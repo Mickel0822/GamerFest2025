@@ -15,7 +15,9 @@ class Inscription extends Model
         'status',
         'payment_method',
         'payment_receipt',
-        'round_id', // Relación con rondas
+        'round_id',
+        'is_eliminated',
+        'receipt_number',
     ];
 
     const STATUS_PENDING = 'pendiente';
@@ -35,6 +37,14 @@ class Inscription extends Model
     public function game()
     {
         return $this->belongsTo(Game::class);
+    }
+
+    /**
+     * Filtrar inscripciones no eliminadas.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_eliminated', false);
     }
 
     /**
