@@ -19,6 +19,7 @@ class RegisterController extends Controller
         // Validar los datos
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'university' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
@@ -36,6 +37,7 @@ class RegisterController extends Controller
         // Crear el usuario con la ruta simplificada
         User::create([
             'name' => $validated['name'],
+            'last_name' => $validated['last_name'],
             'university' => $validated['university'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
