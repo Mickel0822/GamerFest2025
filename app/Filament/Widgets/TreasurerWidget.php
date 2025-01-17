@@ -9,6 +9,8 @@ class TreasurerWidget extends Widget
 {
     protected static string $view = 'filament.widgets.treasurer-widget';
 
+    // Hacer que el widget ocupe toda la fila
+
     public $totalInscriptions;
     public $verified;
     public $pending;
@@ -37,7 +39,7 @@ class TreasurerWidget extends Widget
 
         $this->totalRevenue = Inscription::where('status', Inscription::STATUS_VERIFIED)->sum('cost');
 
-        $this->goal = 5000; // Puedes ajustar este valor
+        $this->goal = 500; // Puedes ajustar este valor
         $this->progress = $this->goal > 0
             ? round(($this->totalRevenue / $this->goal) * 100, 2)
             : 0;

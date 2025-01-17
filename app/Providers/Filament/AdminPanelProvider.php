@@ -19,8 +19,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Widgets\CustomAccountWidget;
-
-
+use App\Filament\Widgets\TreasurerWidget;
 use Filament\Navigation\MenuItem;
 
 use PHPUnit\Framework\Constraint\IsTrue;

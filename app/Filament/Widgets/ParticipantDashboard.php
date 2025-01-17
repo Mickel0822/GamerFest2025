@@ -13,7 +13,7 @@ class ParticipantDashboard extends Widget
     }
 
     protected static string $view = 'filament.widgets.participant-dashboard';
-
+    protected int|string|array $columnSpan = 'full'; // Ocupa toda la fila
     public $pending = [];
     public $verified = [];
     public $rejected = [];

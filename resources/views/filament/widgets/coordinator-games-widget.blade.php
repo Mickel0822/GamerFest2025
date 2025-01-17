@@ -1,64 +1,72 @@
 <x-filament::widget>
-    <x-filament::card>
+    <x-filament::card class="bg-gray-50 dark:bg-gray-900 shadow-lg p-6">
         @php
-        
             // Obtener el usuario autenticado
             $user = \Illuminate\Support\Facades\Auth::user();
-            $games = null;
+            $game = null;
             $message = null;
 
             if (!$user) {
                 $message = 'No se pudo identificar al usuario logueado.';
             } else {
-                // Consultar los juegos asignados al coordinador
-                $games = \App\Models\Game::where('coordinator_id', $user->id)
+                // Consultar el único juego asignado al coordinador
+                $game = \App\Models\Game::where('coordinator_id', $user->id)
                     ->with('inscriptions.user')
-                    ->get();
+                    ->first();
 
-                if ($games->isEmpty()) {
-                    $message = 'No se te han asignado juegos.';
+                if (!$game) {
+                    $message = 'No se te ha asignado ningún juego.';
                 }
             }
         @endphp
 
-        {{-- Verifica si hay un mensaje o los juegos están definidos --}}
+        {{-- Título del widget --}}
+        <h2 class="text-2xl font-extrabold text-gray-900 dark:text-gray-100 mb-6 text-center">
+            Juego Asignado
+        </h2>
+
+        {{-- Mostrar mensaje si no hay juego asignado --}}
         @if ($message)
-            <p class="text-gray-500">{{ $message }}</p>
-        @elseif ($games && $games->isNotEmpty())
-            <h2 class="text-lg font-bold mb-4">Juego Asignado</h2>
-            <div class="grid grid-cols-1 gap-6">
-                @foreach ($games as $game)
-                    <div class="bg-gray-100 p-4 rounded-lg shadow">
-                        {{-- Imagen del juego y nombre arriba --}}
-                        <div class="text-center">
-                            @if ($game->image_url)
-                                <h3 class="text-lg font-bold mb-2">{{ $game->name }}</h3>
-                                <img src="{{ $game->image_url }}" alt="{{ $game->name }}" class="w-32 h-32 object-cover rounded-lg shadow-md mx-auto mb-2">
-                            @else
-                                <h3 class="text-lg font-bold mb-2">{{ $game->name }}</h3>
-                                <p class="text-gray-500">Sin imagen</p>
-                            @endif
-
-                            {{-- Detalles debajo de la imagen --}}
-                            <div class="text-left mt-4">
-                                <p><strong>Lugar:</strong> {{ $game->location ?? 'No especificado' }}</p>
-                                <p><strong>Reglas:</strong> {{ $game->rules ?? 'No especificadas' }}</p>
-                                <ul class="list-disc list-inside">
-                                    @foreach ($game->inscriptions as $inscription)
-                                        <li>{{ $inscription->team_name ?? ($inscription->user->name ?? 'Desconocido') }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
+            <p class="text-center text-gray-600 dark:text-gray-400">{{ $message }}</p>
         @else
-            <p class="text-gray-500">No tienes ningun juego asignado.</p>
-        @endif
+            {{-- Mostrar información del juego asignado --}}
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                {{-- Imagen del juego o mensaje alternativo --}}
+                <div class="text-center mb-6">
+                    @if ($game->image_url)
+                        <img src="{{ $game->image_url }}" alt="{{ $game->name }}"
+                             class="w-48 h-48 object-cover rounded-lg shadow-lg mx-auto">
+                    @else
+                        <div class="w-48 h-48 flex items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-lg shadow-md">
+                            <p class="text-gray-500 dark:text-gray-400">Sin Imagen</p>
+                        </div>
+                    @endif
+                </div>
 
-        {{-- Mostrar información del usuario autenticado --}}
-        @if ($user)
+                {{-- Información del juego --}}
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white text-center mb-4">{{ $game->name }}</h3>
+
+                <div class="text-left space-y-4">
+                    <p class="text-gray-800 dark:text-gray-300">
+                        <strong class="font-semibold text-gray-900 dark:text-white">Lugar:</strong>
+                        {{ $game->location ?? 'No especificado' }}
+                    </p>
+                    <p class="text-gray-800 dark:text-gray-300">
+                        <strong class="font-semibold text-gray-900 dark:text-white">Reglas:</strong>
+                        {{ $game->rules ?? 'No especificadas' }}
+                    </p>
+                    <p class="text-gray-800 dark:text-gray-300">
+                        <strong class="font-semibold text-gray-900 dark:text-white">Fecha de Inicio:</strong>
+                        {{ $game->start_time ? \Carbon\Carbon::parse($game->start_time)->format('d/m/Y') : 'No especificada' }}
+                    </p>
+                    <p class="text-gray-800 dark:text-gray-300">
+                        <strong class="font-semibold text-gray-900 dark:text-white">Fecha de Fin:</strong>
+                        {{ $game->end_time ? \Carbon\Carbon::parse($game->end_time)->format('d/m/Y') : 'No especificada' }}
+                    </p>
+
+
+                </div>
+            </div>
         @endif
     </x-filament::card>
 </x-filament::widget>
