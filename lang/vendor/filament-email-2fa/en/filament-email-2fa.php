@@ -2,14 +2,14 @@
 
 // translations for Solutionforest/FilamentEmail2fa
 return [
-    'login_success' => 'Login Success',
-    'email_sent' => 'A email has been sent to :email, please follow the instruction of the email',
-    '2sv' => '2-Step Verification',
-    'continue' => 'Continue',
-    'confirm' => 'Confirm',
-    'resend_email' => 'Resend Email',
-    'invalid_code' => 'Invalid 2-FA code',
-    '2fa-code' => '2-FA Code',
-    'resend_success' => 'Resend Success',
-    'use_another_ac' => 'Use Another Account',
+    'login_success' => 'Ingreso Exitoso',
+    'email_sent' => 'Un correo ha sido enviado a su cuenta ":email", por favor siga las instrucciones.',
+    '2sv' => 'GAMERFEST2025 - VERIFICACIÓN EN DOS PASOS',
+    'continue' => 'Continuar',
+    'confirm' => 'Confirmar',
+    'resend_email' => 'Reenviar email',
+    'invalid_code' => 'Código 2-FA inválido',
+    '2fa-code' => 'Código 2-FA',
+    'resend_success' => 'Reenviar correctamente',
+    'use_another_ac' => 'Usar otra cuenta',
 ];

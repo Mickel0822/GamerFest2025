@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <!-- Agregar el enlace de la fuente -->
+    <link href="https://fonts.cdnfonts.com/css/adventure-request" rel="stylesheet">
+
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('images/LOGO.png') }}" type="image/png">
     <!-- Opción adicional para iconos .ico -->
