@@ -607,7 +607,9 @@
                             <h3>{{ $game->name }}</h3>
                             <p>Precio: $3.00</p>
                             <div class="game-buttons">
-                                <a href="/inscribirse/{{ $game->id }}">Inscribirse</a>
+                            <a href="/admin/inscriptions/create?game_id={{ $game->id }}">Inscribirse</a>
+
+                                
                                 <a href="#">Reglas</a>
                             </div>
                         </div>
@@ -627,7 +629,8 @@
                         <h3>{{ $game->name }}</h3>
                         <p>Precio: $25.00</p>
                         <div class="game-buttons">
-                            <a href="/inscribirse/{{ $game->id }}">Inscribirse</a>
+                            <a href="/admin/inscriptions/create?game_id={{ $game->id }}">Inscribirse</a>
+
                             <a href="#">Reglas</a>
                         </div>
                     </div>
