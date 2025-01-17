@@ -6,10 +6,10 @@
 
     <style>
         body {
-            background-color: rgb(9, 64, 82) !important; /* Fondo base */
+            background-color: rgb(168, 180, 184) !important; /* Fondo base */
             /*font-family: 'Adventure Request' !important; /* Fuente personalizada */
             background-repeat: no-repeat; /* Sin repetir */
-            background-position: center; /* Centrar imagen */
+            background-position: c  enter; /* Centrar imagen */
             background-size: contain; /* Ajusta la imagen dentro del contenedor */
             /*opacity: 0.2; /* Suaviza el efecto de marca de agua */
             position: relative;

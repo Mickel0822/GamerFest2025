@@ -14,7 +14,7 @@
     <!-- <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon"> -->
 
     <!-- Incluye estilos generados por Vite -->
-    @vite(['resources/css/app.css', 'resources/js/app.js']) <!-- Agrega también el archivo app.js -->
+    @vite(['resources/css/stylesDash.css', 'resources/js/app.js']) <!-- Agrega también el archivo app.js -->
     @stack('styles') <!-- Para agregar estilos adicionales -->
 </head>
 <body class="bg-gray-100 text-gray-800">

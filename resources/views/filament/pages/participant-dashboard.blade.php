@@ -1,4 +1,11 @@
 <x-filament::page>
+
+    <!-- Agregar el archivo de CSS -->
+    @push('styles')
+        <link href="{{ asset('css/stylesDash.css') }}" rel="stylesheet">
+    @endpush
+
+
     <!-- Encabezado con el nombre del usuario y su foto -->
     <div class="bg-gray-800 text-white p-2 rounded-lg shadow flex flex-col items-start">
         <div class="flex flex-col items-center">
