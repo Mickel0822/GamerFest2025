@@ -22,13 +22,27 @@
             width: 100%;
             /*max-width: 200px; /* Puedes ajustar el tamaño según lo necesites */
             display: block;
-                margin: 0 auto 20px; /* Centrado y espacio abajo */
+            margin: 0 auto 20px; /* Centrado y espacio abajo */
             height: auto; /* Mantiene las proporciones de la imagen */
             object-fit: contain; /* Ajusta la imagen para que se ajuste al contenedor sin distorsionarse */
         }
         .sponsors img {
             max-width: 100px;
             margin: 10px;
+        }
+
+        .card{
+            position: relative; /* Para que los elementos dentro no se vean afectados */
+            background-color:rgb(234, 244, 255)!important; /* Fondo blanco con opacidad del 80% */
+            padding: 20px!important;
+            border-radius: 8px!important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            color:rgb(0, 39, 78) !important;
+        }
+
+        /* Hover sobre los botones */
+        .form button:hover {
+            box-shadow: 0 0 15px 5px rgba(0, 1, 2, 0.8) !important; /* Haz de luz azul */
         }
 
         .footer-text {
@@ -43,6 +57,11 @@
             color: rgba(169, 169, 169, 0.5) !important;  /* Gris Claro*/
             font-size: 0.8rem; /* Reducir el tamaño de la fuente */
         }
+
+        #form input {
+            font-size: 0.1rem;
+        }
+
     </style>
 </head>
 <body>
@@ -63,7 +82,14 @@
                             @csrf
                             <!-- Usuario -->
                             <div class="mb-3">
-                                <input type="text" name="name" id="name" class="form-control" placeholder="Usuario" value="{{ old('name') }}" required autofocus>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Nombre" value="{{ old('name') }}" required autofocus>
+                                @error('name')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <!-- Usuario -->
+                            <div class="mb-3">
+                                <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Apellido" value="{{ old('name') }}" required autofocus>
                                 @error('name')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
