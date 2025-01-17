@@ -19,6 +19,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Widgets\CustomAccountWidget;
+use PHPUnit\Framework\Constraint\IsTrue;
+use SebastianBergmann\Type\TrueType;
 use Solutionforest\FilamentEmail2fa\FilamentEmail2faPlugin;
 
 class AdminPanelProvider extends PanelProvider
@@ -31,6 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->favicon(asset('images/LOGO.png')) // Ruta al favicon
             ->login()
+            ->darkMode(true, true)
             ->colors([
                 'primary' => Color::Amber,
             ])

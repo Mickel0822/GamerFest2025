@@ -12,7 +12,7 @@
             background-repeat: no-repeat; /* Sin repetir */
             background-position: center; /* Centrar imagen */
             background-size: contain; /* Ajusta la imagen dentro del contenedor */
-            /opacity: 0.2; / Suaviza el efecto de marca de agua */
+            /*opacity: 0.2; / Suaviza el efecto de marca de agua */
             position: relative;
         }
 
@@ -53,19 +53,20 @@
 
         /* Estilos para el formulario */
         #form input {
-            background-color:#dff2f9 !important;
-            padding: 20px !important;
+            background-color:rgb(142, 199, 255)!important;
+            color:rgb(0, 56, 111)!important;
+            padding: 10px !important;
             border-radius: 8px !important;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+            /**forced-color-adjust:auto;*/
         }
-
 
         /* Estilos para el checkbox */
         #form input[type="checkbox"] {
             border: 2px solid #167FC6  !important; /* Borde inicial */
             border-radius: 10px !important;
             padding: 8px!important;
-            background-color: #66b3ff !important; /* Fondo del checkbox */
+            background-color:rgb(37, 146, 255) !important; /* Fondo del checkbox */
             cursor: pointer; /* Cambia el cursor al pasar */
             margin-right: -6px !important; /* Espacio entre el checkbox y el texto */
         }
