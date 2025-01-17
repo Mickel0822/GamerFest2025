@@ -20,4 +20,13 @@ class GameController extends Controller
             'sponsors' => $sponsors,
         ]);
     }
+
+    public function show($id)
+    {
+        // Buscar el juego por su ID
+        $game = Game::findOrFail($id);
+
+        // Retornar la vista con los detalles del juego
+        return view('game.details', compact('game'));
+    }
 }
