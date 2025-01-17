@@ -40,10 +40,11 @@ class UserResource extends Resource
             Forms\Components\Select::make('university')
                 ->label('Universidad')
                 ->options([
-                    'Universidad A' => 'Universidad A',
-                    'Universidad B' => 'Universidad B',
-                    'Universidad C' => 'Universidad C',
-                    'Universidad D' => 'Universidad D',
+                    'Universidad Técnica de Cotopaxi' => 'Universidad Técnica de Cotopaxi',
+                    'Universidad Técnica Particular de Loja' => 'Universidad Técnica Particular de Loja',
+                    'Universidad Estatal de Bolívar' => 'Universidad Estatal de Bolívar',
+                    'Universidad de las Fuerzas Armadas ESPE Latacunga' => 'Universidad de las Fuerzas Armadas ESPE Latacunga',
+                    'Universidad Politécnica Salesiana'=>'Universidad Politécnica Salesiana',
                 ])
                 ->required(),
             Forms\Components\Select::make('role')
@@ -57,16 +58,13 @@ class UserResource extends Resource
                 ->required()
                 ->reactive()
                 ->afterStateUpdated(fn ($state, callable $set) => $set('game_id', null)), // Limpia juego al cambiar rol
-            Forms\Components\Select::make('game_id')
-                ->label('Juego Asignado (Coordinador)')
-                ->relationship('game', 'name')
-                ->visible(fn ($get) => $get('role') === 'coordinator') // Solo visible para coordinadores
-                ->nullable(),
             Forms\Components\TextInput::make('password')
                 ->label('Contraseña')
                 ->password()
-                ->required(fn (string $context): bool => $context === 'create')
-                ->dehydrateStateUsing(fn ($state) => bcrypt($state)),
+                ->required(fn (string $context): bool => $context === 'create') // Solo en creación
+                ->visible(fn (string $context): bool => $context === 'create') // Solo visible al crear
+                ->dehydrateStateUsing(fn ($state) => bcrypt($state))
+                ,
         ]);
     }
 

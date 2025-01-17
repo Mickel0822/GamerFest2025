@@ -106,10 +106,10 @@ class QuickInscriptionResource extends Resource
             FileUpload::make('payment_receipt')
                 ->label('Comprobante de Pago (JPG)')
                 ->image()
-                ->directory('receipts')
-                ->visibility('public')
+                ->disk('s3')
+                ->directory('inscripcion')
+                ->visibility('private')
                 ->downloadable()
-                ->default(fn ($record) => $record ? asset('storage/' . $record->payment_receipt) : null)
                 ->visible(fn (\Filament\Forms\Get $get) => $get('payment_method') === 'receipt')
                 ->required(fn (\Filament\Forms\Get $get) => $get('payment_method') === 'receipt'),
         ]);
@@ -117,7 +117,7 @@ class QuickInscriptionResource extends Resource
 
     public static function canViewAny(): bool
     {
-    return auth()->user()?->role === 'treasurer';
+    return auth()->user()?->role === 'treasurer' or auth()->user()?->role === 'admin';
     }
 
     public static function table(Table $table): Table
@@ -149,9 +149,9 @@ class QuickInscriptionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListQuickInscriptions::route('/'),
-            'create' => Pages\CreateQuickInscription::route('/create'),
-            'edit' => Pages\EditQuickInscription::route('/{record}/edit'),
+            //'index' => Pages\ListQuickInscriptions::route('/'),
+            'index' => Pages\CreateQuickInscription::route('/create'),
+            //'edit' => Pages\EditQuickInscription::route('/{record}/edit'),
         ];
     }
 }
