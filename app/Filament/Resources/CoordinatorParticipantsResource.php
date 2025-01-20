@@ -45,7 +45,8 @@ class CoordinatorParticipantsResource extends Resource
 
                 TextColumn::make('team_name')
                     ->label('Equipo')
-                    ->getStateUsing(fn ($record) => $record->game && $record->game->type === 'group' ? $record->team_name : null),
+                    ->getStateUsing(fn ($record) => $record->game && $record->game->type === 'group' ? $record->team_name : null)
+                    ->visible(fn ($record) => $record && $record->game && $record->game->type === 'group'), // Solo visible si es grupal
 
                 // Crear dinámicamente las columnas para los miembros
                 ...self::getDynamicMemberColumns(),
@@ -60,7 +61,7 @@ class CoordinatorParticipantsResource extends Resource
             ]);
     }
 
-    // Función para crear dinámicamente las columnas según los miembros
+
     protected static function getDynamicMemberColumns(): array
     {
         $maxColumns = 4; // Máximo de columnas a generar
@@ -77,10 +78,12 @@ class CoordinatorParticipantsResource extends Resource
                         }
                     }
                     return null; // Retorna null si no hay usuario o no es grupal
-                }),
+                })
+                ->visible(fn ($record) => $record && $record->game && $record->game->type === 'group'), // Ocultar si no es grupal
             range(0, $maxColumns - 1)
         );
     }
+
 
 
 

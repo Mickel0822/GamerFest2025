@@ -14,6 +14,10 @@ class CreateInscription extends CreateRecord
     protected static string $resource = InscriptionResource::class;
     protected array $members = [];
 
+    protected function getRedirectUrl(): string
+    {
+        return '/admin'; // URL absoluta al dashboard principal
+    }
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {

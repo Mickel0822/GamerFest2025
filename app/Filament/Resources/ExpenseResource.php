@@ -82,7 +82,7 @@ class ExpenseResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return auth()->user()?->role === 'treasurer';
+        return auth()->user()?->role === 'treasurer' or auth()->user()?->role === 'admin';
     }
 
 
