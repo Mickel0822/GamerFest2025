@@ -2,12 +2,12 @@
 
  <!-- Personaliza tu estilo aquí -->
     <!-- Carga el CDN de la fuente Adventure Request -->
-    <!--<link href="https://fonts.cdnfonts.com/css/adventure-request" rel="stylesheet"> -->
+    <link href="https://fonts.cdnfonts.com/css/adventure-request" rel="stylesheet">
 
     <style>
         body {
-            background-color: rgb(168, 180, 184) !important; /* Fondo base */
-            /*font-family: 'Adventure Request' !important; /* Fuente personalizada */
+            background-color: rgb(9, 64, 82) !important; /* Fondo base */
+            font-family: 'Adventure Request' !important; /* Fuente personalizada */
             background-repeat: no-repeat; /* Sin repetir */
             background-position: c  enter; /* Centrar imagen */
             background-size: contain; /* Ajusta la imagen dentro del contenedor */
