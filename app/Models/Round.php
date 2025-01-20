@@ -11,8 +11,11 @@ class Round extends Model
 
     protected $fillable = [
         'game_id',
-        'number',
-        'description',
+        'name',
+        'order',
+        'type', // Tipo de ronda
+        'start_time',
+        'end_time',
     ];
 
     /**
@@ -29,5 +32,14 @@ class Round extends Model
     public function inscriptions()
     {
         return $this->hasMany(Inscription::class);
+    }
+
+
+    /**
+     * Relación: Una ronda tiene muchos resultados.
+     */
+    public function results()
+    {
+        return $this->hasMany(Result::class);
     }
 }

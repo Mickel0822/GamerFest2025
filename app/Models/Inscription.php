@@ -7,7 +7,11 @@ use Illuminate\Support\Facades\Storage;
 
 class Inscription extends Model
 {
+    protected $primaryKey = 'id'; // Definir explícitamente la clave primaria
+    public $incrementing = true; // Indicar que es una clave incremental
+    protected $keyType = 'int'; // Especificar el tipo de clave como entero
     protected $fillable = [
+        
         'user_id',
         'game_id',
         'team_name',
@@ -15,7 +19,9 @@ class Inscription extends Model
         'status',
         'payment_method',
         'payment_receipt',
-        'round_id', // Relación con rondas
+        'round_id',
+        'is_eliminated',
+        'receipt_number',
     ];
 
     const STATUS_PENDING = 'pendiente';
@@ -35,6 +41,14 @@ class Inscription extends Model
     public function game()
     {
         return $this->belongsTo(Game::class);
+    }
+
+    /**
+     * Filtrar inscripciones no eliminadas.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_eliminated', false);
     }
 
     /**

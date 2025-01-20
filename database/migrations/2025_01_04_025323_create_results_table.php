@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('game_id')->constrained('games')->onDelete('cascade'); // Relación con juego
-            $table->foreignId('round_id')->nullable()->constrained('rounds')->onDelete('cascade'); // Relación con ronda
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade'); // Relación con usuario
-            $table->string('team_name')->nullable(); // Nombre del equipo (opcional)
+            $table->foreignId('game_id')->constrained('games')->onDelete('cascade'); // Relación con juegos
+            $table->foreignId('round_id')->constrained('rounds')->onDelete('cascade'); // Relación con rondas
+            $table->foreignId('player_one_id')->nullable()->constrained('inscriptions')->onDelete('cascade'); // Relación con inscripción del jugador/equipo 1
+            $table->foreignId('player_two_id')->nullable()->constrained('inscriptions')->onDelete('cascade'); // Relación con inscripción del jugador/equipo 2
+            $table->string('winner_type')->nullable(); // Tipo de ganador ('player', 'team')
+            $table->foreignId('winner_id')->nullable()->constrained('inscriptions')->onDelete('cascade'); // Relación con inscripción del ganador
+            $table->string('match_type')->default('individual'); // Tipo de enfrentamiento ('individual', 'group')
             $table->timestamps();
         });
     }
