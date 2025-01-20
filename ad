@@ -1,0 +1,36 @@
+[1mdiff --git a/app/Filament/Resources/InscriptionResource.php b/app/Filament/Resources/InscriptionResource.php[m
+[1mindex 5485935..f8753fd 100644[m
+[1m--- a/app/Filament/Resources/InscriptionResource.php[m
+[1m+++ b/app/Filament/Resources/InscriptionResource.php[m
+[36m@@ -141,9 +141,10 @@[m [mpublic static function table(Table $table): Table[m
+                 ->openUrlInNewTab(),[m
+ [m
+ [m
+[32m+[m
+         ])[m
+         ->actions([[m
+[31m-[m
+[32m+[m[32m            Tables\Actions\DeleteAction::make(),[m
+         ]);[m
+     }[m
+ [m
+[36m@@ -166,6 +167,7 @@[m [mpublic static function getPages(): array[m
+         return [[m
+             'index' => Pages\ListInscriptions::route('/'),[m
+             'create' => Pages\CreateInscription::route('/create'),[m
+[32m+[m[32m            'edit' => Pages\EditInscription::route('/{record}/edit'),[m
+         ];[m
+     }[m
+ }[m
+[1mdiff --git a/resources/views/vendor/filament-email-2fa/login-success.blade.php b/resources/views/vendor/filament-email-2fa/login-success.blade.php[m
+[1mindex 384a3a5..bad2b00 100644[m
+[1m--- a/resources/views/vendor/filament-email-2fa/login-success.blade.php[m
+[1m+++ b/resources/views/vendor/filament-email-2fa/login-success.blade.php[m
+[36m@@ -13,6 +13,7 @@[m
+             background-repeat: no-repeat; /* Sin repetir */[m
+             background-position: center; /* Centrar imagen */[m
+             background-size: contain; /* Ajusta la imagen dentro del contenedor */[m
+[32m+[m[32m            /*opacity: 0.2; / Suaviza el efecto de marca de agua */[m
+             position: relative;[m
+         }[m
+ [m
