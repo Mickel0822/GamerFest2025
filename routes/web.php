@@ -7,6 +7,12 @@ use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\RulesController;
+
+Route::get('/rules', [RulesController::class, 'show'])->name('rules.show');
+
+
+
 
 Route::get('/', [GameController::class, 'index'])->name('home');
 

@@ -196,8 +196,11 @@
         }
 
         .game-buttons a {
+            font-family: 'Rockwell', cursive;
+            font-weight: bold; 
             display: inline-block;
             margin: 5px;
+            text-transform: uppercase;
             padding: 0.5rem 1rem;
             font-size: 0.9rem;
             color: #fff;
@@ -608,9 +611,7 @@
                             <p>Precio: $3.00</p>
                             <div class="game-buttons">
                             <a href="/admin/inscriptions/create?game_id={{ $game->id }}">Inscribirse</a>
-
-                                
-                                <a href="#">Reglas</a>
+                            <a href="{{ route('rules.show') }}?game_id={{ $game->id }}" class="cta-buttonss">Reglas</a>
                             </div>
                         </div>
                     </div>
@@ -630,8 +631,7 @@
                         <p>Precio: $25.00</p>
                         <div class="game-buttons">
                             <a href="/admin/inscriptions/create?game_id={{ $game->id }}">Inscribirse</a>
-
-                            <a href="#">Reglas</a>
+                            <a href="{{ route('rules.show') }}?game_id={{ $game->id }}" class="cta-buttonss">Reglas</a>
                         </div>
                     </div>
                 </div>
