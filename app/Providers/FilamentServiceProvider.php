@@ -13,9 +13,9 @@ class FilamentServiceProvider extends ServiceProvider
     {
 
         // Registra los widgets personalizados
-        Filament::registerWidgets([
-            ParticipantDashboardWidget::class,
-        ]);
+        //Filament::registerWidgets([
+           // ParticipantDashboardWidget::class,
+        //]);
     }
 }
 

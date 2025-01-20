@@ -7,7 +7,11 @@ use Illuminate\Support\Facades\Storage;
 
 class Inscription extends Model
 {
+    protected $primaryKey = 'id'; // Definir explícitamente la clave primaria
+    public $incrementing = true; // Indicar que es una clave incremental
+    protected $keyType = 'int'; // Especificar el tipo de clave como entero
     protected $fillable = [
+        
         'user_id',
         'game_id',
         'team_name',

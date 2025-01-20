@@ -102,5 +102,4 @@ return [
         'web',
         'auth', // Requiere que los usuarios estén autenticados.
     ],
-
 ];
