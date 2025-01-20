@@ -70,7 +70,6 @@
             background-repeat: no-repeat; /* Sin repetir */
             background-position: center; /* Centrar imagen */
             background-size: contain; /* Ajusta la imagen dentro del contenedor */
-            /*opacity: 0.2; / Suaviza el efecto de marca de agua */
             position: relative;
         }
 

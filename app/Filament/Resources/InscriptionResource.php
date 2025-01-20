@@ -94,6 +94,13 @@ class InscriptionResource extends Resource
                     }
                 }),
 
+
+
+            TextInput::make('receipt_number')
+                ->label('Número de Comprobante')
+                ->required() // Obligatorio en el formulario
+                ->placeholder('Ingrese el número de comprobante'),
+
             FileUpload::make('payment_receipt')
                 ->label('Comprobante de Pago (JPG)')
                 ->image()
@@ -120,6 +127,10 @@ class InscriptionResource extends Resource
                 ->label('Nombre del Equipo')
                 ->sortable(),
 
+            TextColumn::make('receipt_number')
+                ->label('Número de Comprobante')
+                ->sortable(),
+
             TextColumn::make('cost')
                 ->label('Costo')
                 ->money('USD'),
@@ -131,20 +142,18 @@ class InscriptionResource extends Resource
                     'warning' => 'pendiente',
                 ]),
 
-                TextColumn::make('payment_receipt')
-                ->label('Comprobante')
-                ->formatStateUsing(fn () => 'Ver Comprobante')
-                ->url(fn ($record) => $record->payment_receipt
+                ImageColumn::make('payment_receipt')
+                ->label('Comprobante de Pago')
+                ->disk('s3') // Asegura que estás usando S3
+                ->getStateUsing(fn ($record) => $record->payment_receipt
                     ? Storage::disk('s3')->url($record->payment_receipt)
                     : null
                 )
-                ->openUrlInNewTab(),
-
-
+                ->size(50), // Ajusta el tamaño de la imagen en píxeles
 
         ])
         ->actions([
-            Tables\Actions\DeleteAction::make(),
+
         ]);
     }
 
@@ -165,9 +174,8 @@ class InscriptionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListInscriptions::route('/'),
-            'create' => Pages\CreateInscription::route('/create'),
-            'edit' => Pages\EditInscription::route('/{record}/edit'),
+            //'index' => Pages\ListInscriptions::route('/'),
+            'index' => Pages\CreateInscription::route('/create'),
         ];
     }
 }

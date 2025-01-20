@@ -64,40 +64,26 @@
             </a>
         </div>
     </div>
-
-    <!-- Sección de Juegos Inscritos -->
-    <div class="mt-10 w-full">
-        <h2 class="text-4xl font-bold mb-6">Juegos Inscritos</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            @foreach ($games ?? [] as $game)
-                <div class="bg-gray-800 p-4 rounded-lg shadow text-center">
-                    <img src="{{ $game['image'] }}" alt="{{ $game['name'] }}" class="w-full h-48 object-cover rounded-lg mb-4">
-                    <h3 class="text-lg font-bold text-white mb-2">{{ $game['name'] }}</h3>
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded-lg w-full toggle-details">
-                        Ver Detalles
-                    </button>
-                    <div class="details hidden mt-4 text-gray-300 text-sm transition-details">
-                        <p>Fecha y Hora: {{ $game['date'] }}</p>
-                        <p>Lugar: {{ $game['location'] }}</p>
-                    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        @foreach (['pending' => 'Juegos Pendientes', 'verified' => 'Juegos Verificados', 'rejected' => 'Juegos Rechazados'] as $key => $title)
+            <div class="bg-white shadow rounded-lg p-4">
+                <h2 class="text-lg font-semibold">{{ $title }}</h2>
+                <div class="mt-4 space-y-4">
+                    @forelse ($$key as $inscription)
+                        <div class="flex items-center space-x-4 p-12">
+                            <!-- Aumentamos el tamaño de las imágenes -->
+                            <img src="{{ $inscription->game->image_url }}" alt="Juego" class="w-96 h-96 rounded">
+                            <div>
+                                <p class="font-medium">{{ $inscription->game->name }}</p>
+                                <a href="{{ route('game.details', $inscription->game->id) }}" class="text-sm text-blue-500">Ver Detalles</a>
+                            </div>
+                        </div>
+                    @empty
+                        <p class="text-gray-500">No hay inscripciones en esta categoría.</p>
+                    @endforelse
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
     </div>
-
-    <!-- Estilos adicionales -->
-    <style>
-        #calendar {
-            min-height: 400px;
-            background-color: #1a202c;
-            padding: 1rem;
-        }
-        .hidden { display: none; }
-        .transition-details {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-        .transition-details:not(.hidden) { display: block; }
-    </style>
+</div>
 </x-filament::page>

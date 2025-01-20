@@ -6,13 +6,13 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
+     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('institution')->nullable()->after('name'); // Puedes elegir la posición del campo
+        Schema::table('inscriptions', function (Blueprint $table) {
+            $table->string('receipt_number')->nullable()->after('payment_receipt'); // Número de comprobante
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('institution');
+        Schema::table('inscriptions', function (Blueprint $table) {
+            $table->dropColumn('receipt_number');
         });
     }
 };

@@ -19,8 +19,12 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Widgets\CustomAccountWidget;
+use App\Filament\Widgets\TreasurerWidget;
+use Filament\Navigation\MenuItem;
+
 use PHPUnit\Framework\Constraint\IsTrue;
 use SebastianBergmann\Type\TrueType;
+
 use Solutionforest\FilamentEmail2fa\FilamentEmail2faPlugin;
 
 class AdminPanelProvider extends PanelProvider
@@ -112,8 +116,14 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\FilamentInfoWidget::class,
                 CustomAccountWidget::class, // Usar el widget personalizado
+            ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Volver al Inicio')
+                    ->url('/')
+                    ->icon('heroicon-o-home'),
+                // ...
             ])
             ->middleware([
                 EncryptCookies::class,

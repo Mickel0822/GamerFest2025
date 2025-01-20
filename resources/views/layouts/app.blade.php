@@ -16,6 +16,9 @@
     <!-- Incluye estilos generados por Vite -->
     @vite(['resources/css/stylesDash.css', 'resources/js/app.js']) <!-- Agrega también el archivo app.js -->
     @stack('styles') <!-- Para agregar estilos adicionales -->
+
+    <!-- Livewire Styles -->
+    @livewireStyles
 </head>
 <body class="bg-gray-100 text-gray-800">
     <header class="bg-blue-500 text-white p-4">
@@ -29,6 +32,9 @@
     <footer class="bg-gray-800 text-white text-center py-4">
         <p>&copy; {{ date('Y') }} - Todos los derechos reservados.</p>
     </footer>
+
+    <!-- Livewire Scripts -->
+    @livewireScripts
 
     <!-- Cargar scripts adicionales -->
     @stack('scripts') <!-- Esto se asegura de cargar los scripts adicionales cuando se agregan -->
