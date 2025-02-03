@@ -40,13 +40,19 @@ class InscriptionResource extends Resource
     {
         return $form->schema([
             Select::make('game_id')
-                ->label('Juego')
-                ->relationship('game', 'name')
-                ->preload()
-                ->reactive()
-                ->afterStateUpdated(fn ($state, callable $set) =>
-                    $set('cost', Game::find($state)?->type === 'group' ? 25.00 : 3.00)
-                ),
+        ->label('Juego')
+        ->options(function () {
+            return \App\Models\Game::all()->mapWithKeys(function ($game) {
+                // Traducción del tipo de juego
+                $typeTranslation = $game->type === 'group' ? 'Grupal' : 'Individual';
+                return [$game->id => "{$game->name} ({$typeTranslation})"];
+            });
+        })
+        ->preload()
+        ->reactive()
+        ->afterStateUpdated(fn ($state, callable $set) =>
+            $set('cost', \App\Models\Game::find($state)?->type === 'group' ? 25.00 : 3.00)
+    ),
 
             TextInput::make('cost')
                 ->label('Costo')

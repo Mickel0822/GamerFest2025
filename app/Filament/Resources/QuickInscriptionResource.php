@@ -41,6 +41,13 @@ class QuickInscriptionResource extends Resource
             Select::make('game_id')
                 ->label('Juego')
                 ->relationship('game', 'name')
+                ->options(function () {
+                    return \App\Models\Game::all()->mapWithKeys(function ($game) {
+                        // Traducción del tipo de juego
+                        $typeTranslation = $game->type === 'group' ? 'Grupal' : 'Individual';
+                        return [$game->id => "{$game->name} ({$typeTranslation})"];
+                    });
+                })
                 ->preload()
                 ->reactive()
                 ->afterStateUpdated(fn ($state, callable $set) =>
