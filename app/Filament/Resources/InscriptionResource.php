@@ -21,92 +21,66 @@ use Filament\Tables;
 use App\Models\TeamMember;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Storage;
-
+use App\Rules\UniqueGameInscription;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class InscriptionResource extends Resource
 {
     protected static ?string $model = Inscription::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
     protected static ?string $pluralLabel = 'Inscripciones';
     protected static ?string $singularLabel = 'Inscripcion';
     protected static ?string $navigationLabel = '¡Inscribete Ahora!';
-    protected static ?int $navigationSort = 4; // Cambia el orden
-    protected static ?string $navigationGroup = 'Inscribirse Nuevo Juego'; // Grupo del menú
+    protected static ?int $navigationSort = 4;
+    protected static ?string $navigationGroup = 'Inscribirse Nuevo Juego';
 
     public static function form(Form $form): Form
     {
         return $form->schema([
+            Radio::make('inscription_type')
+                ->label('Seleccione el tipo de inscripción')
+                ->options([
+                    'individual' => 'Inscripción Individual',
+                    'group' => 'Inscripción Grupal',
+                ])
+                ->reactive(),
             Select::make('game_id')
-        ->label('Juego')
-        ->options(function () {
-            return \App\Models\Game::all()->mapWithKeys(function ($game) {
-                // Traducción del tipo de juego
-                $typeTranslation = $game->type === 'group' ? 'Grupal' : 'Individual';
-                return [$game->id => "{$game->name} ({$typeTranslation})"];
-            });
-        })
-        ->preload()
-        ->reactive()
-        ->afterStateUpdated(fn ($state, callable $set) =>
-            $set('cost', \App\Models\Game::find($state)?->type === 'group' ? 25.00 : 3.00)
-    ),
-
+                ->label('Juego')
+                ->options(fn ($get) => Game::where('type', $get('inscription_type'))->pluck('name', 'id'))
+                ->preload()
+                ->reactive()
+                ->hidden(fn ($get) => !$get('inscription_type'))
+                ->afterStateUpdated(fn ($state, callable $set) =>
+                    $set('cost', Game::find($state)?->type === 'group' ? 25.00 : 3.00)
+                )
+                ->rules([
+                    new UniqueGameInscription(),
+                ]),
             TextInput::make('cost')
                 ->label('Costo')
                 ->readOnly()
-                ->required(),
-
+                ->required()
+                ->hidden(fn ($get) => !$get('inscription_type')),
             TextInput::make('team_name')
                 ->label('Nombre del Equipo')
-                ->visible(fn ($get) => Game::find($get('game_id'))?->type === 'group'),
-
+                ->visible(fn ($get) => $get('inscription_type') === 'group'),
             Select::make('members')
                 ->label('Miembros del Equipo')
                 ->multiple()
-                ->options(User::where('id', '!=', auth()->id())->pluck('name', 'id')) // Opciones de usuarios
-                ->visible(fn ($get) => \App\Models\Game::find($get('game_id'))?->type === 'group')
+                ->options(User::where('id', '!=', auth()->id())->pluck('name', 'id'))
+                ->visible(fn ($get) => $get('inscription_type') === 'group')
                 ->helperText('Seleccione los miembros adicionales del equipo.')
-                ->required(fn ($get) => \App\Models\Game::find($get('game_id'))?->type === 'group')
-                ->default([]) // Asegura que sea un array vacío por defecto
+                ->required(fn ($get) => $get('inscription_type') === 'group')
+                ->default([])
                 ->rule('distinct')
-                ->rule('exists:users,id') // Asegurar que los usuarios existan
-                ->extraAttributes(['name' => 'members[]'])
-                ->afterStateUpdated(function ($state, callable $set, $component) {
-                    $inscriptionId = $component->getContainer()->getState()['id'] ?? null;
-
-                    if (!$inscriptionId) {
-                        // No hay inscripción asociada, no limpiar directamente el campo.
-                        return;
-                    }
-
-                    $gameId = Inscription::find($inscriptionId)?->game_id;
-
-                    if (!$gameId) {
-                        // No se encontró un juego asociado, no realizar operaciones adicionales.
-                        return;
-                    }
-
-                    foreach ($state as $memberId) {
-                        if (TeamMember::whereHas('inscription', fn ($query) =>
-                            $query->where('game_id', $gameId))
-                            ->where('user_id', $memberId)
-                            ->exists()) {
-                            $set('members', []); // Limpia el campo correctamente si hay conflicto.
-                            break;
-                        }
-                    }
-                }),
-
-
-
+                ->rule('exists:users,id')
+                ->extraAttributes(['name' => 'members[]']),
             TextInput::make('receipt_number')
                 ->label('Número de Comprobante')
-                ->required() // Obligatorio en el formulario
-                ->placeholder('Ingrese el número de comprobante'),
-
+                ->required()
+                ->placeholder('Ingrese el número de comprobante')
+                ->hidden(fn ($get) => !$get('inscription_type')),
             FileUpload::make('payment_receipt')
                 ->label('Comprobante de Pago (JPG)')
                 ->image()
@@ -114,9 +88,8 @@ class InscriptionResource extends Resource
                 ->directory('inscripcion')
                 ->visibility('private')
                 ->downloadable()
-                ->required(),
-
-
+                ->required()
+                ->hidden(fn ($get) => !$get('inscription_type')),
         ]);
     }
 
