@@ -44,6 +44,7 @@ class InscriptionResource extends Resource
                     'individual' => 'Inscripción Individual',
                     'group' => 'Inscripción Grupal',
                 ])
+                ->columnSpanFull()
                 ->reactive(),
             Select::make('game_id')
                 ->label('Juego')
@@ -70,9 +71,9 @@ class InscriptionResource extends Resource
                 ->multiple()
                 ->options(User::where('id', '!=', auth()->id())->pluck('name', 'id'))
                 ->visible(fn ($get) => $get('inscription_type') === 'group')
-                ->helperText('Seleccione los miembros adicionales del equipo.')
+                ->helperText('Seleccione hasta 4 miembros adicionales del equipo.')
                 ->required(fn ($get) => $get('inscription_type') === 'group')
-                ->default([])
+                ->maxItems(4) // Limita la selección a 4 jugadores
                 ->rule('distinct')
                 ->rule('exists:users,id')
                 ->extraAttributes(['name' => 'members[]']),
