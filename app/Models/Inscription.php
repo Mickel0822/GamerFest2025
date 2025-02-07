@@ -81,7 +81,7 @@ class Inscription extends Model
         // Evento para verificar el cambio de estado antes de guardar
         static::saving(function ($inscription) {
             // Verifica si el estado ha cambiado
-            if ($inscription->isDirty('status')) {
+            /*if ($inscription->isDirty('status')) {
                 $previousStatus = $inscription->getOriginal('status');
                 $newStatus = $inscription->status;
 
@@ -109,6 +109,22 @@ class Inscription extends Model
                 }
             } else {
                 Log::info('El estado no ha cambiado, no se enviará correo.');
+            }*/
+
+
+            if ($inscription->isDirty('status')) {
+                $previousStatus = $inscription->getOriginal('status');
+                $newStatus = $inscription->status;
+
+                // Si el estado cambió, envía el correo
+                try {
+                    Mail::to($inscription->user->email)->send(new PaymentStatusChanged($inscription));
+                } catch (\Exception $e) {
+                    // Si ocurre un error, puedes manejarlo de alguna manera (sin log)
+                    // Aquí podrías agregar algún tipo de manejo del error o una notificación
+                }
+            } else {
+                // No se enviará correo si el estado no ha cambiado
             }
         });
 

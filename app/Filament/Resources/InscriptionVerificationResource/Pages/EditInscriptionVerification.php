@@ -25,7 +25,7 @@ class EditInscriptionVerification extends EditRecord
         ];
     }
 
-    protected function afterSave()
+    /* protected function afterSave()
     {
         $record = $this->record;
 
@@ -63,5 +63,5 @@ class EditInscriptionVerification extends EditRecord
                 'status' => $record->status
             ]);
         }
-    }
+    }*/
 }
