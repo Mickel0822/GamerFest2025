@@ -22,7 +22,7 @@ class ResultResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-trophy';
 
     protected static ?string $navigationGroup = 'Gestión de Coordinador';
-    protected static ?string $navigationLabel = 'Resultados';
+    protected static ?string $navigationLabel = 'Ganadores';
 
 
     public static function form(Form $form): Form
