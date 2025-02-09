@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Result extends Model
 {
@@ -48,7 +49,16 @@ class Result extends Model
         return $this->belongsTo(Inscription::class, 'winner_id');
     }
 
+    public function winner(): BelongsTo
+    {
+        return $this->belongsTo(Inscription::class, 'winner_id');
+    }
 
+    public function game(): BelongsTo
+    {
+        return $this->belongsTo(Game::class);
+    }
+    
 
     public function getPlayerOneNameAttribute(): string
     {
