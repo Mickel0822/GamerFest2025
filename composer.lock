@@ -163,6 +163,7 @@
                 "ext-openssl": "*",
                 "ext-pcntl": "*",
                 "ext-sockets": "*",
+                "paragonie/random_compat": ">= 2",
                 "phpunit/phpunit": "^5.6.3 || ^8.5 || ^9.5",
                 "psr/cache": "^2.0 || ^3.0",
                 "psr/simple-cache": "^2.0 || ^3.0",
@@ -1542,6 +1543,7 @@
         {
             "name": "filament/infolists",
             "version": "v3.2.137",
+
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/infolists.git",
