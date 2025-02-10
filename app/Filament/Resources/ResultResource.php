@@ -12,8 +12,10 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use App\Models\Round;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Model;
 
 class ResultResource extends Resource
 {
@@ -22,7 +24,7 @@ class ResultResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-trophy';
 
     protected static ?string $navigationGroup = 'Gestión de Coordinador';
-    protected static ?string $navigationLabel = 'Resultados';
+    protected static ?string $navigationLabel = 'Enfrentamientos';
 
 
     public static function form(Form $form): Form
@@ -40,18 +42,33 @@ class ResultResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table->columns([
-            TextColumn::make('player_one_name')->label('Jugador/Equipo 1'), // Usa el accesor dinámico
-            TextColumn::make('player_two_name')->label('Jugador/Equipo 2'), // Usa el accesor dinámico
-            TextColumn::make('winner_name')->label('Ganador')->sortable(), // Usa el accesor dinámico
-        ])
-        ->actions([
-            Tables\Actions\EditAction::make()
-                ->label('Registrar Resultado')
-                ->button()
-                ->color('primary'),
-
-        ]);
+        return $table
+            ->columns([
+                TextColumn::make('round.name')->label('Ronda'),
+                TextColumn::make('player_one_name')->label('Jugador/Equipo 1'),
+                TextColumn::make('player_two_name')->label('Jugador/Equipo 2'),
+                TextColumn::make('winner_name')->label('Ganador')->color('danger'),
+            ])
+            ->filters([
+                Tables\Filters\SelectFilter::make('round_id')
+                    ->label('Ronda')
+                    ->options(Round::all()->pluck('name', 'id'))
+                    ->default(Round::latest()->first()?->id), // Filtra por la última ronda por defecto
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make()
+                    ->label('Registrar Resultado')
+                    ->button()
+                    ->color('primary'),
+            ])
+            ->headerActions([
+                Tables\Actions\Action::make('createNextRound')
+                    ->label('Crear Nueva Ronda')
+                    ->button()
+                    ->color('success')
+                    ->visible(fn () => Round::latest()->first()?->allMatchesResolved())
+                    ->url(fn () => RoundResource::getUrl('create')),
+            ]);
     }
 
 
@@ -73,5 +90,15 @@ class ResultResource extends Resource
             'index' => Pages\ListResults::route('/'),
             'edit' => Pages\EditResult::route('/{record}/edit'),
         ];
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return false;
     }
 }
