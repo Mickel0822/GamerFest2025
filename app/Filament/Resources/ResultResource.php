@@ -21,6 +21,8 @@ class ResultResource extends Resource
 {
     protected static ?string $model = Result::class;
     protected static ?string $navigationIcon = 'heroicon-o-trophy';
+    protected static ?string $navigationGroup = 'Gestión de Coordinador';
+    protected static ?string $navigationLabel = 'Ganadores';
     public static function form(Form $form): Form
     {
         return $form->schema([
