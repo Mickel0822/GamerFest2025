@@ -26,9 +26,8 @@ use App\Rules\UniqueGameInscription;
 class QuickInscriptionResource extends Resource
 {
     protected static ?string $model = Inscription::class;
-    protected static ?string $pluralLabel = 'Inscripción efectivo';
+    protected static ?string $pluralLabel = 'Inscripciones';
     protected static ?string $navigationIcon = 'heroicon-o-plus-circle';
-    protected static ?string $navigationGroup = 'Gestion Tesorero';
 
     public static function form(Form $form): Form
     {
@@ -162,5 +161,29 @@ class QuickInscriptionResource extends Resource
             'index' => Pages\CreateQuickInscription::route('/create'),
             //'edit' => Pages\EditQuickInscription::route('/{record}/edit'),
         ];
+    }
+
+
+
+    public static function getNavigationGroup(): ?string
+    {
+        $user = auth()->user();
+
+        if ($user && $user->role === 'admin') {
+            return 'CRUDS'; // Solo el admin ve este grupo
+        }
+
+        return null; // Para el tesorero, no aparece en ningún grupo
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        $user = auth()->user();
+
+        if ($user && $user->role === 'admin') {
+            return 1; // Admin verá este recurso en la posición 6 dentro de CRUDS
+        }
+
+        return 2; // Tesorero lo verá en una posición diferente sin grupo
     }
 }

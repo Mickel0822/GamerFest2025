@@ -48,3 +48,9 @@ Route::get('/api/games-events', function() {
         ];
     });
 });
+
+
+
+Route::get('/test-translation', function () {
+    return trans('Financial Baaalance');
+});
