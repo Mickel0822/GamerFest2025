@@ -12,6 +12,7 @@ class FinancialBalance extends Page
 {
     protected static string $resource = FinancialBalanceResource::class;
     protected static ?string $navigationLabel = 'Balance Financiero';
+    protected static ?string $title = 'Balance Financiero';
     protected static string $view = 'filament.resources.financial-balance-resource.pages.financial-balance';
 
     // Función para obtener los datos de ingresos, egresos y saldo total.
@@ -27,7 +28,6 @@ class FinancialBalance extends Page
             'saldo' => mb_convert_encoding(number_format($saldoTotal, 2), 'UTF-8', 'UTF-8'),
         ];
     }
-
 
     // Función para exportar el balance a PDF.
     public function exportToPdf()

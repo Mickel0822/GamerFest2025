@@ -33,11 +33,19 @@ class CreateRound extends CreateRecord
     {
         $round = $this->record;
 
-        // Obtener participantes activos del juego asociado
+        // Obtener participantes activos y verificados del juego asociado
         $participants = Inscription::where('game_id', $round->game_id)
             ->active()
+            ->where('status', 'verificado') // Solo participantes verificados
+            ->where('is_eliminated', false)
             ->pluck('id') // IDs de inscripciones (individuales o grupales)
             ->shuffle();
+
+        // Verificar si hay suficientes participantes
+        if ($participants->count() < 2) {
+            session()->flash('warning', 'No hay suficientes participantes verificados para generar enfrentamientos.');
+            return;
+        }
 
         // Crear enfrentamientos
         $pairs = $participants->chunk(2);
@@ -62,5 +70,7 @@ class CreateRound extends CreateRecord
                 ]);
             }
         }
+
+        session()->flash('success', 'Los enfrentamientos se han generado correctamente.');
     }
 }
