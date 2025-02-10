@@ -2,8 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ExpenseResource\Pages;
-use App\Filament\Resources\ExpenseResource\RelationManagers;
+use App\Filament\Resources\EgressResource\Pages;
 use App\Models\Expense;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
@@ -12,16 +11,16 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ExpenseResource extends Resource
+// Necesita crear un modelo para los egresos
+
+class EgressResource extends Resource
 {
     protected static ?string $model = Expense::class;
 
     protected static ?string $navigationGroup = 'Gestion Tesorero';
-    protected static ?string $navigationIcon = 'heroicon-o-wallet'; // Cambia el ícono si lo deseas
-    protected static ?string $pluralLabel = 'Ingresos';
+    protected static ?string $navigationIcon = 'heroicon-o-wallet'; // Ícono de egresos
+    protected static ?string $pluralLabel = 'Egresos';
 
     public static function form(Form $form): Form
     {
@@ -29,7 +28,7 @@ class ExpenseResource extends Resource
             TextInput::make('description')
                 ->label('Descripción')
                 ->required()
-                ->placeholder('Escribe una breve descripción del gasto'),
+                ->placeholder('Escribe una breve descripción del egreso'),
 
             TextInput::make('amount')
                 ->label('Monto')
@@ -63,35 +62,28 @@ class ExpenseResource extends Resource
                 ->date()
                 ->sortable(),
         ])
-        ->filters([
-            // Filtros personalizados si es necesario
-        ])
         ->actions([
-            Tables\Actions\EditAction::make(), // Acción para editar un gasto
-            Tables\Actions\DeleteAction::make(), // Acción para eliminar un gasto
+            Tables\Actions\EditAction::make(),
+            Tables\Actions\DeleteAction::make(),
         ]);
     }
 
-
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function canViewAny(): bool
     {
-        return auth()->user()?->role === 'treasurer' or auth()->user()?->role === 'admin';
+        return auth()->user()?->role === 'treasurer' || auth()->user()?->role === 'admin';
     }
-
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListExpenses::route('/'),
-            'create' => Pages\CreateExpense::route('/create'),
-            'edit' => Pages\EditExpense::route('/{record}/edit'),
+            'index' => Pages\ListEgresses::route('/'),
+            'create' => Pages\CreateEgress::route('/create'),
+            'edit' => Pages\EditEgress::route('/{record}/edit'),
         ];
     }
 }

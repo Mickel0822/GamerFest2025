@@ -26,7 +26,7 @@ use App\Rules\UniqueGameInscription;
 class QuickInscriptionResource extends Resource
 {
     protected static ?string $model = Inscription::class;
-    protected static ?string $pluralLabel = 'Inscripción Rápida';
+    protected static ?string $pluralLabel = 'Inscripción efectivo';
     protected static ?string $navigationIcon = 'heroicon-o-plus-circle';
     protected static ?string $navigationGroup = 'Gestion Tesorero';
 
