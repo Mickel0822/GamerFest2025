@@ -34,7 +34,6 @@ class Round extends Model
         return $this->hasMany(Inscription::class);
     }
 
-
     /**
      * Relación: Una ronda tiene muchos resultados.
      */
@@ -42,4 +41,10 @@ class Round extends Model
     {
         return $this->hasMany(Result::class);
     }
+
+    public function allMatchesResolved(): bool
+    {
+        return $this->results()->whereNull('winner_id')->doesntExist();
+    }
+
 }

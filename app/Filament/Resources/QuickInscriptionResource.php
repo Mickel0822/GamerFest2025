@@ -21,85 +21,75 @@ use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Rules\UniqueGameInscription;
 
 class QuickInscriptionResource extends Resource
 {
     protected static ?string $model = Inscription::class;
-    protected static ?string $pluralLabel = 'Inscripción Rápida';
+    protected static ?string $pluralLabel = 'Inscripciones';
     protected static ?string $navigationIcon = 'heroicon-o-plus-circle';
-    protected static ?string $navigationGroup = 'Gestion Tesorero';
 
     public static function form(Form $form): Form
     {
         return $form->schema([
+            // Botón para seleccionar el tipo de inscripción
+            Radio::make('inscription_type')
+                ->label('Seleccione el tipo de inscripción')
+                ->options([
+                    'individual' => 'Inscripción Individual',
+                    'group' => 'Inscripción Grupal',
+                ])
+                ->columnSpanFull()
+                ->reactive(), // Necesario para que se actualicen los campos dependientes
+                //->afterStateUpdated(fn ($state, callable $set) => $set('game_id', null)), // Limpiar el juego cuando cambie el tipo de inscripción
+
+            // Participante, visible en ambos tipos de inscripción
             Select::make('user_id')
                 ->label('Participante')
                 ->searchable()
                 ->options(User::all()->pluck('name', 'id'))
-                ->required(),
+                ->required()
+                ->hidden(fn ($get) => !$get('inscription_type')),
 
+            // Campo de juegos, solo se muestran los juegos de acuerdo al tipo de inscripción
             Select::make('game_id')
                 ->label('Juego')
-                ->relationship('game', 'name')
-                ->options(function () {
-                    return \App\Models\Game::all()->mapWithKeys(function ($game) {
-                        // Traducción del tipo de juego
-                        $typeTranslation = $game->type === 'group' ? 'Grupal' : 'Individual';
-                        return [$game->id => "{$game->name} ({$typeTranslation})"];
-                    });
-                })
+                ->options(fn ($get) => Game::where('type', $get('inscription_type'))->pluck('name', 'id'))
                 ->preload()
                 ->reactive()
+                ->hidden(fn ($get) => !$get('inscription_type'))
                 ->afterStateUpdated(fn ($state, callable $set) =>
                     $set('cost', Game::find($state)?->type === 'group' ? 25.00 : 3.00)
-                ),
+                )
+                ->rules([
+                    new UniqueGameInscription(),
+                ]),
 
             TextInput::make('cost')
                 ->label('Costo')
                 ->readOnly()
-                ->required(),
+                ->required()
+                ->hidden(fn ($get) => !$get('inscription_type')), // Solo visible cuando se seleccione un tipo de inscripción
 
+            // Solo se muestra para inscripción grupal
             TextInput::make('team_name')
                 ->label('Nombre del Equipo')
-                ->visible(fn ($get) => Game::find($get('game_id'))?->type === 'group'),
+                ->visible(fn ($get) => $get('inscription_type') === 'group'),
 
+            // Miembros del equipo, solo visible para inscripción grupal y limita a 4 miembros
             Select::make('members')
                 ->label('Miembros del Equipo')
                 ->multiple()
-                ->options(\App\Models\User::pluck('name', 'id')) // Opciones de usuarios
-                ->visible(fn ($get) => \App\Models\Game::find($get('game_id'))?->type === 'group')
-                ->helperText('Seleccione los miembros adicionales del equipo.')
-                ->required(fn ($get) => \App\Models\Game::find($get('game_id'))?->type === 'group')
-                ->default([]) // Asegura que sea un array vacío por defecto
-                ->rule('distinct')
-                ->rule('exists:users,id') // Asegurar que los usuarios existan
-                ->extraAttributes(['name' => 'members[]'])
-                ->afterStateUpdated(function ($state, callable $set, $component) {
-                    $inscriptionId = $component->getContainer()->getState()['id'] ?? null;
+                ->options(User::where('id', '!=', auth()->id())->pluck('name', 'id')) // Opciones de usuarios
+                ->visible(fn ($get) => $get('inscription_type') === 'group') // Solo visible para inscripción grupal
+                ->helperText('Seleccione hasta 4 miembros adicionales del equipo.')
+                ->required(fn ($get) => $get('inscription_type') === 'group') // Requiere miembros si es grupal
+                ->maxItems(4) // Limita la selección a 4 miembros
+                ->rule('distinct') // Asegura que no haya miembros repetidos
+                ->rule('exists:users,id') // Asegura que los usuarios existan
+                ->extraAttributes(['name' => 'members[]']),
 
-                    if (!$inscriptionId) {
-                        // No hay inscripción asociada, no limpiar directamente el campo.
-                        return;
-                    }
-
-                    $gameId = Inscription::find($inscriptionId)?->game_id;
-
-                    if (!$gameId) {
-                        // No se encontró un juego asociado, no realizar operaciones adicionales.
-                        return;
-                    }
-
-                    foreach ($state as $memberId) {
-                        if (TeamMember::whereHas('inscription', fn ($query) =>
-                            $query->where('game_id', $gameId))
-                            ->where('user_id', $memberId)
-                            ->exists()) {
-                            $set('members', []); // Limpia el campo correctamente si hay conflicto.
-                            break;
-                        }
-                    }
-                }),
-
+            // Método de pago
             Select::make('payment_method')
                 ->label('Método de Pago')
                 ->options([
@@ -108,8 +98,10 @@ class QuickInscriptionResource extends Resource
                 ])
                 ->default('cash')
                 ->required()
-                ->reactive(),
+                ->reactive()
+                ->hidden(fn ($get) => !$get('inscription_type')),
 
+            // Comprobante de pago, solo visible si el método de pago es "receipt"
             FileUpload::make('payment_receipt')
                 ->label('Comprobante de Pago (JPG)')
                 ->image()
@@ -119,13 +111,22 @@ class QuickInscriptionResource extends Resource
                 ->downloadable()
                 ->visible(fn (\Filament\Forms\Get $get) => $get('payment_method') === 'receipt')
                 ->required(fn (\Filament\Forms\Get $get) => $get('payment_method') === 'receipt'),
+
+            // Número de comprobante, visible solo si es necesario
+            TextInput::make('receipt_number')
+                ->label('Número de Comprobante')
+                ->required()
+                ->placeholder('Ingrese el número de comprobante')
+                ->hidden(fn ($get) => !$get('inscription_type')), // Solo visible cuando se haya seleccionado un tipo de inscripción
         ]);
     }
 
     public static function canViewAny(): bool
     {
-    return auth()->user()?->role === 'treasurer' or auth()->user()?->role === 'admin';
+        return auth()->user()?->role === 'treasurer' or auth()->user()?->role === 'admin';
     }
+
+
 
     public static function table(Table $table): Table
     {
@@ -160,5 +161,29 @@ class QuickInscriptionResource extends Resource
             'index' => Pages\CreateQuickInscription::route('/create'),
             //'edit' => Pages\EditQuickInscription::route('/{record}/edit'),
         ];
+    }
+
+
+
+    public static function getNavigationGroup(): ?string
+    {
+        $user = auth()->user();
+
+        if ($user && $user->role === 'admin') {
+            return 'CRUDS'; // Solo el admin ve este grupo
+        }
+
+        return null; // Para el tesorero, no aparece en ningún grupo
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        $user = auth()->user();
+
+        if ($user && $user->role === 'admin') {
+            return 1; // Admin verá este recurso en la posición 6 dentro de CRUDS
+        }
+
+        return 2; // Tesorero lo verá en una posición diferente sin grupo
     }
 }
