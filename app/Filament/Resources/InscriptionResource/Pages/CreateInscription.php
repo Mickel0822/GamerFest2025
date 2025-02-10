@@ -9,6 +9,8 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
+use Illuminate\Support\Facades\Log;
+
 class CreateInscription extends CreateRecord
 {
     protected static string $resource = InscriptionResource::class;
@@ -27,6 +29,7 @@ class CreateInscription extends CreateRecord
         $data['payment_method'] = 'comprobante';
 
         return $data; // Devuelve los datos restantes (sin duplicar la inscripción)
+
     }
 
     protected function afterCreate(): void
@@ -38,5 +41,6 @@ class CreateInscription extends CreateRecord
             ]);
         }
     }
+
 
 }

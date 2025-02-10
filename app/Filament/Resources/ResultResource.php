@@ -12,14 +12,15 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use App\Models\Round;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Model;
 
 class ResultResource extends Resource
 {
     protected static ?string $model = Result::class;
     protected static ?string $navigationIcon = 'heroicon-o-trophy';
-
     public static function form(Form $form): Form
     {
         return $form->schema([
@@ -48,8 +49,8 @@ class ResultResource extends Resource
                 Tables\Actions\EditAction::make()
                     ->label('Registrar Resultado')
                     ->button()
-                    ->color('primary'),
-    
+                    ->color('primary')
+ 
             ]);
         }
 
@@ -79,8 +80,6 @@ class ResultResource extends Resource
             'edit' => Pages\EditResult::route('/{record}/edit'),
         ];
     }
-
-
 
     public static function getNavigationGroup(): ?string
     {

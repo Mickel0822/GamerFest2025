@@ -246,10 +246,12 @@
             margin: 10px 0;
             font-size: 1rem;
         }
-
-        .game-buttons {
-            margin-top: 10px;
-        }
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: var(--text-light);
+    border-radius: 3px;
+}
 
         .game-buttons a {
             font-weight: bold;
@@ -265,28 +267,30 @@
             transition: background-color 0.3s ease;
         }
 
-        .game-buttons a:hover {
-            background-color: #5991b6;
-        }
+.hero-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4rem 4rem; /* Ajustado el espaciado */
+    max-width: 1200px;
+    margin: auto;
+}
 
-        /* Redes sociales en una fila */
-        .social-media {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
+.hero-text {
+    max-width: 50%;
+}
 
-        .social-media img {
-            width: 50px;
-            height: 50px;
-            transition: transform 0.3s ease;
-        }
+.hero-text h1 {
+    font-size: 2.8rem; /* Reducido ligeramente */
+    font-family: var(--font-primary);
+    color: var(--primary-color);
+}
 
-        .social-media img:hover {
-            transform: scale(1.2);
-        }
+.hero-text p {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin: 1rem 0; /* Más espacio entre el texto */
+}
 
         /* Contador */
         .contador {
@@ -306,11 +310,18 @@
             /* Transición suave al ajustar la posición */
         }
 
+.hero-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 35px rgba(255, 204, 0, 1);
+}
 
-        .contador h2 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
+.hero-image {
+    width: 450px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0, 123, 255, 0.8);
+    margin-top: 3rem; /* Ajustado para subir un poco */
+}
 
         #countdown {
             font-size: 2rem;
@@ -355,11 +366,10 @@
             /* Asegura proporción */
         }
 
-        /* Menú de enlaces */
-        .nav-links {
-            display: flex;
-            gap: 1rem;
+        .box:hover {
+            transform: scale(1.1);
         }
+
 
         .nav-links a {
             text-decoration: none;
@@ -374,25 +384,21 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
             position: relative;
         }
+.social-media {
+    margin-bottom: 1rem;
+}
 
-        .nav-links a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
+.social-icon {
+    font-size: 1.8rem;
+    color: var(--secondary-color);
+    margin: 0 10px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
 
-        /* Estilos para el menú hamburguesa */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 5px;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background-color: white;
-            border-radius: 3px;
-        }
+.social-icon:hover {
+    color: white;
+    transform: scale(1.2);
+}
 
         /* Menú desplegable (por defecto oculto) */
         .nav-links-mobile {
@@ -458,16 +464,19 @@
             }
         }
 
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
+/* Nombre del usuario */
+.user-name {
+    font-weight: bold;
+    color: white;
+    margin-right: 5px;
+}
 
-        .dropdown-toggle {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-        }
+/* Flecha desplegable */
+.dropdown-icon {
+    font-size: 14px;
+    color: white;
+    transition: transform 0.3s ease;
+}
 
         .dropdown-toggle img.avatar {
             width: 40px;
@@ -480,18 +489,35 @@
             font-size: 1.8rem;
         }
 
+/* Menú desplegable */
+.dropdown-menu-user {
+    display: none;
+    position: absolute;
+    top: 50px; /* Ajustado para no estar pegado al perfil */
+    right: 0px; /* Lo mantiene alineado con el icono */
+    background: rgba(11, 34, 97, 0.95);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    min-width: 180px; /* Se ajusta para evitar que el texto se desborde */
+    text-align: left;
+}
+/* Asegurar que los textos no se salgan del cuadro */
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    white-space: nowrap; /* Evita que el texto se rompa */
+    padding: 10px 12px;
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
 
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background-color: #ffffff;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            z-index: 1000;
-            min-width: 200px;
-        }
+/* Icono en los botones del menú */
+.dropdown-item i {
+    margin-right: 8px;
+}
 
         .dropdown-menu a,
         .dropdown-item-form {
@@ -502,32 +528,62 @@
             font-size: 1rem;
         }
 
-        .dropdown-menu a:hover {
-            background-color: #f5f5f5;
 
-        }
+/* Mostrar el menú cuando esté activo */
+.user-menu.active .dropdown-menu-user {
+    display: block;
+}
 
-        .dropdown-item-button {
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-size: 1rem;
-            width: 100%;
-            text-align: left;
-        }
+/* Estilos del dropdown */
+.dropdown-menu-user a,
+.dropdown-menu-user button {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
 
-        .dropdown-item-button:hover {
-            background-color: #f5f5f5;
-        }
+/* Iconos dentro del dropdown */
+.dropdown-menu-user a i,
+.dropdown-menu-user button i {
+    margin-right: 8px;
+}
 
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
+/* Efecto hover */
+.dropdown-menu-user a:hover,
+.dropdown-menu-user button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
 
-        /* Estilos para el avatar y el menú desplegable móvil */
-        .dropdown-mobile {
-            position: relative;
-            display: block;
+/* Botón de iniciar sesión */
+.btn-login {
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 10px 20px;
+    background: #ffcc00;
+    color: black;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.btn-login:hover {
+    background: white;
+    color: #0b2261;
+}
+        .section-title {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: var(--primary-color);
             text-align: center;
             margin-bottom: 1rem;
         }
@@ -621,11 +677,13 @@
                     <span class="nombre">{{ Auth::user()->name }}</span>
                     <img src="{{ Auth::user()->avatar_url }}" alt="Foto de perfil" class="avatar">
                 </div>
-                <div class="dropdown-menu">
-                    <a href="/admin/dashboard-participante" class="dropdown-item">Revisar mi perfil</a>
-                    <form action="/logout" method="POST" class="dropdown-item-form">
+                <div class="dropdown-menu-user">
+                <button onclick="window.location.href='/admin/dashboard-participante'" class="dropdown-item">
+                    <i class="fas fa-user"></i> Revisar mi perfil
+                </button>
+                    <form action="{{ route('logout') }}" method="POST">
                         @csrf
-                        <button type="submit" class="dropdown-item-button">Cerrar sesión</button>
+                        <button type="submit" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
                     </form>
                 </div>
             </div>
@@ -672,9 +730,23 @@
         {{ session('success') }}
     </div>
     @endif
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="hero-text">
+        <h1>BIENVENIDO A GAMER FEST</h1>
+        <p>El evento mas grande del centro del pais</p>
+        <p>Belisario Quevedo - Latacunga</p>
+        <a href="{{ route('register') }}" class="hero-button">Inscríbete Ya!</a>
+    </div>
+    <img src="/images/LOGO.png" alt="Gamer Fest Logo" class="hero-image">
+</div>
 
-
-    <!-- Fondo difuminado -->
+    <!-- Mostrar mensajes de éxito -->
+    @if(session('success'))
+        <div class="alert alert-success" style="text-align: center; margin: 1rem auto; max-width: 800px; background-color: #d4edda; color: #155724; padding: 1rem; border-radius: 5px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <!-- Contenido principal -->
     <div class="content-with-bg">
@@ -698,8 +770,7 @@
             @endforeach
         </div>
 
-        <!-- Juegos Grupales -->
-        <h1 class="section-title">Juegos Grupales</h1>
+        <h1 class="section-title" id="grupales">Juegos Grupales</h1>
         <div class="games-section">
             @foreach($games as $game)
             @if ($game->type === 'group')
@@ -718,8 +789,7 @@
             @endforeach
         </div>
 
-        <!-- Patrocinadores -->
-        <h1 class="section-title">Patrocinadores</h1>
+        <h1 class="section-title" id="patrocinadores">Patrocinadores</h1>
         <div class="sponsors-section">
             @foreach($sponsors as $sponsor)
             <div class="box">
@@ -775,7 +845,6 @@
         const countdownFunction = setInterval(function() {
             const now = new Date().getTime();
             const distance = eventDate - now;
-
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -854,9 +923,6 @@
             }
         });
     </script>
-
-
-
 
 </body>
 

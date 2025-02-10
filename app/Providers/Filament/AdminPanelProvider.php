@@ -20,9 +20,13 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Widgets\CustomAccountWidget;
 use Filament\Navigation\MenuItem;
-use PHPUnit\Framework\Constraint\IsTrue;
-use SebastianBergmann\Type\TrueType;
 use Solutionforest\FilamentEmail2fa\FilamentEmail2faPlugin;
+use App\Filament\Resources\EgressResource;
+use App\Filament\Resources\ExpenseResource;
+use App\Filament\Resources\BalanceResource;
+use App\Filament\Resources\QuickEnrollmentResource;
+use App\Filament\Resources\PaymentVerificationResource;
+use App\Filament\Resources\ReportesResource;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -52,7 +56,6 @@ class AdminPanelProvider extends PanelProvider
                     ->label('Volver al Inicio')
                     ->url('/')
                     ->icon('heroicon-o-home'),
-                // ...
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -69,6 +72,10 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->plugin(FilamentEmail2faPlugin::make());
+            ->plugin(FilamentEmail2faPlugin::make())
+            ->navigationGroups([
+                'Gestion Tesorero',  // Primero Gestión Tesorero
+                'Reportes',           // Después Reportes
+            ]);
     }
 }
