@@ -21,7 +21,7 @@ class ExpenseResource extends Resource
 
     protected static ?string $navigationGroup = 'Gestion Tesorero';
     protected static ?string $navigationIcon = 'heroicon-o-wallet'; // Cambia el ícono si lo deseas
-    protected static ?string $pluralLabel = 'Gastos';
+    protected static ?string $pluralLabel = 'Ingresos';
 
     public static function form(Form $form): Form
     {
