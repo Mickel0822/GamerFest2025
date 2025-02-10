@@ -23,8 +23,8 @@ class GameResource extends Resource
     protected static ?string $navigationLabel = 'Juegos';
     protected static ?string $pluralLabel = 'Juegos';
     protected static ?string $singularLabel = 'Juego';
-    protected static ?int $navigationSort = 2; // Cambia el orden
-    protected static ?string $navigationGroup = 'Gestión de Juegos'; // Grupo del menú
+    protected static ?int $navigationSort = 3; // Cambia el orden
+    protected static ?string $navigationGroup = 'CRUDS'; // Grupo del menú
 
 
     public static function form(Form $form): Form

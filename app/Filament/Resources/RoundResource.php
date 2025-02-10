@@ -26,10 +26,10 @@ class RoundResource extends Resource
 
     protected static ?string $navigationGroup = 'Gestión de Coordinador';
 
-    protected static ?string $navigationLabel = 'Crear Ronda';
+    protected static ?string $navigationLabel = 'Enfrentamientos';
 
-    protected static ?string $pluralLabel = 'Crear una Ronda';
-    protected static ?string $singularLabel = 'Crear una Ronda';
+    protected static ?string $pluralLabel = 'Enfretamientos';
+    protected static ?string $singularLabel = 'Enfrentamiento';
 
     public static function form(Form $form): Form
     {
