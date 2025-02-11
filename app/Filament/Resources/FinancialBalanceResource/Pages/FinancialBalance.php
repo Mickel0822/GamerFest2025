@@ -3,10 +3,13 @@
 namespace App\Filament\Resources\FinancialBalanceResource\Pages;
 
 use App\Filament\Resources\FinancialBalanceResource;
+use App\Filament\Resources\BalanceResource;
 use Filament\Resources\Pages\Page;
 use App\Models\Inscription;
 use App\Models\Expense;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Filament\Actions\Action;
+use Filament\Resources\Pages\ListRecords;
 
 class FinancialBalance extends Page
 {
@@ -29,25 +32,23 @@ class FinancialBalance extends Page
         ];
     }
 
+
     // Función para exportar el balance a PDF.
+
     public function exportToPdf()
     {
-        $data = $this->getData();
+        // Obtener los datos del balance general
+        $totalIngresos = Inscription::where('status', 'verificado')->sum('cost');
+        $totalEgresos = Expense::sum('amount');
+        $balanceFinal = $totalIngresos - $totalEgresos;
 
-        // Asegúrate de que los datos sean válidos y estén codificados en UTF-8
-        foreach ($data as $key => $value) {
-            if (is_string($value) && !mb_check_encoding($value, 'UTF-8')) {
-                $data[$key] = utf8_encode($value);
-            }
-        }
+        // Pasar los datos a la vista del PDF
+        $pdf = Pdf::loadView('exports.balance-report', compact('totalIngresos', 'totalEgresos', 'balanceFinal'));
 
-        // Generar el PDF usando la vista
-        $pdf = Pdf::loadView('exports.financial-balance', compact('data'));
-
-        // Forzar la descarga del PDF
+        // Descargar el PDF
         return response()->streamDownload(
             fn () => print($pdf->output()),
-            'balance_financiero.pdf'
+            'balance_general.pdf'
         );
     }
 

@@ -8,9 +8,13 @@ use Filament\Resources\Resource;
 class FinancialBalanceResource extends Resource
 {
     protected static ?string $model = null; // No se requiere un modelo específico
-    protected static ?string $navigationLabel = 'Balance Financiero';
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    protected static ?string $pluralLabel = 'Balances Financieros';
+    protected static ?string $navigationLabel = 'Balance General';
+    protected static ?string $pluralLabel = 'Balance General';
+    protected static ?string $singularLabel = 'Balance General';
+    protected static ?int $navigationSort = 5;
+    protected static ?string $navigationGroup = 'Reportes';
+
 
     /*
     public static function form(Form $form): Form
