@@ -30,10 +30,10 @@ class InscriptionResource extends Resource
     protected static ?string $model = Inscription::class;
     protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
     protected static ?string $pluralLabel = 'Inscripciones';
-    protected static ?string $singularLabel = 'Inscripcion';
-    protected static ?string $navigationLabel = '¡Inscribete Ahora!';
-    protected static ?int $navigationSort = 4;
-    protected static ?string $navigationGroup = 'Inscribirse Nuevo Juego';
+    protected static ?string $singularLabel = 'Inscripción';
+    protected static ?string $navigationLabel = '¡Inscríbete Ahora!';
+    protected static ?int $navigationSort = 4; // Cambia el orden
+    protected static ?string $navigationGroup = 'Inscribirse Nuevo Juego'; // Grupo del menú
 
     public static function form(Form $form): Form
     {

@@ -10,7 +10,7 @@ class FinancialBalanceResource extends Resource
     protected static ?string $model = null; // No se requiere un modelo específico
     protected static ?string $navigationLabel = 'Balance Financiero';
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    protected static ?string $navigationGroup = 'Gestion Tesorero';
+    protected static ?string $pluralLabel = 'Balances Financieros';
 
     /*
     public static function form(Form $form): Form
@@ -41,7 +41,6 @@ class FinancialBalanceResource extends Resource
     }
     */
 
-
     //public static function canViewAny(): bool
     //{
         //return auth()->user()?->role === 'treasurer' || auth()->user()->role === 'admin';
@@ -67,5 +66,28 @@ class FinancialBalanceResource extends Resource
             //'create' => Pages\CreateFinancialBalance::route('/create'),
             //'edit' => Pages\EditFinancialBalance::route('/{record}/edit'),
         ];
+    }
+
+
+    public static function getNavigationGroup(): ?string
+    {
+        $user = auth()->user();
+
+        if ($user && $user->role === 'admin') {
+            return 'Reportes'; // Solo el admin ve este grupo
+        }
+
+        return null; // Para el tesorero, no aparece en ningún grupo
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        $user = auth()->user();
+
+        if ($user && $user->role === 'admin') {
+            return 5; // Admin verá este recurso en la posición 6 dentro de CRUDS
+        }
+
+        return 1; // Tesorero lo verá en una posición diferente sin grupo
     }
 }

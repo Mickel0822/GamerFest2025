@@ -7,6 +7,9 @@ use Filament\Facades\Filament;
 use App\Filament\Pages\ParticipantDashboard;
 use App\Filament\Widgets\ParticipantDashboard as ParticipantDashboardWidget;
 
+use Illuminate\Support\Facades\App;
+
+
 class FilamentServiceProvider extends ServiceProvider
 {
     public function boot(): void
@@ -16,6 +19,10 @@ class FilamentServiceProvider extends ServiceProvider
         Filament::registerWidgets([
             ParticipantDashboardWidget::class,
         ]);
+
+
+
+        App::setLocale('es'); // Forzar el idioma de Laravel
     }
 }
 

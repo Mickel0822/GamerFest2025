@@ -18,10 +18,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class ExpenseResource extends Resource
 {
     protected static ?string $model = Expense::class;
-
-    protected static ?string $navigationGroup = 'Gestion Tesorero';
     protected static ?string $navigationIcon = 'heroicon-o-wallet'; // Cambia el ícono si lo deseas
-    protected static ?string $pluralLabel = 'Ingresos';
+    protected static ?string $pluralLabel = 'Egresos';
 
     public static function form(Form $form): Form
     {
@@ -94,4 +92,27 @@ class ExpenseResource extends Resource
             'edit' => Pages\EditExpense::route('/{record}/edit'),
         ];
     }
+
+    public static function getNavigationGroup(): ?string
+    {
+        $user = auth()->user();
+
+        if ($user && $user->role === 'admin') {
+            return 'CRUDS'; // Solo el admin ve este grupo
+        }
+
+        return null; // Para el tesorero, no aparece en ningún grupo
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        $user = auth()->user();
+
+        if ($user && $user->role === 'admin') {
+            return 6; // Admin verá este recurso en la posición 6 dentro de CRUDS
+        }
+
+        return 3; // Tesorero lo verá en una posición diferente sin grupo
+    }
+
 }

@@ -19,8 +19,8 @@ class SponsorResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
     protected static ?string $navigationLabel = 'Patrocinadores';
-    protected static ?int $navigationSort = 3; // Cambia el orden
-    protected static ?string $navigationGroup = 'Gestion Patrocinadores';
+    protected static ?int $navigationSort = 4; // Cambia el orden
+    protected static ?string $navigationGroup = 'CRUDS';
 
     public static function form(Form $form): Form
     {
