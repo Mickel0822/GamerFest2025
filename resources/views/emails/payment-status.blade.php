@@ -1,15 +1,80 @@
-<!DOCTYPE html>
-<html>
+<body style="margin: 0; padding: 0; background-color: #1c1c1c; font-family: Arial, sans-serif; color: #ffffff;">
+    <!-- Contenedor principal (tabla) -->
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 0; padding: 0;">
+        <tr>
+            <td align="center" style="padding: 20px;">
+                <!-- Tabla interior centrada -->
+                <table width="600" border="0" cellspacing="0" cellpadding="0"
+                    style="background-color: #094052; border-radius: 8px; overflow: hidden;">
 
-<head>
-    <title>Estado de Inscripción Actualizado</title>
-</head>
+                    <!-- Encabezado con Logo -->
+                    <tr>
+                        <td align="center" style="padding: 20px;">
+                            <img src="https://gamerfest2025-receipts.s3.us-east-2.amazonaws.com/imagenesUsoGeneral/LOGO.png"
+                                alt="LOGO" style="width: 150px; height: auto;">
+                        </td>
+                    </tr>
 
-<body>
-    <h1>Hola, {{ $userName }}</h1>
-    <p>Tu inscripción para el juego <strong>{{ $gameName }}</strong> ha sido actualizada.</p>
-    <p>Nuevo estado: <strong>{{ ucfirst($status) }}</strong></p>
-    <p>Gracias por participar.</p>
+                    <!-- Título principal -->
+                    <tr>
+                        <td align="center" style="padding: 10px 20px;">
+                            <h1 style="margin: 0; font-size: 26px; color: #ffffff;">
+                                ACTUALIZACIÓN DE INSCRIPCIÓN
+                            </h1>
+                        </td>
+                    </tr>
+
+                    <!-- Contenido -->
+                    <tr>
+                        <td style="padding: 10px 40px; text-align: center;">
+                            <p style="margin: 0; font-size: 16px;">
+                                Hola, <strong>{{ $userName }}</strong>
+                            </p>
+                            <p style="margin: 0; font-size: 16px;">
+                                Tu inscripción para el juego <strong>{{ $gameName }}</strong> ha sido
+                                actualizada a:
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Estado de inscripción grande y centrado -->
+                    <tr>
+                        <td align="center" style="padding: 20px;">
+                            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #0bd9f4;">
+                                {{ ucfirst($status) }}
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Mensaje de contacto -->
+                    <tr>
+                        <td style="padding: 10px 40px 20px; text-align: center;">
+                            <p style="margin: 0; font-size: 16px;">
+                                Si necesitas más información, por favor revisa tu cuenta o contáctanos.
+                            </p>
+                        </td>
+                    </tr>
+                    <!-- Mensaje de agradecimiento -->
+                    <tr>
+                        <td style="padding: 10px 40px 20px; text-align: center;">
+                            <p style="margin: 0; font-size: 16px;">
+                                ¡Gracias por participar!
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Botón (opcional, si deseas agregar un enlace) -->
+                    <tr>
+                        <td align="center" style="padding: 20px;">
+                            <a href="http://grupo2.gamerfest2025.com/"
+                                style="display: inline-block; text-decoration: none; background-color: #0dc6df; color: #ffffff; padding: 12px 24px; border-radius: 4px; font-size: 16px;">
+                                Ir a GamerFest
+                            </a>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
-
-</html>
