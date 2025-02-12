@@ -32,6 +32,7 @@ class PaymentStatusChanged extends Mailable
                 'gameName' => $this->inscription->game->name,
                 'status' => $this->inscription->status,
                 'userName' => $this->inscription->user->name,
+                'userLastName' => $this->inscription->user->last_name,
             ]);
     }
 }

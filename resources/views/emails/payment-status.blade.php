@@ -28,7 +28,7 @@
                     <tr>
                         <td style="padding: 10px 40px; text-align: center;">
                             <p style="margin: 0; font-size: 16px;">
-                                Hola, <strong>{{ $userName }}</strong>
+                                Hola, <strong>{{ $userLastName }}</strong> <strong>{{ $userName }}</strong>
                             </p>
                             <p style="margin: 0; font-size: 16px;">
                                 Tu inscripción para el juego <strong>{{ $gameName }}</strong> ha sido
