@@ -38,9 +38,18 @@
                     </tr>
 
                     <!-- Estado de inscripción grande y centrado -->
+                    @php
+                        $color = match (strtolower($status)) {
+                            'pendiente' => '#0bd9f4',
+                            'rechazado' => '#f87171',
+                            'verificado' => '#4ade80',
+                            default => '#000000', // color por defecto en caso de otros estados
+                        };
+                    @endphp
+
                     <tr>
                         <td align="center" style="padding: 20px;">
-                            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #0bd9f4;">
+                            <p style="margin: 0; font-size: 24px; font-weight: bold; color: {{ $color }};">
                                 {{ ucfirst($status) }}
                             </p>
                         </td>
