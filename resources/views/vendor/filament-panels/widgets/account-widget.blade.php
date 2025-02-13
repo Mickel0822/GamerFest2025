@@ -1,3 +1,4 @@
+
 @php
     $user = filament()->auth()->user();
 @endphp
@@ -11,7 +12,6 @@
             background-repeat: no-repeat; /* Sin repetir */
             background-position: c  enter; /* Centrar imagen */
             background-size: contain; /* Ajusta la imagen dentro del contenedor */
-            /*opacity: 0.2; /* Suaviza el efecto de marca de agua */
             position: relative;
         }
 
@@ -90,7 +90,7 @@
         }
 
         table th {
-            background-color: #f4f4f4;
+            background-color:rgb(9, 64, 82);
             font-weight: bold;
         }
 
@@ -129,58 +129,45 @@
     </style>
 
     <x-filament::section>
-        <div class="flex items-center gap-x-3">
-            <x-filament-panels::avatar.user size="lg" :user="$user" />
-
-            <div class="flex-1">
-                <h2
-                    class="grid flex-1 text-base font-semibold leading-6 text-gray-950 dark:text-white"
-                >
-                    {{ __('filament-panels::widgets/account-widget.welcome', ['app' => config('app.name')]) }}
+        <div class="flex items-center gap-x-3 mb-6">
+            <div class="flex-1 mb-4">
+                <h2 class="text-base font-semibold leading-6 text-gray-950 dark:text-white inline-flex items-center">
+                    {{ __('filament-panels::widgets/account-widget.welcome', ['app' => config('app.name')]) }}:&nbsp&nbsp
+                    <span class="text-sm text-gray-500 dark:text-gray-400">
+                        {{ filament()->getUserName($user) }}
+                    </span>
                 </h2>
-
-                <p class="text-sm text-gray-500 dark:text-gray-400">
-                    {{ filament()->getUserName($user) }}
-                </p>
+                
             </div>
-
-            <!-- Botón adicional: Volver al Inicio -->
-            <form
-                action="/"
-                method="get"
-                class="my-auto"
-            >
-                <x-filament::button
-                    color="gray"
-                    icon="heroicon-o-home"
-                    icon-alias="panels::widgets.account.home-button"
-                    labeled-from="sm"
-                    tag="button"
-                    type="submit"
-                >
-                    Volver al Inicio
-                </x-filament::button>
-            </form>
-
-            <!-- Botón: Salir -->
-            <form
-                action="{{ filament()->getLogoutUrl() }}"
-                method="post"
-                class="my-auto"
-            >
-                @csrf
-
-                <x-filament::button
-                    color="gray"
-                    icon="heroicon-m-arrow-left-on-rectangle"
-                    icon-alias="panels::widgets.account.logout-button"
-                    labeled-from="sm"
-                    tag="button"
-                    type="submit"
-                >
-                    {{ __('filament-panels::widgets/account-widget.actions.logout.label') }}
-                </x-filament::button>
-            </form>
         </div>
+
+        {{-- Sección que solo aparece para el rol "participant" --}}
+
+        @if ($user->role === 'participant')
+
+        <h2 class="text-4xl font-extrabold text-gray-800 dark:text-gray-100 mt-6 text-center">
+            Número de Juegos Registrados
+        </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                {{-- Juegos Grupales Verificados --}}
+                <div class="p-4 bg-purple-100 rounded-md shadow text-center">
+                    <h3 class="text-sm font-medium text-yellow-700">Juegos Grupales</h3>
+                    <p class="text-2xl font-bold text-yellow-800">
+                        {{ number_format($verifiedGroupGames) }}
+                    </p>
+                </div>
+
+                {{-- Juegos Individuales Verificados --}}
+                <div class="p-4 bg-purple-100 rounded-md shadow text-center">
+                    <h3 class="text-sm font-medium text-purple-700">Juegos Individuales</h3>
+                    <p class="text-2xl font-bold text-purple-800">
+                        {{ number_format($verifiedIndividualGames) }}
+                    </p>
+                </div>
+            </div>
+        @endif
+
     </x-filament::section>
+
 </x-filament-widgets::widget>

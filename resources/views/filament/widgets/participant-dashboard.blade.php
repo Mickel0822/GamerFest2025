@@ -43,16 +43,7 @@
                                 <h4 class="text-lg font-bold text-gray-800 dark:text-gray-100">{{ $inscription->game->name }}</h4>
                                 <p class="text-sm text-gray-600 dark:text-gray-400"><strong>Lugar:</strong> {{ $inscription->game->location ?? 'No especificado' }}</p>
                                 <p class="text-sm text-gray-600 dark:text-gray-400"><strong>Fecha de Inicio:</strong> {{ \Carbon\Carbon::parse($inscription->game->start_time)->format('d/m/Y') }}</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400"><strong>Fecha de Fin:</strong> {{ \Carbon\Carbon::parse($inscription->game->end_time)->format('d/m/Y') }}</p>
                                 <p class="text-sm text-gray-600 dark:text-gray-400"><strong>Reglas:</strong> {{ $inscription->game->rules ?? 'No especificadas' }}</p>
-
-                                {{-- Botón de ver detalles --}}
-                                <button
-                                    class="mt-4 py-2 px-4 text-sm font-medium text-white rounded-lg bg-blue-600 dark:bg-blue-500 hover:opacity-90"
-                                    wire:click="showGameDetails({{ $inscription->game->id }})"
-                                >
-                                    {{ $selectedGameId === $inscription->game->id ? 'Ocultar Detalles' : 'Ver Detalles' }}
-                                </button>
 
                                 {{-- Detalles adicionales --}}
                                 @if ($selectedGameId === $inscription->game->id)
