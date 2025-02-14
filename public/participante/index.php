@@ -5,7 +5,7 @@ declare(strict_types=1);
 require_once 'flight/Flight.php';
 
 // Configuración de la conexión a la base de datos
-Flight::register('db', 'PDO', array('mysql:host=localhost;port=3307;dbname=db_gamerfest2025;charset=utf8', 'root', ''));
+Flight::register('db', 'PDO', array('mysql::host=localhost;dbname=u808897717_gamerfest25', 'u808897717_gamer', 'GamerFest2025*'));
 
 /**
  * Middleware para manejar errores globales en Flight
