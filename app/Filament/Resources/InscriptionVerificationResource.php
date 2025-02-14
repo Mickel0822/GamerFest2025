@@ -134,7 +134,7 @@ class InscriptionVerificationResource extends Resource
 
     public static function canViewAny(): bool
     {
-    return auth()->user()?->role === 'treasurer' or auth()->user()?->role === 'admin';
+    return auth()->user()?->role === 'treasurer';
     }
 
 

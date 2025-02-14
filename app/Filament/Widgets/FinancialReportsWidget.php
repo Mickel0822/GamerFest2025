@@ -14,7 +14,7 @@ class FinancialReportsWidget extends Widget
 
     public static function canView(): bool
     {
-        return auth()->user()?->role === 'admin';
+        return auth()->user()?->role === null;
     }
 
     public function render(): View

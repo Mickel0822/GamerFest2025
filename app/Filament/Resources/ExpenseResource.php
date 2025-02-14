@@ -112,7 +112,7 @@ class ExpenseResource extends Resource
             return 6; // Admin verá este recurso en la posición 6 dentro de CRUDS
         }
 
-        return 3; // Tesorero lo verá en una posición diferente sin grupo
+        return 2; // Tesorero lo verá en una posición diferente sin grupo
     }
 
 }

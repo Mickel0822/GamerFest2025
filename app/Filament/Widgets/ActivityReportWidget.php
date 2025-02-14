@@ -14,7 +14,7 @@ class ActivityReportWidget extends BaseWidget
 
     public static function canView(): bool
     {
-        return auth()->user()?->role === 'admin';
+        return auth()->user()?->role === null;
     }
 
     public function table(Tables\Table $table): Tables\Table

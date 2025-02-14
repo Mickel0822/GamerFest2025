@@ -3,7 +3,8 @@
     $user = filament()->auth()->user();
 @endphp
 
-<x-filament-widgets::widget class="fi-account-widget">
+<x-filament-widgets::widget class="fi-account-widget bg-transparent shadow-none">
+
     <link href="https://fonts.cdnfonts.com/css/adventure-request" rel="stylesheet">
     <style>
         body {
@@ -129,45 +130,65 @@
     </style>
 
     <x-filament::section>
-        <div class="flex items-center gap-x-3 mb-6">
-            <div class="flex-1 mb-4">
-                <h2 class="text-base font-semibold leading-6 text-gray-950 dark:text-white inline-flex items-center">
-                    {{ __('filament-panels::widgets/account-widget.welcome', ['app' => config('app.name')]) }}:&nbsp&nbsp
-                    <span class="text-sm text-gray-500 dark:text-gray-400">
-                        {{ filament()->getUserName($user) }}
-                    </span>
-                </h2>
-                
-            </div>
-        </div>
+        @if ($user->role === 'admin')
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+                {{-- Participantes --}}
+                <div class="p-4 bg-white dark:bg-gray-800 rounded-md shadow text-center">
+                    <h3 class="text-sm font-medium text-yellow-700">Participantes</h3>
+                    <p class="text-2xl font-bold text-yellow-800">
+                        {{ number_format($participantGames) }}
+                    </p>
+                </div>
 
-        {{-- Sección que solo aparece para el rol "participant" --}}
+                {{-- Número de Juegos --}}
+                <div class="p-4 bg-white dark:bg-gray-800 rounded-md shadow text-center">
+                    <h3 class="text-sm font-medium text-purple-700">Número de Juegos</h3>
+                    <p class="text-2xl font-bold text-purple-800">
+                        {{ number_format($userGames) }}
+                    </p>
+                </div>
 
-        @if ($user->role === 'participant')
+                {{-- Auspiciantes --}}
+                <div class="p-4 bg-white dark:bg-gray-800 rounded-md shadow text-center">
+                    <h3 class="text-sm font-medium text-yellow-700">Auspiciantes</h3>
+                    <p class="text-2xl font-bold text-yellow-800">
+                        {{ number_format($Sponsors) }}
+                    </p>
+                </div>
 
-        <h2 class="text-4xl font-extrabold text-gray-800 dark:text-gray-100 mt-6 text-center">
-            Número de Juegos Registrados
-        </h2>
+                {{-- Ingreso Inscripción --}}
+                <div class="p-4 bg-white dark:bg-gray-800 rounded-md shadow text-center">
+                    <h3 class="text-sm font-medium text-purple-700">Ingreso Inscripción</h3>
+                    <p class="text-2xl font-bold text-purple-800">
+                        {{ number_format($ingresoInscripcion) }}
+                    </p>
+                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                {{-- Juegos Grupales Verificados --}}
-                <div class="p-4 bg-purple-100 rounded-md shadow text-center">
-                    <h3 class="text-sm font-medium text-yellow-700">Juegos Grupales</h3>
+                {{-- Otros Ingresos --}}
+                <div class="p-4 bg-white dark:bg-gray-800 rounded-md shadow text-center">
+                    <h3 class="text-sm font-medium text-yellow-700">Otros Ingresos</h3>
                     <p class="text-2xl font-bold text-yellow-800">
                         {{ number_format($verifiedGroupGames) }}
                     </p>
                 </div>
 
-                {{-- Juegos Individuales Verificados --}}
-                <div class="p-4 bg-purple-100 rounded-md shadow text-center">
-                    <h3 class="text-sm font-medium text-purple-700">Juegos Individuales</h3>
+                {{-- Egresos --}}
+                <div class="p-4 bg-white dark:bg-gray-800 rounded-md shadow text-center">
+                    <h3 class="text-sm font-medium text-purple-700">Egresos</h3>
                     <p class="text-2xl font-bold text-purple-800">
-                        {{ number_format($verifiedIndividualGames) }}
+                        {{ number_format($expense) }}
+                    </p>
+                </div>
+
+                {{-- Saldo --}}
+                <div class="p-4 bg-white dark:bg-gray-800 rounded-md shadow text-center">
+                    <h3 class="text-sm font-medium text-yellow-700">Saldo</h3>
+                    <p class="text-2xl font-bold text-yellow-800">
+                        {{ number_format($saldoTotal) }}
                     </p>
                 </div>
             </div>
         @endif
-
     </x-filament::section>
 
 </x-filament-widgets::widget>
