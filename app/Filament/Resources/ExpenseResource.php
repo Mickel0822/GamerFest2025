@@ -109,7 +109,7 @@ class ExpenseResource extends Resource
         $user = auth()->user();
 
         if ($user && $user->role === 'admin') {
-            return 6; // Admin verá este recurso en la posición 6 dentro de CRUDS
+            return 5; // Admin verá este recurso en la posición 6 dentro de CRUDS
         }
 
         return 3; // Tesorero lo verá en una posición diferente sin grupo

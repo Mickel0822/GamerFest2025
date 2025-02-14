@@ -22,7 +22,7 @@ class CoordinatorParticipantsResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    
+    protected static ?string $navigationGroup = 'Gestión de Coordinador';
 
     protected static ?string $navigationLabel = 'Lista de Participantes';
 
@@ -91,7 +91,7 @@ class CoordinatorParticipantsResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return auth()->user()?->role === 'coordinator' or auth()->user()?->role === 'admin';
+        return auth()->user()?->role === 'coordinator';
     }
 
     public static function getRelations(): array
@@ -107,28 +107,4 @@ class CoordinatorParticipantsResource extends Resource
             'index' => Pages\ListCoordinatorParticipants::route('/'),
         ];
     }
-
-    
-    public static function getNavigationGroup(): ?string
-    {
-        $user = auth()->user();
-
-        if ($user && $user->role === 'admin') {
-            return 'Reportes'; // Solo el admin ve este grupo
-        }
-
-        return null; // Para el tesorero, no aparece en ningún grupo
-    }
-
-    public static function getNavigationSort(): ?int
-    {
-        $user = auth()->user();
-
-        if ($user && $user->role === 'admin') {
-            return 1; // Admin verá este recurso en la posición 6 dentro de CRUDS
-        }
-
-        return 1; // Tesorero lo verá en una posición diferente sin grupo
-    }
-
 }

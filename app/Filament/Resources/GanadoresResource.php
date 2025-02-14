@@ -13,11 +13,11 @@ class GanadoresResource extends Resource
 {
     protected static ?string $model = Result::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-check-circle';
     protected static ?string $navigationLabel = 'Lista de Ganadores';
     protected static ?string $pluralLabel = 'Lista de Ganadores';
     protected static ?string $singularLabel = 'Lista de Ganadores';
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 2;
     protected static ?string $navigationGroup = 'Reportes';
 
     public static function table(Table $table): Table

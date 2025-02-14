@@ -19,11 +19,11 @@ class IngresosResource extends Resource
 {
     protected static ?string $model = Inscription::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
     protected static ?string $navigationLabel = 'Detalle de Ingresos';
     protected static ?string $pluralLabel = 'Detalle de Ingresos';
     protected static ?string $singularLabel = 'Detalle de Ingresos';
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 3;
     protected static ?string $navigationGroup = 'Reportes';
 
 

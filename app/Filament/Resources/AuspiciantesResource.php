@@ -17,11 +17,11 @@ class AuspiciantesResource extends Resource
 {
     protected static ?string $model = Sponsor::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-user-plus';
     protected static ?string $navigationLabel = 'Lista de Auspiciantes';
     protected static ?string $pluralLabel = 'Lista de Auspiciantes';
     protected static ?string $singularLabel = 'Lista de Auspiciantes';
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 6;
     protected static ?string $navigationGroup = 'Reportes';
 
 
