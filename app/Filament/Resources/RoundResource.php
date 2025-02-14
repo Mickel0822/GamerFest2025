@@ -36,9 +36,12 @@ class RoundResource extends Resource
         return $form->schema([
             TextInput::make('name')->label('Nombre de la Ronda')->required(),
             TextInput::make('order')->label('Orden')->numeric()->required(),
-            TextInput::make('type')
+            Select::make('type')
                 ->label('Tipo de Ronda')
-                ->default('normal') // Por defecto, puedes personalizar
+                ->options([
+                    'Normal' => 'Normal',
+                    'final' => 'final',
+                ])
                 ->required(),
         ]);
     }

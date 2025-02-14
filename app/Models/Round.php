@@ -47,4 +47,13 @@ class Round extends Model
         return $this->results()->whereNull('winner_id')->doesntExist();
     }
 
+    public function previousRound()
+    {
+        return Round::where('game_id', $this->game_id)
+                    ->where('order', '<', $this->order)
+                    ->orderBy('order', 'desc')
+                    ->first();
+    }
+
+
 }
