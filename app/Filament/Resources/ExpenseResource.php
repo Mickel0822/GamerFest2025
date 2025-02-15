@@ -101,7 +101,7 @@ class ExpenseResource extends Resource
             return 'CRUDS'; // Solo el admin ve este grupo
         }
 
-        return null; // Para el tesorero, no aparece en ningún grupo
+        return 'Gestión Tesorero'; // Para el tesorero, no aparece en ningún grupo
     }
 
     public static function getNavigationSort(): ?int
@@ -109,7 +109,7 @@ class ExpenseResource extends Resource
         $user = auth()->user();
 
         if ($user && $user->role === 'admin') {
-            return 6; // Admin verá este recurso en la posición 6 dentro de CRUDS
+            return 4; // Admin verá este recurso en la posición 6 dentro de CRUDS
         }
 
         return 3; // Tesorero lo verá en una posición diferente sin grupo

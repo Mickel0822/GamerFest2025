@@ -26,8 +26,8 @@ class InscriptionVerificationResource extends Resource
 {
     protected static ?string $model = Inscription::class;
     protected static ?string $pluralLabel = 'Verificación Pagos';
-    protected static ?int $navigationSort = 7;
-    protected static ?string $navigationGroup = 'Gestion Tesorero';
+    protected static ?int $navigationSort = 1;
+    protected static ?string $navigationGroup = 'Gestión Tesorero';
 
     protected static ?string $navigationIcon = 'heroicon-o-credit-card';
 
@@ -134,7 +134,7 @@ class InscriptionVerificationResource extends Resource
 
     public static function canViewAny(): bool
     {
-    return auth()->user()?->role === 'treasurer' or auth()->user()?->role === 'admin';
+    return auth()->user()?->role === 'treasurer';
     }
 
 
