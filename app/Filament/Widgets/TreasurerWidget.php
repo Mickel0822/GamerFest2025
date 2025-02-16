@@ -3,6 +3,8 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Inscription;
+use App\Models\Income;
+use App\Models\Expense;
 use Filament\Widgets\Widget;
 
 class TreasurerWidget extends Widget
@@ -13,9 +15,13 @@ class TreasurerWidget extends Widget
 
     public $totalInscriptions;
     public $verified;
+    public $pendingAmount;
     public $pending;
     public $rejected;
     public $totalRevenue;
+    public $totalIncome;
+    public $totalExpenses;
+    public $saldo;
     public $goal;
     public $progress;
 
@@ -39,6 +45,18 @@ class TreasurerWidget extends Widget
 
         $this->totalRevenue = Inscription::where('status', Inscription::STATUS_VERIFIED)->sum('cost');
 
+        // Calcula el total de dinero pendiente**
+        $this->pendingAmount = Inscription::where('status', Inscription::STATUS_PENDING)->sum('cost');
+        
+        // Sumar el total de los ingresos registrados
+        $this->totalIncome = Income::sum('amount');
+
+        //  Sumar el total de los egresos registrados
+        $this->totalExpenses = Expense::sum('amount');
+
+        // Calcular el saldo
+        $this->saldo = $this->totalIncome - $this->totalExpenses;
+       
         $this->goal = 500; // Puedes ajustar este valor
         $this->progress = $this->goal > 0
             ? round(($this->totalRevenue / $this->goal) * 100, 2)

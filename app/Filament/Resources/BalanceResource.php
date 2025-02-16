@@ -69,7 +69,7 @@ class BalanceResource extends Resource
     {
         return auth()->user()?->role === 'treasurer' || auth()->user()?->role === 'admin';
     }
-
+    
     public static function getPages(): array
     {
         return [
