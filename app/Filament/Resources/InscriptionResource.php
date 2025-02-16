@@ -31,9 +31,8 @@ class InscriptionResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
     protected static ?string $pluralLabel = 'Inscripciones';
     protected static ?string $singularLabel = 'Inscripción';
-    protected static ?string $navigationLabel = '¡Inscríbete Ahora!';
+    protected static ?string $navigationLabel = '¡ Inscríbete YA !';
     protected static ?int $navigationSort = 4; // Cambia el orden
-    protected static ?string $navigationGroup = 'Inscribirse Nuevo Juego'; // Grupo del menú
 
     public static function form(Form $form): Form
     {

@@ -1,8 +1,10 @@
+
 @php
     $user = filament()->auth()->user();
 @endphp
 
-<x-filament-widgets::widget class="fi-account-widget">
+<x-filament-widgets::widget class="fi-account-widget bg-transparent shadow-none">
+
     <link href="https://fonts.cdnfonts.com/css/adventure-request" rel="stylesheet">
     <style>
         body {
@@ -11,7 +13,6 @@
             background-repeat: no-repeat; /* Sin repetir */
             background-position: c  enter; /* Centrar imagen */
             background-size: contain; /* Ajusta la imagen dentro del contenedor */
-            /*opacity: 0.2; /* Suaviza el efecto de marca de agua */
             position: relative;
         }
 
@@ -90,7 +91,7 @@
         }
 
         table th {
-            background-color: #f4f4f4;
+            background-color:rgb(9, 64, 82);
             font-weight: bold;
         }
 
@@ -129,58 +130,65 @@
     </style>
 
     <x-filament::section>
-        <div class="flex items-center gap-x-3">
-            <x-filament-panels::avatar.user size="lg" :user="$user" />
+        @if ($user->role === 'admin')
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+                {{-- Participantes --}}
+                <div class="p-4 bg-white dark:bg-gray-800 rounded-md shadow text-center">
+                    <h3 class="text-sm font-medium text-yellow-700">Participantes</h3>
+                    <p class="text-2xl font-bold text-yellow-800">
+                        {{ number_format($participantGames) }}
+                    </p>
+                </div>
 
-            <div class="flex-1">
-                <h2
-                    class="grid flex-1 text-base font-semibold leading-6 text-gray-950 dark:text-white"
-                >
-                    {{ __('filament-panels::widgets/account-widget.welcome', ['app' => config('app.name')]) }}
-                </h2>
+                {{-- Número de Juegos --}}
+                <div class="p-4 bg-white dark:bg-gray-800 rounded-md shadow text-center">
+                    <h3 class="text-sm font-medium text-purple-700">Número de Juegos</h3>
+                    <p class="text-2xl font-bold text-purple-800">
+                        {{ number_format($userGames) }}
+                    </p>
+                </div>
 
-                <p class="text-sm text-gray-500 dark:text-gray-400">
-                    {{ filament()->getUserName($user) }}
-                </p>
+                {{-- Auspiciantes --}}
+                <div class="p-4 bg-white dark:bg-gray-800 rounded-md shadow text-center">
+                    <h3 class="text-sm font-medium text-yellow-700">Auspiciantes</h3>
+                    <p class="text-2xl font-bold text-yellow-800">
+                        {{ number_format($Sponsors) }}
+                    </p>
+                </div>
+
+                {{-- Ingreso Inscripción --}}
+                <div class="p-4 bg-white dark:bg-gray-800 rounded-md shadow text-center">
+                    <h3 class="text-sm font-medium text-purple-700">Ingreso Inscripción</h3>
+                    <p class="text-2xl font-bold text-purple-800">
+                        {{ number_format($ingresoInscripcion) }}
+                    </p>
+                </div>
+
+                {{-- Otros Ingresos --}}
+                <div class="p-4 bg-white dark:bg-gray-800 rounded-md shadow text-center">
+                    <h3 class="text-sm font-medium text-yellow-700">Otros Ingresos</h3>
+                    <p class="text-2xl font-bold text-yellow-800">
+                        {{ number_format($verifiedGroupGames) }}
+                    </p>
+                </div>
+
+                {{-- Egresos --}}
+                <div class="p-4 bg-white dark:bg-gray-800 rounded-md shadow text-center">
+                    <h3 class="text-sm font-medium text-purple-700">Egresos</h3>
+                    <p class="text-2xl font-bold text-purple-800">
+                        {{ number_format($expense) }}
+                    </p>
+                </div>
+
+                {{-- Saldo --}}
+                <div class="p-4 bg-white dark:bg-gray-800 rounded-md shadow text-center">
+                    <h3 class="text-sm font-medium text-yellow-700">Saldo</h3>
+                    <p class="text-2xl font-bold text-yellow-800">
+                        {{ number_format($saldoTotal) }}
+                    </p>
+                </div>
             </div>
-
-            <!-- Botón adicional: Volver al Inicio -->
-            <form
-                action="/"
-                method="get"
-                class="my-auto"
-            >
-                <x-filament::button
-                    color="gray"
-                    icon="heroicon-o-home"
-                    icon-alias="panels::widgets.account.home-button"
-                    labeled-from="sm"
-                    tag="button"
-                    type="submit"
-                >
-                    Volver al Inicio
-                </x-filament::button>
-            </form>
-
-            <!-- Botón: Salir -->
-            <form
-                action="{{ filament()->getLogoutUrl() }}"
-                method="post"
-                class="my-auto"
-            >
-                @csrf
-
-                <x-filament::button
-                    color="gray"
-                    icon="heroicon-m-arrow-left-on-rectangle"
-                    icon-alias="panels::widgets.account.logout-button"
-                    labeled-from="sm"
-                    tag="button"
-                    type="submit"
-                >
-                    {{ __('filament-panels::widgets/account-widget.actions.logout.label') }}
-                </x-filament::button>
-            </form>
-        </div>
+        @endif
     </x-filament::section>
+
 </x-filament-widgets::widget>
