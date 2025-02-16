@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\GanadoresResource\Pages;
 use App\Models\Result;
+use Filament\Forms\Components\Builder;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -30,38 +31,33 @@ class GanadoresResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                // Nombre completo del Jugador 1
-                TextColumn::make('playerOne.user.name')
-                    ->label('Jugador 1')
-                    ->sortable()
-                    ->searchable(),
-                TextColumn::make('playerOne.user.last_name')
-                    ->label('Apellido Jugador 1')
-                    ->sortable()
-                    ->searchable(),
-
-                // Nombre completo del Jugador 2
-                TextColumn::make('playerTwo.user.name')
-                    ->label('Jugador 2')
-                    ->sortable()
-                    ->searchable(),
-                TextColumn::make('playerTwo.user.last_name')
-                    ->label('Apellido Jugador 2')
-                    ->sortable()
-                    ->searchable(),
-
-                // Nombre completo del Ganador
+                // Ganador del primer puesto
                 TextColumn::make('winner_name')
-                    ->label('Ganador')
+                    ->label('🥇 Primer Lugar')
+                    ->sortable()
+                    ->searchable(), 
+
+                // Ganador del segundo puesto
+                TextColumn::make('playerTwo.user.name')
+                    ->label('🥈 Segundo Lugar')
                     ->sortable()
                     ->searchable(),
 
-                // Tipo de enfrentamiento
-                TextColumn::make('match_type')
-                    ->label('Categoría')
+                // Ganador del tercer puesto
+                TextColumn::make('third_place')
+                    ->label('🥉 Tercer Lugar')
+                    ->sortable()
+                    ->searchable(),
+
+                // Fecha de creación del registro
+                TextColumn::make('created_at')
+                    ->label('Fecha del Evento')
+                    ->date()
                     ->sortable(),
             ]);
     }
+
+
 
     public static function shouldRegisterNavigation(): bool
     {

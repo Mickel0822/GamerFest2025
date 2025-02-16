@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name'); // Nombre del patrocinador
             $table->string('image_url'); // URL de la imagen/logo
+            $table->text('description')->nullable(); // Nueva columna de descripción (permite valores nulos)
             $table->timestamps();
         });
     }

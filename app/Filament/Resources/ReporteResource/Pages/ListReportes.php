@@ -4,7 +4,6 @@ namespace App\Filament\Resources\ReporteResource\Pages;
 
 use App\Filament\Resources\ReporteResource;
 use Filament\Resources\Pages\ListRecords;
-use App\Models\Inscription;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
 
@@ -24,7 +23,7 @@ class ListReportes extends ListRecords
 
     public function exportToPdf()
     {
-        // Obtener la consulta de la tabla con los filtros aplicados
+        // Obtener la consulta de la tabla con los filtros aplicados desde Filament
         $inscriptions = $this->getFilteredTableQuery()->with(['user', 'game'])->get();
 
         // Generar el PDF con la vista

@@ -27,17 +27,19 @@
     <table>
         <thead>
             <tr>
-                <th style="width: 50%;">Nombre del Auspiciante</th>
-                <th style="width: 50%;">Logo</th>
+            <th style="width: 20%;">Logo Patrocinador</th>    
+            <th style="width: 50%;">Nombre del Patrocinador</th>
+            <th style="width: 50%;">Descripción</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($sponsors as $index => $sponsor)
                 <tr>
-                    <td>{{ $sponsor->name }}</td>
                     <td>
                         <img src="{{ public_path('images/sponsorFake' . ($index + 1) . '.png') }}" alt="Logo" class="sponsor-logo">
                     </td>
+                    <td>{{ $sponsor->name }}</td>
+                    <td style="text-align: left;">{{ $sponsor->description ?? 'Sin descripción' }}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -46,7 +48,7 @@
     <!-- Firma del Representante -->
     <div class="signature-container">
         <img src="{{ public_path('images/firma.png') }}" alt="Firma" class="signature">
-        <div class="representative-name">Juan Pérez<br>Representante Oficial</div>
+        <div class="representative-name">Administrador<br>Representante Designado</div>
     </div>
 
 </body>

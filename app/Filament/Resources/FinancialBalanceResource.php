@@ -13,6 +13,7 @@ class FinancialBalanceResource extends Resource
     protected static ?string $pluralLabel = 'Balance General';
     protected static ?string $singularLabel = 'Balance General';
     protected static ?int $navigationSort = 5;
+    protected static ?string $navigationGroup = 'Reportes';
 
 
     /*
@@ -80,7 +81,7 @@ class FinancialBalanceResource extends Resource
             return 'Reportes'; // Solo el admin ve este grupo
         }
 
-        return null; // Para el tesorero, no aparece en ningún grupo
+        return 'Reportes'; // Para el tesorero, no aparece en ningún grupo
     }
 
     public static function getNavigationSort(): ?int

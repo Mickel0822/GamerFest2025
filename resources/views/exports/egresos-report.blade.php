@@ -51,7 +51,7 @@
     <!-- Firma del Representante -->
     <div class="signature-container">
         <img src="{{ public_path('images/firma.png') }}" alt="Firma" class="signature">
-        <div class="representative-name">Juan Pérez<br>Representante Oficial</div>
+        <div class="representative-name">Tesorero<br>Representante Designado</div>
     </div>
 
 </body>

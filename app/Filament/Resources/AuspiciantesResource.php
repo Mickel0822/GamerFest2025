@@ -29,11 +29,15 @@ class AuspiciantesResource extends Resource
     {
         return $table
         ->columns([
+            Tables\Columns\ImageColumn::make('image_url')
+            ->label('Logo del Patrocinador'),
             Tables\Columns\TextColumn::make('name')
                  ->label('Nombre del Patrocinador')
                 ->searchable(),
-            Tables\Columns\ImageColumn::make('image_url')
-                ->label('URL de la Imagen'),
+            Tables\Columns\TextColumn::make('description') // Agregamos la descripción
+                ->label('Descripción')
+                ->limit(50) // Opcional: Limita la cantidad de caracteres mostrados en la tabla
+                ->wrap(),
 
         ]);
     }

@@ -38,14 +38,17 @@ class ReporteResource extends Resource
         ')
         ->leftjoin('users', 'users.id', '=', 'inscriptions.user_id')
         ->leftjoin('games', 'games.id', '=', 'inscriptions.game_id')
-        ->whereNotNull('inscriptions.user_id') // Excluir inscripciones sin usuario
+        ->whereNotNull('inscriptions.user_id')
         ->where('inscriptions.status', 'verificado')
+        ->when(request()->query('game_id'), function ($query, $gameId) {
+            return $query->where('games.id', $gameId);
+        })
         ->groupBy('users.id', 'users.last_name', 'users.name', 'users.email')
         ->orderBy('users.last_name')
 )
 ->columns([
-    Tables\Columns\TextColumn::make('last_name')->label('Apellido')->sortable(),
-    Tables\Columns\TextColumn::make('name')->label('Nombre')->sortable(),
+    Tables\Columns\TextColumn::make('last_name')->label('Apellido'),
+    Tables\Columns\TextColumn::make('name')->label('Nombre'),
     Tables\Columns\TextColumn::make('email')->label('Correo Electrónico'),
     Tables\Columns\TextColumn::make('juegos')->label('Juegos Inscritos'),// Mostrar juegos concatenados
 

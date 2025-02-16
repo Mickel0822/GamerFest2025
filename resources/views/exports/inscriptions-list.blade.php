@@ -21,6 +21,8 @@
         <h4 style="margin-bottom: 2px;">Presenta: Gamer Fest 2025</h4>
         <img src="{{ public_path('images/LOGO.png') }}" alt="Logo" class="logo">
         <h2 style="margin-top: 5px;">Lista de Inscritos</h2>
+
+
     </div>
 
     <table>
@@ -30,21 +32,15 @@
                 <th style="width: 15%;">Nombre</th>
                 <th style="width: 25%;">Correo Electrónico</th>
                 <th style="width: 15%;">Juegos Inscritos</th>
-                <th style="width: 15%;">Equipo</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($inscriptions as $inscription)
+            @foreach($inscriptions as $inscription)
                 <tr>
-                    <td>{{ $inscription->user->last_name }}</td>
-                    <td>{{ $inscription->user->name }}</td>
-                    <td>{{ $inscription->user->email }}</td>
-                    <td>
-                        {{ $inscription->user->inscriptions->pluck('game.name')->unique()->implode(', ') }}
-                    </td>
-                    <td>
-                        {{ $inscription->user->inscriptions->whereNotNull('team_name')->pluck('team_name')->unique()->implode(', ') ?: 'No asignado' }}
-                    </td>
+                    <td>{{ $inscription->last_name }}</td>
+                    <td>{{ $inscription->name }}</td>
+                    <td>{{ $inscription->email }}</td>
+                    <td>{{ $inscription->juegos }}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -52,7 +48,7 @@
 
     <div class="signature-container">
         <img src="{{ public_path('images/firma.png') }}" alt="Firma" class="signature">
-        <div class="representative-name">Juan Pérez<br>Representante Oficial</div>
+        <div class="representative-name">Coordinador<br>Representante Designado</div>
     </div>
 </body>
 </html>
