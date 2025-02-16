@@ -52,12 +52,7 @@ class CoordinatorParticipantsResource extends Resource
                 ...self::getDynamicMemberColumns(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('status')
-                    ->label('Estado de Pago')
-                    ->options([
-                        'pendiente' => 'Pendiente',
-                        'verificado' => 'Aprobado',
-                    ]),
+
             ]);
     }
 

@@ -6,11 +6,7 @@ use App\Filament\Resources\ReporteResource\Pages;
 use App\Models\Inscription;
 use App\Models\Game;
 use Filament\Tables;
-use Filament\User;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\Action;
-use Filament\Forms\Components\Select;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Tables\Filters\SelectFilter;
 
 class ReporteResource extends Resource
@@ -21,43 +17,44 @@ class ReporteResource extends Resource
     protected static ?string $navigationLabel = 'Lista de Inscritos';
     protected static ?string $pluralLabel = 'Lista de Inscritos';
     protected static ?string $singularLabel = 'Lista de Inscritos';
-    protected static ?int $navigationSort = 1 ;
+    protected static ?int $navigationSort = 1;
     protected static ?string $navigationGroup = 'Reportes';
 
     public static function table(Tables\Table $table): Tables\Table
     {
         return $table
-        ->query(
-            Inscription::query()
-            ->selectRaw('
-            users.id AS id,
-            users.last_name AS last_name,
-            users.name AS name,
-            users.email AS email,
-            GROUP_CONCAT(DISTINCT games.name ORDER BY games.name SEPARATOR ", ") AS juegos
-        ')
-        ->leftjoin('users', 'users.id', '=', 'inscriptions.user_id')
-        ->leftjoin('games', 'games.id', '=', 'inscriptions.game_id')
-        ->whereNotNull('inscriptions.user_id')
-        ->where('inscriptions.status', 'verificado')
-        ->when(request()->query('game_id'), function ($query, $gameId) {
-            return $query->where('games.id', $gameId);
-        })
-        ->groupBy('users.id', 'users.last_name', 'users.name', 'users.email')
-        ->orderBy('users.last_name')
-)
-->columns([
-    Tables\Columns\TextColumn::make('last_name')->label('Apellido'),
-    Tables\Columns\TextColumn::make('name')->label('Nombre'),
-    Tables\Columns\TextColumn::make('email')->label('Correo Electrónico'),
-    Tables\Columns\TextColumn::make('juegos')->label('Juegos Inscritos'),// Mostrar juegos concatenados
-
-        ])
-        ->filters([
-            SelectFilter::make('game_id')
-                ->label('Seleccione un Juego')
-                ->options(fn () => Game::pluck('name', 'id')->toArray()),
-        ]);
+            ->query(
+                Inscription::query()
+                    ->selectRaw('
+                        users.id AS id,
+                        users.last_name AS last_name,
+                        users.name AS name,
+                        users.email AS email,
+                        GROUP_CONCAT(DISTINCT games.name ORDER BY games.name SEPARATOR ", ") AS juegos
+                    ')
+                    ->leftJoin('users', 'users.id', '=', 'inscriptions.user_id')
+                    ->leftJoin('games', 'games.id', '=', 'inscriptions.game_id')
+                    ->whereNotNull('inscriptions.user_id')
+                    ->where('inscriptions.status', 'verificado')
+                    ->when(auth()->user()?->role === 'coordinator', function ($query) {
+                        $gameId = auth()->user()?->game?->id; // Obtener el juego asignado al coordinador
+                        return $query->where('games.id', $gameId);
+                    })
+                    ->groupBy('users.id', 'users.last_name', 'users.name', 'users.email')
+                    ->orderBy('users.last_name')
+            )
+            ->columns([
+                Tables\Columns\TextColumn::make('last_name')->label('Apellido'),
+                Tables\Columns\TextColumn::make('name')->label('Nombre'),
+                Tables\Columns\TextColumn::make('email')->label('Correo Electrónico'),
+                Tables\Columns\TextColumn::make('juegos')->label('Juegos Inscritos'), // Mostrar juegos concatenados
+            ])
+            ->filters([
+                SelectFilter::make('game_id')
+                    ->label('Seleccione un Juego')
+                    ->options(fn () => Game::pluck('name', 'id')->toArray())
+                    ->hidden(fn () => auth()->user()?->role === 'coordinator'), // Ocultar filtro para coordinadores
+            ]);
     }
 
     public static function shouldRegisterNavigation(): bool

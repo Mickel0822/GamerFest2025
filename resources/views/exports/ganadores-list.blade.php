@@ -4,11 +4,20 @@
     <meta charset="UTF-8">
     <title>Lista de Ganadores</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 10px; text-align: center; font-size: 12px; }
+        @font-face {
+            font-family: 'NotoColorEmoji';
+            src: url('{{ storage_path("fonts/NotoColorEmoji.ttf") }}') format('truetype');
+        }
+        body {
+            font-family: 'NotoColorEmoji', Arial, sans-serif;
+            margin: 10px;
+            text-align: center;
+            font-size: 12px;
+        }
         .header { margin-bottom: 5px; }
         .logo { width: 100px; margin-top: 5px; } /* Ajusta el tamaño del logo */
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 10px; }
-        th, td { border: 1px solid black; padding: 4px; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
+        th, td { border: 1px solid black; padding: 6px; text-align: center; }
         th { background-color: #f2f2f2; }
         .signature-container { margin-top: 40px; text-align: center; }
         .signature { width: 150px; height: auto; } /* Tamaño de la firma */
@@ -37,9 +46,9 @@
             @foreach ($ganadores as $ganador)
                 <tr>
                     <td>{{ $ganador->game->name ?? 'Sin nombre' }}</td>
-                    <td>{{ $ganador->winner_name }}</td>
-                    <td>{{ $ganador->playerTwo->user->name ?? 'Sin nombre' }}</td>
-                    <td>{{ $ganador->third_place }}</td>
+                    <td>{{ $ganador->first_place ?? 'Sin nombre' }}</td>
+                    <td>{{ $ganador->second_place ?? 'Sin nombre' }}</td>
+                    <td>{{ $ganador->third_place ?? 'Sin nombre' }}</td>
                     <td>{{ $ganador->created_at->format('d-m-Y') }}</td>
                 </tr>
             @endforeach

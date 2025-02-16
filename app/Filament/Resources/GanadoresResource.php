@@ -3,8 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\GanadoresResource\Pages;
-use App\Models\Result;
-use Filament\Forms\Components\Builder;
+use App\Models\GameWinner;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -12,7 +11,7 @@ use Filament\Tables\Columns\TextColumn;
 
 class GanadoresResource extends Resource
 {
-    protected static ?string $model = Result::class;
+    protected static ?string $model = GameWinner::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-check-circle';
     protected static ?string $navigationLabel = 'Lista de Ganadores';
@@ -31,33 +30,31 @@ class GanadoresResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                // Ganador del primer puesto
-                TextColumn::make('winner_name')
+                // Primer Lugar
+                TextColumn::make('first_place')
                     ->label('🥇 Primer Lugar')
                     ->sortable()
-                    ->searchable(), 
+                    ->searchable(),
 
-                // Ganador del segundo puesto
-                TextColumn::make('playerTwo.user.name')
+                // Segundo Lugar
+                TextColumn::make('second_place')
                     ->label('🥈 Segundo Lugar')
                     ->sortable()
                     ->searchable(),
 
-                // Ganador del tercer puesto
+                // Tercer Lugar
                 TextColumn::make('third_place')
                     ->label('🥉 Tercer Lugar')
                     ->sortable()
                     ->searchable(),
 
-                // Fecha de creación del registro
+                // Fecha del Evento
                 TextColumn::make('created_at')
                     ->label('Fecha del Evento')
                     ->date()
                     ->sortable(),
             ]);
     }
-
-
 
     public static function shouldRegisterNavigation(): bool
     {
@@ -66,9 +63,7 @@ class GanadoresResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
