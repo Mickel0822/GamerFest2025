@@ -31,20 +31,35 @@ class EditResult extends EditRecord
         // Marcar al perdedor como eliminado
         Inscription::where('id', $loserId)->update(['is_eliminated' => true]);
 
-        // Si es la final, guardar los 3 primeros lugares en `game_winners`
+        // Obtener los nombres correspondientes según el tipo de enfrentamiento
+        $winnerName = $result->match_type === 'group'
+            ? Inscription::find($data['winner_id'])?->team_name
+            : Inscription::find($data['winner_id'])?->user?->name;
+
+        $loserName = $result->match_type === 'group'
+            ? Inscription::find($loserId)?->team_name
+            : Inscription::find($loserId)?->user?->name;
+
+        $thirdPlaceName = $result->match_type === 'group'
+            ? Inscription::find($data['third_place'])?->team_name
+            : Inscription::find($data['third_place'])?->user?->name;
+
+        // Si es la final, guardar los nombres en `game_winners`
         if ($round->type === 'final') {
             GameWinner::updateOrCreate(
-                ['game_id' => $round->game_id], // Condición para evitar duplicados
+                ['game_id' => $round->game_id], // Para evitar duplicados
                 [
-                    'first_place' => $data['winner_id'],
-                    'second_place' => $loserId,
-                    'third_place' => $data['third_place'] ?? null,
+                    'first_place' => $winnerName,
+                    'second_place' => $loserName,
+                    'third_place' => $thirdPlaceName,
                 ]
             );
         }
 
         return $data;
     }
+
+
 
     protected function getHeaderActions(): array
     {

@@ -25,28 +25,4 @@ class GameWinner extends Model
     {
         return $this->belongsTo(Game::class);
     }
-
-    /**
-     * Relación: Primer lugar.
-     */
-    public function firstPlace()
-    {
-        return $this->belongsTo(Inscription::class, 'first_place');
-    }
-
-    /**
-     * Relación: Segundo lugar.
-     */
-    public function secondPlace()
-    {
-        return $this->belongsTo(Inscription::class, 'second_place');
-    }
-
-    /**
-     * Relación: Tercer lugar.
-     */
-    public function thirdPlace()
-    {
-        return $this->belongsTo(Inscription::class, 'third_place');
-    }
 }
