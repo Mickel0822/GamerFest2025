@@ -608,7 +608,7 @@
                     <i class="fas fa-chevron-down dropdown-icon"></i>
                 </div>
                 <div class="dropdown-menu-user">
-                <button onclick="window.location.href='/admin/dashboard-participante'" class="dropdown-item">
+                <button onclick="window.location.href='/admin'" class="dropdown-item">
                     <i class="fas fa-user"></i> Revisar mi perfil
                 </button>
                     <form action="{{ route('logout') }}" method="POST">
