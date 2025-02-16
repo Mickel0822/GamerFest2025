@@ -8,7 +8,7 @@ use Filament\Resources\Resource;
 class FinancialBalanceResource extends Resource
 {
     protected static ?string $model = null; // No se requiere un modelo específico
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-scale';
     protected static ?string $navigationLabel = 'Balance General';
     protected static ?string $pluralLabel = 'Balance General';
     protected static ?string $singularLabel = 'Balance General';
@@ -80,7 +80,7 @@ class FinancialBalanceResource extends Resource
             return 'Reportes'; // Solo el admin ve este grupo
         }
 
-        return null; // Para el tesorero, no aparece en ningún grupo
+        return 'Reportes'; // Para el tesorero, no aparece en ningún grupo
     }
 
     public static function getNavigationSort(): ?int

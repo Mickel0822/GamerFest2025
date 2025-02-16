@@ -40,17 +40,34 @@ class ListIngresos extends ListRecords
 
     public function exportToPdf()
     {
-        // ✅ Filtra solo los ingresos verificados en el PDF
-        $ingresos = Inscription::where('status', 'verificado')->get();
-        $totalIngresos = Inscription::where('status', 'verificado')->sum('cost');
-
-        // Generar el PDF con la vista
-        $pdf = Pdf::loadView('exports.ingresos-report', compact('ingresos', 'totalIngresos'));
-
-        // Descargar el PDF
+        // ✅ Filtra solo los ingresos verificados por tipo de pago
+        $ingresosEfectivo = Inscription::where('status', 'verificado')
+            ->where('payment_method', 'cash')
+            ->get();
+    
+        $ingresosComprobante = Inscription::where('status', 'verificado')
+            ->where('payment_method', 'comprobante')
+            ->get();
+    
+        // ✅ Calcular totales
+        $totalEfectivo = $ingresosEfectivo->sum('cost');
+        $totalComprobante = $ingresosComprobante->sum('cost');
+        $totalGeneral = $totalEfectivo + $totalComprobante;
+    
+        // ✅ Generar el PDF con la vista correcta
+        $pdf = Pdf::loadView('exports.ingresos-report', compact(
+            'ingresosEfectivo',
+            'ingresosComprobante',
+            'totalEfectivo',
+            'totalComprobante',
+            'totalGeneral'
+        ));
+    
+        // ✅ Descargar el PDF
         return response()->streamDownload(
             fn () => print($pdf->output()),
             'lista_ingresos.pdf'
         );
     }
+    
 }

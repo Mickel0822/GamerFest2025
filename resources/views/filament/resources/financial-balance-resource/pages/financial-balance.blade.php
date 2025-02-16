@@ -26,6 +26,11 @@
             z-index: -1; /* Asegura que la imagen esté detrás del contenido */
         }
     </style>
+        <div class="mt-6 flex justify-end">
+    <x-filament::button wire:click="exportToPdf" color="primary">
+        Exportar a PDF
+    </x-filament::button>
+</div>
     <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
         <div class="p-6 shadow rounded-lg bg-white dark:bg-gray-800">
             <h3 class="text-lg font-bold dark:text-gray-200">Ingresos Totales</h3>
@@ -49,9 +54,6 @@
         </div>
     </div>
 
-    <div class="mt-6">
-        <x-filament::button wire:click="exportToPdf" color="primary">
-            Exportar a PDF
-        </x-filament::button>
-    </div>
+
+
 </x-filament::page>

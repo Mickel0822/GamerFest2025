@@ -33,6 +33,11 @@ class SponsorResource extends Resource
                 ->url()
                 ->placeholder('https://example.com/logo.jpg')
                 ->required(),
+            Forms\Components\Textarea::make('description') // Agregamos la descripción
+                ->label('Descripción')
+                ->rows(4)
+                ->placeholder('Ingrese una breve descripción del patrocinador')
+                ->maxLength(500), // Opcional: Limita el tamaño de la descripción
         ]);
     }
 
@@ -40,9 +45,12 @@ class SponsorResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\ImageColumn::make('image_url'),
+                Tables\Columns\TextColumn::make('description') // Agregamos la descripción
+                ->label('Descripción')
+                ->limit(50) // Opcional: Limita la cantidad de caracteres mostrados en la tabla
+                ->wrap(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

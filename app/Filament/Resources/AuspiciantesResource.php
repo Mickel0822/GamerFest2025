@@ -17,11 +17,11 @@ class AuspiciantesResource extends Resource
 {
     protected static ?string $model = Sponsor::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-user-plus';
     protected static ?string $navigationLabel = 'Lista de Auspiciantes';
     protected static ?string $pluralLabel = 'Lista de Auspiciantes';
     protected static ?string $singularLabel = 'Lista de Auspiciantes';
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 6;
     protected static ?string $navigationGroup = 'Reportes';
 
 
@@ -29,11 +29,15 @@ class AuspiciantesResource extends Resource
     {
         return $table
         ->columns([
+            Tables\Columns\ImageColumn::make('image_url')
+            ->label('Logo del Patrocinador'),
             Tables\Columns\TextColumn::make('name')
                  ->label('Nombre del Patrocinador')
                 ->searchable(),
-            Tables\Columns\ImageColumn::make('image_url')
-                ->label('URL de la Imagen'),
+            Tables\Columns\TextColumn::make('description') // Agregamos la descripción
+                ->label('Descripción')
+                ->limit(50) // Opcional: Limita la cantidad de caracteres mostrados en la tabla
+                ->wrap(),
 
         ]);
     }

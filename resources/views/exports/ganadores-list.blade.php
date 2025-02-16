@@ -26,21 +26,21 @@
     <table>
         <thead>
             <tr>
-                <th style="width: 20%;">Juego</th>
-                <th style="width: 20%;">Jugador/Equipo 1</th>
-                <th style="width: 20%;">Jugador/Equipo 2</th>
-                <th style="width: 20%;">Ganador</th>
-                <th style="width: 20%;">Categoría</th>
+                <th style="width: 25%;">Juego</th>
+                <th style="width: 25%;">Primer Lugar</th>
+                <th style="width: 25%;">Segundo Lugar</th>
+                <th style="width: 25%;">Tercer Lugar</th>
+                <th style="width: 15%;">Fecha</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($ganadores as $ganador)
                 <tr>
-                    <td>{{ $ganador->game->name }}</td>
-                    <td>{{ $ganador->playerOne?->team_name ?? ($ganador->playerOne?->user?->name . ' ' . $ganador->playerOne?->user?->last_name) }}</td>
-                    <td>{{ $ganador->playerTwo?->team_name ?? ($ganador->playerTwo?->user?->name . ' ' . $ganador->playerTwo?->user?->last_name) }}</td>
-                    <td>{{ $ganador->winner?->team_name ?? ($ganador->winner?->user?->name . ' ' . $ganador->winner?->user?->last_name) }}</td>
-                    <td>{{ ucfirst($ganador->match_type) }}</td>
+                    <td>{{ $ganador->game->name ?? 'Sin nombre' }}</td>
+                    <td>{{ $ganador->winner_name }}</td>
+                    <td>{{ $ganador->playerTwo->user->name ?? 'Sin nombre' }}</td>
+                    <td>{{ $ganador->third_place }}</td>
+                    <td>{{ $ganador->created_at->format('d-m-Y') }}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -49,7 +49,7 @@
     <!-- Firma del Representante -->
     <div class="signature-container">
         <img src="{{ public_path('images/firma.png') }}" alt="Firma" class="signature">
-        <div class="representative-name">Juan Pérez<br>Representante Oficial</div>
+        <div class="representative-name">Coordinador<br>Representante Designado</div>
     </div>
 
 </body>

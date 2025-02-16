@@ -4,7 +4,7 @@ namespace App\Filament\Resources\GanadoresResource\Pages;
 
 use App\Filament\Resources\GanadoresResource;
 use Filament\Resources\Pages\ListRecords;
-use App\Models\Result;
+use App\Models\GameWinner;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
 
@@ -24,9 +24,9 @@ class ListGanadores extends ListRecords
 
     public function exportToPdf()
     {
-        // Obtener la consulta de la tabla con los filtros aplicados
+        // Obtener los datos de la tabla `game_winners`
         $ganadores = $this->getFilteredTableQuery()
-            ->with(['game', 'playerOne.user', 'playerTwo.user', 'winner.user'])
+            ->with(['game']) // Solo traemos el nombre del juego
             ->get();
 
         // Generar el PDF con la vista
