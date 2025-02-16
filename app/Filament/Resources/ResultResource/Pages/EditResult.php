@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ResultResource\Pages;
 
 use App\Filament\Resources\ResultResource;
+use App\Models\GameWinner;
 use App\Models\Inscription;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -19,6 +20,7 @@ class EditResult extends EditRecord
     protected function mutateFormDataBeforeSave(array $data): array
     {
         $result = $this->record;
+        $round = $result->round;
 
         // Determinar el tipo de ganador basado en el tipo de juego
         $data['winner_type'] = $result->match_type === 'individual' ? 'player' : 'team';
@@ -29,8 +31,35 @@ class EditResult extends EditRecord
         // Marcar al perdedor como eliminado
         Inscription::where('id', $loserId)->update(['is_eliminated' => true]);
 
+        // Obtener los nombres correspondientes según el tipo de enfrentamiento
+        $winnerName = $result->match_type === 'group'
+            ? Inscription::find($data['winner_id'])?->team_name
+            : Inscription::find($data['winner_id'])?->user?->name;
+
+        $loserName = $result->match_type === 'group'
+            ? Inscription::find($loserId)?->team_name
+            : Inscription::find($loserId)?->user?->name;
+
+        $thirdPlaceName = $result->match_type === 'group'
+            ? Inscription::find($data['third_place'])?->team_name
+            : Inscription::find($data['third_place'])?->user?->name;
+
+        // Si es la final, guardar los nombres en `game_winners`
+        if ($round->type === 'final') {
+            GameWinner::updateOrCreate(
+                ['game_id' => $round->game_id], // Para evitar duplicados
+                [
+                    'first_place' => $winnerName,
+                    'second_place' => $loserName,
+                    'third_place' => $thirdPlaceName,
+                ]
+            );
+        }
+
         return $data;
     }
+
+
 
     protected function getHeaderActions(): array
     {
