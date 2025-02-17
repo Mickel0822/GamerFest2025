@@ -30,7 +30,7 @@
                     <tr>
                         <td style="padding: 10px 40px; text-align: center;">
                             <p style="margin: 0; font-size: 16px;">
-                                Hola <strong>{{ $userLastName }}</strong> <strong>{{ $userName }}</strong>, hemos
+                                Hola <strong>{{ $lastName }}</strong> <strong>{{ $name }}</strong>, hemos
                                 recibido una
                                 solicitud de verificación
                                 para tu cuenta.

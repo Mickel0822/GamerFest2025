@@ -27,7 +27,7 @@
     <table>
         <thead>
             <tr>
-            <th style="width: 20%;">Logo Patrocinador</th>    
+            <th style="width: 20%;">Logo Patrocinador</th>
             <th style="width: 50%;">Nombre del Patrocinador</th>
             <th style="width: 50%;">Descripción</th>
             </tr>
@@ -36,7 +36,7 @@
             @foreach ($sponsors as $index => $sponsor)
                 <tr>
                     <td>
-                        <img src="{{ public_path('images/sponsorFake' . ($index + 1) . '.png') }}" alt="Logo" class="sponsor-logo">
+                        <img src="{{$sponsor->image_url}}" alt="Logo" class="sponsor-logo">
                     </td>
                     <td>{{ $sponsor->name }}</td>
                     <td style="text-align: left;">{{ $sponsor->description ?? 'Sin descripción' }}</td>

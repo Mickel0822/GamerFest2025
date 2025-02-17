@@ -62,7 +62,7 @@ class QuickInscriptionResource extends Resource
                     $set('cost', Game::find($state)?->type === 'group' ? 25.00 : 3.00)
                 )
                 ->rules([
-                    new UniqueGameInscription(),
+                    fn ($get) => new UniqueGameInscription($get('user_id')),
                 ]),
 
             TextInput::make('cost')
@@ -115,9 +115,9 @@ class QuickInscriptionResource extends Resource
             // Número de comprobante, visible solo si es necesario
             TextInput::make('receipt_number')
                 ->label('Número de Comprobante')
-                ->required()
                 ->placeholder('Ingrese el número de comprobante')
-                ->hidden(fn ($get) => !$get('inscription_type')), // Solo visible cuando se haya seleccionado un tipo de inscripción
+                ->hidden(fn ($get) => $get('payment_method') !== 'receipt')
+                ->required(fn ($get) => $get('payment_method') === 'receipt'),
         ]);
     }
 
