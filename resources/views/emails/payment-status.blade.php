@@ -75,7 +75,7 @@
                     <!-- Botón (opcional, si deseas agregar un enlace) -->
                     <tr>
                         <td align="center" style="padding: 20px;">
-                            <a href="http://grupo2.gamerfest2025.com/"
+                            <a href="http://gamerfest2025.com/"
                                 style="display: inline-block; text-decoration: none; background-color: #0dc6df; color: #ffffff; padding: 12px 24px; border-radius: 4px; font-size: 16px;">
                                 Ir a GamerFest
                             </a>

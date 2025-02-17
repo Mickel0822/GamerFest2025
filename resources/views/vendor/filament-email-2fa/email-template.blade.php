@@ -60,7 +60,7 @@
                     <!-- Enlace a tu página -->
                     <tr>
                         <td align="center" style="padding: 10px 0 30px;">
-                            <a href="http://grupo2.gamerfest2025.com/admin/two-factor-auth"
+                            <a href="http://gamerfest2025.com/admin/two-factor-auth"
                                 style="display: inline-block; text-decoration: none; background-color: #0dc6df; color: #ffffff; padding: 12px 24px; border-radius: 4px; font-size: 16px;">
                                 Ir a la página
                             </a>
