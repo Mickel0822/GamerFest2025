@@ -36,13 +36,16 @@
     justify-content: space-between;
     align-items: center;
     background: var(--primary-color);
-    padding: 10px 20px;
+    padding: 10px 15px;
     position: fixed;
     top: 0;
     width: 100%;
+    height: 110px;
     z-index: 1000;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
 }
+
     .navbar .logo img {
         height: 40px;
         transition: transform 0.3s ease;
@@ -59,12 +62,59 @@
 }
 
 /* Ocultar el menú en pantallas pequeñas */
+/* Normal */
 .nav-links {
     display: flex;
     gap: 15px;
     justify-content: center;
     transition: all 0.3s ease;
 }
+@media (max-width: 768px) {
+    .navbar-buttons {
+        display: none; /* Oculta el botón en móviles */
+    }
+
+    /* Muestra el botón de sesión dentro del menú hamburguesa */
+    .nav-links .btn-login {
+        display: block;
+        text-align: center;
+        padding: 10px;
+        background: var(--secondary-color);
+        border-radius: 5px;
+        color: black;
+        font-weight: bold;
+        margin: 5px 0;
+    }
+}
+/* Ocultar menú en pantallas pequeñas */
+/* Móvil: ocultar y mostrar como franja izquierda */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 100vh;
+        background: var(--primary-color);
+        text-align: left;
+        padding: 20px;
+        box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+}
+
+/* Mostrar en pantallas grandes */
+@media (min-width: 769px) {
+    .nav-links {
+        display: flex !important;
+    }
+}
+
 
 .nav-links a {
     text-decoration: none;
@@ -82,7 +132,6 @@
     color: black;
     transform: scale(1.05);
 }
-
     /* Botón "Iniciar Sesión" más grande y más a la izquierda */
     .navbar-buttons {
         display: flex;
@@ -93,8 +142,9 @@
     }
     .navbar-buttons a {
         text-decoration: none;
-        font-size: 1.2rem; /* Aumentado el tamaño */
-        padding: 0.8rem 1.8rem; /* Hacerlo más visible */
+        font-size: 1rem; /* Aumentado el tamaño */
+        margin: 0.5
+        padding: 0.8rem 1.5rem; /* Hacerlo más visible */
         background: var(--secondary-color);
         border-radius: 5px;
         font-weight: bold;
@@ -104,31 +154,75 @@
         position: relative;
         left: -60px; /* Mueve el botón más a la izquierda */
     }
+    @media (max-width: 768px) {
+        .navbar-buttons {
+            justify-content: center;
+        }
+    }
     .navbar-buttons a:hover {
         background: white;
         color: var(--primary-color);
         transform: scale(1.05);
     }
 
-    /* Contador dentro del navbar */
-    .counter-container {
-        background: var(--background-dark);
-        padding: 0.6rem 1rem;
-        border-radius: 12px;
-        font-size: 0.85rem;
-        font-weight: bold;
-        text-align: center;
-        color: var(--text-light);
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+/* Ajustes en el botón de sesión */
+@media (max-width: 768px) {
+    .navbar-buttons {
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
-        min-width: 180px;
-        min-height: 60px;
-        border: 3px solid white;
-        margin-left: 1rem;
+        width: 100%;
     }
+
+    .navbar-buttons a {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-buttons {
+        display: none; /* Oculta el botón de iniciar sesión */
+    }
+}
+
+/* Contador dentro del navbar */
+.counter-container {
+    background: var(--background-dark);
+    padding: 0.5rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-align: center;
+    color: var(--text-light);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+    min-height: 60px;
+    border: 2px solid white;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Posición en pantallas grandes */
+@media (min-width: 769px) {
+    .counter-container {
+        position: relative;
+        margin-left: 20px; /* Asegura que se quede alineado a la izquierda */
+    }
+}
+
+/* Centrar el contador en pantallas pequeñas */
+@media (max-width: 768px) {
+    .counter-container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
     .counter-container h2 {
         font-size: 0.9rem;
         margin: 0;
@@ -139,47 +233,55 @@
         color: var(--secondary-color);
     }
 
-    /* Menú hamburguesa */
-.hamburger {
+    .hamburger {
     display: none;
     flex-direction: column;
     cursor: pointer;
-    gap: 6px;
+    gap: 5px;
     padding: 10px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 5px;
 }
 
-.hamburger span {
+.hamburger .bar {
     width: 25px;
     height: 3px;
-    background: var(--text-light);
+    background: white;
     border-radius: 3px;
 }
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+}
+
+/* Mostrar el menú hamburguesa en pantallas pequeñas */
 @media (max-width: 768px) {
     .nav-links {
-        display: none;
+        display: flex;
         flex-direction: column;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100%;
+        position: fixed;
+        top: 0;
+        left: -100%; /* Oculto por defecto */
+        width: 250px; /* Ancho del menú lateral */
+        height: 100vh;
         background: var(--primary-color);
-        text-align: center;
-        padding: 10px 0;
-    }
-
-    .nav-links a {
-        display: block;
-        padding: 10px;
+        text-align: left;
+        padding: 20px;
+        transition: left 0.3s ease-in-out;
     }
 
     .nav-links.active {
-        display: flex;
+        left: 0; /* Aparece desde la izquierda */
     }
 
-    .hamburger {
-        display: flex;
+    .nav-links a {
+        padding: 15px;
+        display: block;
+        font-size: 1.2rem;
+        color: white;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 }
 
@@ -583,22 +685,30 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="navbar">
-    <!-- Contador a la izquierda -->
+<!-- Navbar -->
+<div class="navbar">
+    <!-- Botón Hamburguesa -->
+    <div class="hamburger" onclick="toggleMenu()">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+</div>
+
+
+    <!-- Contador -->
     <div class="counter-container">
         <h2>GAMERFEST está a punto de empezar</h2>
         <div id="countdown">314d 23h 28m 45s</div>
     </div>
 
-    <!-- Botones de navegación en el centro -->
+    <!-- Menú de Navegación -->
     <div class="nav-links">
         <a href="#juegos">Juegos Individuales</a>
         <a href="#grupales">Juegos Grupales</a>
         <a href="#patrocinadores">Patrocinadores</a>
     </div>
 
-    <!-- Menú de usuario a la derecha -->
+    <!-- Botón de sesión -->
     <div class="navbar-buttons">
         @if(Auth::check())
             <div class="user-menu" onclick="toggleUserDropdown()">
@@ -608,9 +718,9 @@
                     <i class="fas fa-chevron-down dropdown-icon"></i>
                 </div>
                 <div class="dropdown-menu-user">
-                <button onclick="window.location.href='/admin/dashboard-participante'" class="dropdown-item">
-                    <i class="fas fa-user"></i> Revisar mi perfil
-                </button>
+                    <button onclick="window.location.href='/admin/dashboard-participante'" class="dropdown-item">
+                        <i class="fas fa-user"></i> Revisar mi perfil
+                    </button>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
@@ -622,12 +732,7 @@
         @endif
     </div>
 </div>
-    <!-- Botón de menú hamburguesa -->
-    <div class="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
+
 
 <!-- Hero Section -->
 <div class="hero-section">
@@ -720,48 +825,76 @@
 
     <!-- Script del Contador -->
     <script>
-        const eventDate = new Date("2025-12-20T10:00:00").getTime();
-        setInterval(function () {
-            const now = new Date().getTime();
-            const distance = eventDate - now;
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        }, 1000);
+document.addEventListener("DOMContentLoaded", function () {
+    // Configuración del contador
+    const eventDate = new Date("2025-12-20T10:00:00").getTime();
+    setInterval(function () {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
 
-        document.querySelectorAll('.nav-links a').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+    // Smooth scrolling para los enlaces del navbar
+    document.querySelectorAll('.nav-links a').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
             const targetElement = document.getElementById(targetId);
             if (targetElement) {
                 window.scrollTo({
-                    top: targetElement.offsetTop - 50, // Ajusta según el tamaño de tu navbar
+                    top: targetElement.offsetTop - 50, // Ajuste según tamaño del navbar
                     behavior: 'smooth'
                 });
             }
         });
     });
-    document.addEventListener("DOMContentLoaded", function () {
-        const userMenu = document.querySelector(".user-menu");
-        const dropdown = document.querySelector(".dropdown-menu-user");
 
-        if (userMenu && dropdown) {
-            userMenu.addEventListener("click", function (event) {
-                event.stopPropagation(); // Evita que el evento se propague y se cierre inmediatamente
-                userMenu.classList.toggle("active");
-            });
+    // Manejo del menú de usuario (dropdown)
+    const userMenu = document.querySelector(".user-menu");
+    const dropdown = document.querySelector(".dropdown-menu-user");
 
-            // Cerrar el menú si se hace clic fuera de él
-            document.addEventListener("click", function (event) {
-                if (!userMenu.contains(event.target)) {
-                    userMenu.classList.remove("active");
-                }
-            });
-        }
-    });
+    if (userMenu && dropdown) {
+        userMenu.addEventListener("click", function (event) {
+            event.stopPropagation(); // Evita cierre inmediato
+            userMenu.classList.toggle("active");
+        });
+
+        // Cerrar el menú si se hace clic fuera
+        document.addEventListener("click", function (event) {
+            if (!userMenu.contains(event.target)) {
+                userMenu.classList.remove("active");
+            }
+        });
+    }
+
+    // Manejo del menú hamburguesa
+    const hamburger = document.querySelector(".hamburger");
+    const navLinks = document.querySelector(".nav-links");
+
+    if (hamburger && navLinks) {
+        hamburger.addEventListener("click", function () {
+            navLinks.classList.toggle("active");
+        });
+
+        // Cerrar el menú al hacer clic fuera de él
+        document.addEventListener("click", function (event) {
+            if (!hamburger.contains(event.target) && !navLinks.contains(event.target)) {
+                navLinks.classList.remove("active");
+            }
+        });
+
+        // Asegurar que el menú vuelve a su estado normal en pantallas grandes
+        window.addEventListener("resize", function () {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove("active");
+            }
+        });
+    }
+});
     </script>
 </body>
 </html>
